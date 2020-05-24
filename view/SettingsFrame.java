@@ -15,11 +15,11 @@ import java.awt.event.ActionListener;
  */
 public class SettingsFrame extends JFrame {
     private class SettingsButtons extends JPanel{
-        private JButton userSettingsButton;
-        private JButton checkersSettingsButton;
-        private JButton menuSettingsButton;
-        private JButton chatSettingsButton;
-        private JButton backButton;
+        private final JButton userSettingsButton;
+        private final JButton checkersSettingsButton;
+        private final JButton menuSettingsButton;
+        private final JButton chatSettingsButton;
+        private final JButton backButton;
 
 
         SettingsButtons(){
@@ -27,42 +27,30 @@ public class SettingsFrame extends JFrame {
 
 
             userSettingsButton = new JButton("User");
-            userSettingsButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    CardLayout cl = (CardLayout) settingsPanel.getLayout();
-                    cl.show(settingsPanel, "user");
-                }
+            userSettingsButton.addActionListener(e -> {
+                CardLayout cl = (CardLayout) settingsPanel.getLayout();
+                cl.show(settingsPanel, "user");
             });
             add(userSettingsButton);
 
             checkersSettingsButton = new JButton("Checkers");
-            checkersSettingsButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    CardLayout cl = (CardLayout) settingsPanel.getLayout();
-                    cl.show(settingsPanel, "checkers");
-                }
+            checkersSettingsButton.addActionListener(e -> {
+                CardLayout cl = (CardLayout) settingsPanel.getLayout();
+                cl.show(settingsPanel, "checkers");
             });
             add(checkersSettingsButton);
 
             menuSettingsButton = new JButton("Menu");
-            menuSettingsButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    CardLayout cl = (CardLayout) settingsPanel.getLayout();
-                    cl.show(settingsPanel, "menu");
-                }
+            menuSettingsButton.addActionListener(e -> {
+                CardLayout cl = (CardLayout) settingsPanel.getLayout();
+                cl.show(settingsPanel, "menu");
             });
             add(menuSettingsButton);
 
             chatSettingsButton = new JButton("Chat");
-            chatSettingsButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    CardLayout cl = (CardLayout) settingsPanel.getLayout();
-                    cl.show(settingsPanel, "chat");
-                }
+            chatSettingsButton.addActionListener(e -> {
+                CardLayout cl = (CardLayout) settingsPanel.getLayout();
+                cl.show(settingsPanel, "chat");
             });
             add(chatSettingsButton);
 
@@ -74,7 +62,7 @@ public class SettingsFrame extends JFrame {
         }
     }
 
-    private JPanel settingsPanel;
+    private final JPanel settingsPanel;
     public SettingsFrame(){
         super("Settings");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

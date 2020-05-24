@@ -3,8 +3,6 @@ package model;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /*
  * @author Rafal Uzarowicz
@@ -23,17 +21,14 @@ public class Menu {
         private void addButton(String name, final String plafName){
             JButton button = new JButton(name);
             this.add(button);
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    try{
-                        UIManager.setLookAndFeel(plafName);
-                        for( int i = 0; i<FramesArray.len(); ++i){
-                            SwingUtilities.updateComponentTreeUI(FramesArray.get(i));
-                        }
-                    }catch(Exception exception){
-                        exception.printStackTrace();
+            button.addActionListener(e -> {
+                try{
+                    UIManager.setLookAndFeel(plafName);
+                    for( int i = 0; i<FramesArray.len(); ++i){
+                        SwingUtilities.updateComponentTreeUI(FramesArray.get(i));
                     }
+                }catch(Exception exception){
+                    exception.printStackTrace();
                 }
             });
         }

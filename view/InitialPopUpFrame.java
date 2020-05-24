@@ -10,10 +10,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class InitialPopUpFrame extends JFrame {
-    private JButton nextButton;
-    private JPanel upperPanel;
-    private JPanel lowerPanel;
-    private JLabel infoLabel;
+    private final JButton nextButton;
+    private final JPanel upperPanel;
+    private final JPanel lowerPanel;
+    private final JLabel infoLabel;
     public InitialPopUpFrame(){
         super("Welcome");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

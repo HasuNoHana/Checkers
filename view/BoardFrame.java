@@ -19,11 +19,11 @@ import java.util.ArrayList;
  * @see "https://github.com/RafalUzarowicz"
  */
 public class BoardFrame extends JFrame {
-    private JPanel board;
-    private JTextArea smallChat;
+    private final JPanel board;
+    private final JTextArea smallChat;
     private class EmotesPanel extends JPanel{
-        private ArrayList<JButton> emotes;
-        private JTextArea textArea;
+        private final ArrayList<JButton> emotes;
+        private final JTextArea textArea;
         private class EmoteActionListener implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -33,7 +33,7 @@ public class BoardFrame extends JFrame {
         public EmotesPanel(JTextArea textArea){
             this.textArea = textArea;
             setLayout(new GridLayout());
-            emotes = new ArrayList<JButton>();
+            emotes = new ArrayList<>();
             emotes.add(new JButton(":)"));
             emotes.add(new JButton(":)"));
             emotes.add(new JButton(":("));
@@ -51,8 +51,8 @@ public class BoardFrame extends JFrame {
             }
         }
     }
-    private EmotesPanel emotesPanel;
-    private JButton menuButton;
+    private final EmotesPanel emotesPanel;
+    private final JButton menuButton;
 
 
     public BoardFrame(){

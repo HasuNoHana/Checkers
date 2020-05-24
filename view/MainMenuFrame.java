@@ -8,8 +8,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
@@ -22,14 +20,14 @@ import java.io.IOException;
  */
 public class MainMenuFrame extends JFrame{
     private static class MenuPanel extends JPanel{
-        private JLabel logo;
-        private JPanel enemyReady;
-        private JPanel usersInfo;
-        private JPanel playerName;
-        private JButton exitButton;
-        private JButton startButton;
-        private JButton settingsButton;
-        private JButton connectButton;
+        private final JLabel logo;
+        private final JPanel enemyReady;
+        private final JPanel usersInfo;
+        private final JPanel playerName;
+        private final JButton exitButton;
+        private final JButton startButton;
+        private final JButton settingsButton;
+        private final JButton connectButton;
         MenuPanel(){
             setLayout(new GridLayout(6, 1, 20, 20));
 
@@ -107,7 +105,7 @@ public class MainMenuFrame extends JFrame{
     private static class ChatPanel extends JPanel{
         private final JButton sendButton;
         private final JTextField messField;
-        private JPanel messagePanel;
+        private final JPanel messagePanel;
         ChatPanel(){
             setLayout(new GridBagLayout());
             GridBagConstraints constraints = new GridBagConstraints();
@@ -130,23 +128,20 @@ public class MainMenuFrame extends JFrame{
             messField = new JTextField(10);
             sendButton = new JButton("Send");
             sendButton.setEnabled(false);
-            sendButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    int len = messField.getText().length();
-                    if(len>0){
-                        String text = "[MESS]: \t";
-                        int i = 0;
-                        while(i<messField.getText().length()/ Constants.ChatConstants.MAX_MESS_LEN){
-                            text = text.concat(messField.getText().substring(i*Constants.ChatConstants.MAX_MESS_LEN, (i+1)*Constants.ChatConstants.MAX_MESS_LEN));
-                            text = text.concat("\n\t");
-                            len -= Constants.ChatConstants.MAX_MESS_LEN;
-                            ++i;
-                        }
-                        text = text.concat(messField.getText().substring(i*Constants.ChatConstants.MAX_MESS_LEN, i*Constants.ChatConstants.MAX_MESS_LEN+len));
-                        textArea.append(text+"\n\n");
-                        messField.setText("");
+            sendButton.addActionListener(e -> {
+                int len = messField.getText().length();
+                if(len>0){
+                    String text = "[MESS]: \t";
+                    int i = 0;
+                    while(i<messField.getText().length()/ Constants.ChatConstants.MAX_MESS_LEN){
+                        text = text.concat(messField.getText().substring(i*Constants.ChatConstants.MAX_MESS_LEN, (i+1)*Constants.ChatConstants.MAX_MESS_LEN));
+                        text = text.concat("\n\t");
+                        len -= Constants.ChatConstants.MAX_MESS_LEN;
+                        ++i;
                     }
+                    text = text.concat(messField.getText().substring(i*Constants.ChatConstants.MAX_MESS_LEN, i*Constants.ChatConstants.MAX_MESS_LEN+len));
+                    textArea.append(text+"\n\n");
+                    messField.setText("");
                 }
             });
 
@@ -174,11 +169,7 @@ public class MainMenuFrame extends JFrame{
             add(messagePanel, constraints);
         }
         void setEnemyReady(){
-            if(isEnemyRead){
-                sendButton.setEnabled(true);
-            }else{
-                sendButton.setEnabled(false);
-            }
+            sendButton.setEnabled(isEnemyRead);
         }
 
     }

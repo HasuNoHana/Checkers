@@ -2,8 +2,6 @@ package model;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /*
  * @author Rafal Uzarowicz
@@ -11,10 +9,10 @@ import java.awt.event.ActionListener;
  */
 public class User{
     private static class UserPanel extends JPanel{
-        private FlowLayout layout;
-        private JLabel nameLabel;
-        private JTextField nameField;
-        private JButton changeNameButton;
+        private final FlowLayout layout;
+        private final JLabel nameLabel;
+        private final JTextField nameField;
+        private final JButton changeNameButton;
 
         public UserPanel(){
             layout = new FlowLayout();
@@ -27,15 +25,12 @@ public class User{
             this.add(nameField);
 
             changeNameButton = new JButton("Change");
-            changeNameButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    int len = nameField.getText().length();
-                    if(len>0 && len<Constants.UserConstants.MAX_USERNAME_LENGTH){
-                        String text = nameField.getText();
-                        User.me.setName(text);
-                        nameField.setText("");
-                    }
+            changeNameButton.addActionListener(e -> {
+                int len = nameField.getText().length();
+                if(len>0 && len<Constants.UserConstants.MAX_USERNAME_LENGTH){
+                    String text = nameField.getText();
+                    User.me.setName(text);
+                    nameField.setText("");
                 }
             });
             this.add(changeNameButton);
@@ -50,8 +45,8 @@ public class User{
         this.userNameLabel = new JLabel(this.userName, SwingConstants.CENTER);
     }
     private String userName;
-    private int port;
-    private JLabel userNameLabel;
+    private final int port;
+    private final JLabel userNameLabel;
 
     public void setName(String name){
         if(name.length()<Constants.UserConstants.MAX_USERNAME_LENGTH){

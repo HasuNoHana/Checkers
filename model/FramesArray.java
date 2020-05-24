@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * @see "https://github.com/RafalUzarowicz"
  */
 public class FramesArray {
-    private static ArrayList<JFrame> frames = new ArrayList<JFrame>();
+    private static final ArrayList<JFrame> frames = new ArrayList<>();
     private FramesArray(){
 
     }

@@ -11,9 +11,9 @@ import java.awt.event.ActionListener;
  * @see "https://github.com/RafalUzarowicz"
  */
 public class ConnectionScreenFrame extends JFrame {
-    private JButton hostButton;
-    private JButton joinButton;
-    private JButton backButton;
+    private final JButton hostButton;
+    private final JButton joinButton;
+    private final JButton backButton;
 
     private static JPanel cards;
     public ConnectionScreenFrame(){
@@ -26,24 +26,18 @@ public class ConnectionScreenFrame extends JFrame {
 
 
         hostButton = new JButton("Host");
-        hostButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                CardLayout cl = (CardLayout) cards.getLayout();
-                cl.show(cards, "host");
-                MainMenuFrame.setIsEnemyRead(false);
-            }
+        hostButton.addActionListener(e -> {
+            CardLayout cl = (CardLayout) cards.getLayout();
+            cl.show(cards, "host");
+            MainMenuFrame.setIsEnemyRead(false);
         });
         buttonsPanel.add(hostButton);
 
         joinButton = new JButton("Join");
-        joinButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                CardLayout cl = (CardLayout) cards.getLayout();
-                cl.show(cards, "join");
-                MainMenuFrame.setIsEnemyRead(true);
-            }
+        joinButton.addActionListener(e -> {
+            CardLayout cl = (CardLayout) cards.getLayout();
+            cl.show(cards, "join");
+            MainMenuFrame.setIsEnemyRead(true);
         });
         buttonsPanel.add(joinButton);
 

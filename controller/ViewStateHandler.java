@@ -1,10 +1,8 @@
 package controller;
 
-import model.Constants;
 import model.FramesArray;
 import view.*;
 
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 /*
@@ -27,20 +25,20 @@ public class ViewStateHandler{
     }
     public static ChangeStateListener changeStateListener = new ChangeStateListener();
 
-    public ViewStateHandler(){
-        EventQueue.invokeLater(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        FramesArray.add(new InitialPopUpFrame());
-                        FramesArray.add(new MainMenuFrame());
-                        FramesArray.add(new SettingsFrame());
-                        FramesArray.add(new BoardFrame());
-                        FramesArray.add(new ConnectionScreenFrame());
-
-                        FramesArray.get(0).setVisible(true);
-                    }
-                }
-        );
+    private ViewStateHandler(){
+        FramesArray.add(new InitialPopUpFrame());
+        FramesArray.add(new MainMenuFrame());
+        FramesArray.add(new SettingsFrame());
+        FramesArray.add(new BoardFrame());
+        FramesArray.add(new ConnectionScreenFrame());
     }
+
+    public static ViewStateHandler viewStateHandler = new ViewStateHandler();
+
+    public static void start(){
+        if(FramesArray.len()>0){
+            FramesArray.get(0).setVisible(true);
+        }
+    }
+
 }
