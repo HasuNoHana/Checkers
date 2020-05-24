@@ -1,17 +1,18 @@
 package controller;
 
 import model.FramesArray;
-import view.Board;
-import view.ConnectionScreen;
-import view.MainMenu;
-import view.Settings;
+import view.BoardFrame;
+import view.ConnectionScreenFrame;
+import view.MainMenuFrame;
+import view.SettingsFrame;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
-
+/*
+ * @author Rafal Uzarowicz
+ * @see "https://github.com/RafalUzarowicz"
+ */
 public class ViewStateHandler{
 
     private static class ChangeStateListener implements ActionListener {
@@ -31,57 +32,14 @@ public class ViewStateHandler{
     public ViewStateHandler(){
         EventQueue.invokeLater(
                 new Runnable() {
-//                    int[] xPos = {100, 700, 100, 700};
-//                    int[] yPos = {0, 0, 450, 450};
-//                    int xSize = 600;
-//                    int ySize = 450;
-                    ChangeStateListener changeStateListener = new ChangeStateListener();
-
                     @Override
                     public void run() {
-                        FramesArray.add(new MainMenu());
-                        FramesArray.add(new Settings());
-                        FramesArray.add(new Board());
-                        FramesArray.add(new ConnectionScreen());
+                        FramesArray.add(new MainMenuFrame());
+                        FramesArray.add(new SettingsFrame());
+                        FramesArray.add(new BoardFrame());
+                        FramesArray.add(new ConnectionScreenFrame());
 
-                        FramesArray.get(0).setVisible(true);
-
-//                        JFrame testButton = new JFrame("TestButton");
-//                        testButton.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//                        testButton.setSize(100, 200);
-//                        testButton.setLocation(1400, 0);
-//                        testButton.setLayout(new GridLayout(2, 1));
-//                        JButton button = new JButton("Next");
-//                        JButton button2 = new JButton("Exit");
-//                        final int[] num = {0};
-//                        button.addActionListener(new ActionListener() {
-//                            @Override
-//                            public void actionPerformed(ActionEvent e) {
-//
-//                                int fSizeY = FramesArray.get(num[0]).getSize().height;
-//                                int fPosX = FramesArray.get(num[0]).getLocation().x;
-//                                int fPosY = FramesArray.get(num[0]).getLocation().y;
-//                                int fSizeX = FramesArray.get(num[0]).getSize().width;
-//                                FramesArray.get(num[0]).setVisible(false);
-//                                num[0] = (num[0] +1)%4;
-//                                System.out.println(num[0]);
-//                                FramesArray.get(num[0]).setLocation(fPosX, fPosY);
-//                                FramesArray.get(num[0]).setSize(fSizeX, fSizeY);
-//                                FramesArray.get(num[0]).setVisible(true);
-//                            }
-//                        });
-//                        button2.addActionListener(new ActionListener() {
-//                            @Override
-//                            public void actionPerformed(ActionEvent e) {
-//                                System.exit(0);
-//                            }
-//                        });
-//
-//                        testButton.add(button);
-//                        testButton.add(button2);
-//                        testButton.setVisible(true);
-//                        FramesArray.get(0).setVisible(true);
-
+                        FramesArray.get(1).setVisible(true);
                     }
                 }
         );

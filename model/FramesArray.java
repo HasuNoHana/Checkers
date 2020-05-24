@@ -2,13 +2,12 @@ package model;
 
 import javax.swing.*;
 import java.util.ArrayList;
-
+/*
+ * @author Rafal Uzarowicz
+ * @see "https://github.com/RafalUzarowicz"
+ */
 public class FramesArray {
     private static ArrayList<JFrame> frames = new ArrayList<JFrame>();
-    private final static int DEFAULT_WIDTH = 800;
-    private final static int DEFAULT_HEIGHT = 600;
-    private final static int DEFAULT_X_POSITION = 500;
-    private final static int DEFAULT_Y_POSITION = 200;
     private FramesArray(){
 
     }
@@ -16,9 +15,12 @@ public class FramesArray {
         return frames.get(index);
     }
     public static void add( JFrame frame ){
-        frame.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-        frame.setLocation(DEFAULT_X_POSITION, DEFAULT_Y_POSITION);
+        frame.setSize(Constants.FramesConstants.DEFAULT_WIDTH, Constants.FramesConstants.DEFAULT_HEIGHT);
+        frame.setLocation(Constants.FramesConstants.DEFAULT_X_POSITION, Constants.FramesConstants.DEFAULT_Y_POSITION);
         frames.add(frame);
+    }
+    public static int len(){
+        return frames.size();
     }
     public static void changeVisibleFrame(String source){
         JFrame previous = null;
@@ -46,6 +48,20 @@ public class FramesArray {
         next.setLocation(fPosX, fPosY);
         next.setSize(fSizeX, fSizeY);
         next.setVisible(true);
-        previous.setVisible(false);
+        try {
+            Thread.sleep(50);
+        }catch (java.lang.InterruptedException e){
+            System.exit(0);
+        }
+        fadeOut(previous);
+    }
+
+    private static void fadeOut(JFrame frame){
+//        int steps = 20;
+//        float step = 1f/steps;
+//        for(int i = 0; i<steps-1; ++i){
+//            frame.setOpacity(frame.getOpacity()-step);
+//        }
+        frame.setVisible(false);
     }
 }

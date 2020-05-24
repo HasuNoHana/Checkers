@@ -7,8 +7,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
-public class Board extends JFrame {
+/*
+ * @author Rafal Uzarowicz
+ * @see "https://github.com/RafalUzarowicz"
+ */
+public class BoardFrame extends JFrame {
     private JPanel board;
     private JTextArea smallChat;
     private class EmotesPanel extends JPanel{
@@ -45,7 +48,7 @@ public class Board extends JFrame {
     private JButton menuButton;
 
 
-    public Board(){
+    public BoardFrame(){
         super("Board");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridBagLayout());

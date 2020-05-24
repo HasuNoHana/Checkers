@@ -6,14 +6,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-public class ConnectionScreen extends JFrame {
+/*
+ * @author Rafal Uzarowicz
+ * @see "https://github.com/RafalUzarowicz"
+ */
+public class ConnectionScreenFrame extends JFrame {
     private JButton hostButton;
     private JButton joinButton;
     private JButton backButton;
 
     private static JPanel cards;
-    public ConnectionScreen(){
+    public ConnectionScreenFrame(){
         super("Connection");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(1, 2));
@@ -28,7 +31,7 @@ public class ConnectionScreen extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 CardLayout cl = (CardLayout) cards.getLayout();
                 cl.show(cards, "host");
-                MainMenu.setIsEnemyRead(false);
+                MainMenuFrame.setIsEnemyRead(false);
             }
         });
         buttonsPanel.add(hostButton);
@@ -39,7 +42,7 @@ public class ConnectionScreen extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 CardLayout cl = (CardLayout) cards.getLayout();
                 cl.show(cards, "join");
-                MainMenu.setIsEnemyRead(true);
+                MainMenuFrame.setIsEnemyRead(true);
             }
         });
         buttonsPanel.add(joinButton);

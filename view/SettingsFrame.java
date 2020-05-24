@@ -1,13 +1,19 @@
 package view;
 
 import controller.ViewStateHandler;
+import model.Constants;
+import model.Menu;
+import model.User;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-public class Settings extends JFrame {
+/*
+ * @author Rafal Uzarowicz
+ * @see "https://github.com/RafalUzarowicz"
+ */
+public class SettingsFrame extends JFrame {
     private class SettingsButtons extends JPanel{
         private JButton userSettingsButton;
         private JButton checkersSettingsButton;
@@ -17,7 +23,7 @@ public class Settings extends JFrame {
 
 
         SettingsButtons(){
-            setLayout(new GridLayout(5, 1, 20, 20));
+            setLayout(new GridLayout(5, 1, Constants.LayoutsConstants.H_GAP, Constants.LayoutsConstants.V_GAP));
 
 
             userSettingsButton = new JButton("User");
@@ -69,21 +75,19 @@ public class Settings extends JFrame {
     }
 
     private JPanel settingsPanel;
-    public Settings(){
+    public SettingsFrame(){
         super("Settings");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout());
 
-        add(new Settings.SettingsButtons());
+        add(new SettingsFrame.SettingsButtons());
 
-        JPanel users = new JPanel();
-        users.setBackground(Color.GREEN);
+        JPanel users = User.userPanel;
 
         JPanel checkers = new JPanel();
         checkers.setBackground(Color.RED);
 
-        JPanel menu = new JPanel();
-        menu.setBackground(Color.YELLOW);
+        JPanel menu = Menu.menuLookPanel;
 
         JPanel chat = new JPanel();
         chat.setBackground(Color.BLUE);
@@ -93,6 +97,9 @@ public class Settings extends JFrame {
         settingsPanel.add(checkers, "checkers");
         settingsPanel.add(menu, "menu");
         settingsPanel.add(chat, "chat");
+
+        CardLayout cl = (CardLayout) settingsPanel.getLayout();
+        cl.show(settingsPanel, "user");
 
         add(settingsPanel);
     }
