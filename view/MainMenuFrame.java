@@ -4,10 +4,16 @@ import controller.ViewStateHandler;
 import model.Constants;
 import model.User;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /*
  * @author Rafal Uzarowicz
@@ -26,13 +32,24 @@ public class MainMenuFrame extends JFrame{
         MenuPanel(){
             setLayout(new GridLayout(6, 1, 20, 20));
 
-//            JLabel logoLabel = new JLabel();
-//            add(logoLabel);
-//            ImageIcon icon = new ImageIcon(this.getClass().getResource("../graphics/logo.png"));
-//            Image img = icon.getImage();
-//            Image resizedImage = img.getScaledInstance(logoLabel.getWidth(), logoLabel.getHeight(),  java.awt.Image.SCALE_SMOOTH);
-//            logoLabel.setIcon(new ImageIcon(resizedImage));
-            logo = new JLabel(new ImageIcon(this.getClass().getResource("../graphics/logo.png")));
+            logo = new JLabel();
+            logo.addComponentListener(new ComponentAdapter() {
+                @Override
+                public void componentResized(ComponentEvent e) {
+                    super.componentResized(e);
+                    BufferedImage img = null;
+                    try {
+                        File imageFile = new File(".\\graphics\\logo.png");
+                        img = ImageIO.read(imageFile);
+                    } catch (IOException exception) {
+                        exception.printStackTrace();
+                        System.exit(1);
+                    }
+                    Image dimg = img.getScaledInstance(logo.getWidth(), logo.getHeight(), Image.SCALE_SMOOTH);
+                    ImageIcon imageIcon = new ImageIcon(dimg);
+                    logo.setIcon(imageIcon);
+                }
+            });
             add(logo);
 
             usersInfo = new JPanel(new GridLayout());
@@ -180,7 +197,6 @@ public class MainMenuFrame extends JFrame{
 
     public static void setIsEnemyRead(boolean bool){
         isEnemyRead = bool;
-        System.out.println(isEnemyRead);
         menuPanel.setEnemyReady();
         chatPanel.setEnemyReady();
     }

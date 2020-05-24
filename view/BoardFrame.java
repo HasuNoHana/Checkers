@@ -2,10 +2,16 @@ package view;
 
 import controller.ViewStateHandler;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 /*
  * @author Rafal Uzarowicz
@@ -20,7 +26,7 @@ public class BoardFrame extends JFrame {
         private class EmoteActionListener implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
-                textArea.append(e.getActionCommand()+"\n");
+                textArea.append(" "+e.getActionCommand()+"\n");
             }
         }
         public EmotesPanel(JTextArea textArea){
@@ -69,6 +75,27 @@ public class BoardFrame extends JFrame {
         add(scrollPane, constraints);
 
         board = new JPanel();
+        board.setLayout(new GridLayout());
+        JLabel checkers = new JLabel();
+        checkers.setSize(1000, 1000);
+        board.add(checkers);
+        checkers.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                BufferedImage img = null;
+                try {
+                    File imageFile = new File(".\\graphics\\checkers.png");
+                    img = ImageIO.read(imageFile);
+                } catch (IOException exception) {
+                    exception.printStackTrace();
+                    System.exit(1);
+                }
+                Image dimg = img.getScaledInstance(checkers.getWidth(), checkers.getHeight(), Image.SCALE_SMOOTH);
+                ImageIcon imageIcon = new ImageIcon(dimg);
+                checkers.setIcon(imageIcon);
+            }
+        });
         board.setBackground(Color.RED);
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 0.9;
@@ -78,13 +105,30 @@ public class BoardFrame extends JFrame {
         constraints.gridy = 0;
         add(board, constraints);
 
-
+        JLabel logo = new JLabel();
+        logo.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                BufferedImage img = null;
+                try {
+                    File imageFile = new File(".\\graphics\\logo.png");
+                    img = ImageIO.read(imageFile);
+                } catch (IOException exception) {
+                    exception.printStackTrace();
+                    System.exit(1);
+                }
+                Image dimg = img.getScaledInstance(logo.getWidth(), logo.getHeight(), Image.SCALE_SMOOTH);
+                ImageIcon imageIcon = new ImageIcon(dimg);
+                logo.setIcon(imageIcon);
+            }
+        });
         constraints.weightx = 0.1;
         constraints.weighty = 0.1;
         constraints.gridx = 0;
         constraints.gridwidth = 1;
         constraints.gridy = 1;
-        add(new JLabel("Checkers"), constraints);
+        add(logo, constraints);
 
         emotesPanel = new EmotesPanel(smallChat);
         constraints.fill = GridBagConstraints.BOTH;
