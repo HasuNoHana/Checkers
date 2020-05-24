@@ -4,6 +4,7 @@ import controller.ViewStateHandler;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -63,6 +64,8 @@ public class BoardFrame extends JFrame {
         constraints.weighty = 1;
 
         smallChat = new JTextArea();
+        DefaultCaret caret = (DefaultCaret)smallChat.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
         smallChat.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(smallChat);
 

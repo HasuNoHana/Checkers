@@ -6,6 +6,7 @@ import model.User;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -112,6 +113,8 @@ public class MainMenuFrame extends JFrame{
             GridBagConstraints constraints = new GridBagConstraints();
 
             JTextArea textArea = new JTextArea(8, 20);
+            DefaultCaret caret = (DefaultCaret)textArea.getCaret();
+            caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
             textArea.setEditable(false);
             JScrollPane scrollPane = new JScrollPane(textArea);
             constraints.fill = GridBagConstraints.BOTH;
@@ -133,7 +136,6 @@ public class MainMenuFrame extends JFrame{
                     int len = messField.getText().length();
                     if(len>0){
                         String text = "[MESS]: \t";
-                        System.out.println(len);
                         int i = 0;
                         while(i<messField.getText().length()/ Constants.ChatConstants.MAX_MESS_LEN){
                             text = text.concat(messField.getText().substring(i*Constants.ChatConstants.MAX_MESS_LEN, (i+1)*Constants.ChatConstants.MAX_MESS_LEN));
