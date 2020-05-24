@@ -6,6 +6,7 @@ import controller.ViewStateHandler;
 *  - dodanie samej gry xd
 *  - lepsze rozlozenie struktur w frame'ach
 *  - dodanie roznych eventow do obslugi dodatkowych funkcjonalnosci
+*  - dodania awatara gracza
 *
 * */
 

@@ -26,6 +26,10 @@ public class ViewStateHandler{
     public static ChangeStateListener changeStateListener = new ChangeStateListener();
 
     private ViewStateHandler(){
+        initializeFrames();
+    }
+
+    private void initializeFrames(){
         FramesArray.add(new InitialPopUpFrame());
         FramesArray.add(new MainMenuFrame());
         FramesArray.add(new SettingsFrame());
