@@ -17,6 +17,7 @@ public class FramesArray {
     public static void add( JFrame frame ){
         frame.setSize(Constants.FramesConstants.DEFAULT_WIDTH, Constants.FramesConstants.DEFAULT_HEIGHT);
         frame.setLocation(Constants.FramesConstants.DEFAULT_X_POSITION, Constants.FramesConstants.DEFAULT_Y_POSITION);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frames.add(frame);
     }
     public static int len(){

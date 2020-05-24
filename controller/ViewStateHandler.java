@@ -1,10 +1,8 @@
 package controller;
 
+import model.Constants;
 import model.FramesArray;
-import view.BoardFrame;
-import view.ConnectionScreenFrame;
-import view.MainMenuFrame;
-import view.SettingsFrame;
+import view.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -34,12 +32,13 @@ public class ViewStateHandler{
                 new Runnable() {
                     @Override
                     public void run() {
+                        FramesArray.add(new InitialPopUpFrame());
                         FramesArray.add(new MainMenuFrame());
                         FramesArray.add(new SettingsFrame());
                         FramesArray.add(new BoardFrame());
                         FramesArray.add(new ConnectionScreenFrame());
 
-                        FramesArray.get(1).setVisible(true);
+                        FramesArray.get(0).setVisible(true);
                     }
                 }
         );
