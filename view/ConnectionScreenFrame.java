@@ -1,5 +1,7 @@
 package view;
 
+import controller.Client;
+import controller.Server;
 import controller.ViewStateHandler;
 
 import javax.swing.*;
@@ -13,6 +15,7 @@ import java.awt.event.ActionListener;
 public class ConnectionScreenFrame extends JFrame {
     private final JButton hostButton;
     private final JButton joinButton;
+    private final JButton endConnectionButton;
     private final JButton backButton;
 
     private static JPanel cards;
@@ -29,7 +32,7 @@ public class ConnectionScreenFrame extends JFrame {
         hostButton.addActionListener(e -> {
             CardLayout cl = (CardLayout) cards.getLayout();
             cl.show(cards, "host");
-            MainMenuFrame.setIsEnemyRead(false);
+            Server.server.run();
         });
         buttonsPanel.add(hostButton);
 
@@ -37,9 +40,18 @@ public class ConnectionScreenFrame extends JFrame {
         joinButton.addActionListener(e -> {
             CardLayout cl = (CardLayout) cards.getLayout();
             cl.show(cards, "join");
-            MainMenuFrame.setIsEnemyRead(true);
+            Client.client.run();
         });
         buttonsPanel.add(joinButton);
+
+        endConnectionButton = new JButton("End");
+        endConnectionButton.addActionListener(e -> {
+            CardLayout cl = (CardLayout) cards.getLayout();
+            cl.show(cards, "end");
+            Client.client.end();
+            Server.server.end();
+        });
+        buttonsPanel.add(endConnectionButton);
 
         backButton = new JButton("");
         backButton.addActionListener(ViewStateHandler.changeStateListener);
@@ -54,9 +66,13 @@ public class ConnectionScreenFrame extends JFrame {
         JPanel join = new JPanel();
         join.setBackground(Color.RED);
 
+        JPanel end = new JPanel();
+        end.setBackground(Color.BLUE);
+
         cards = new JPanel(new CardLayout());
         cards.add(host, "host");
         cards.add(join, "join");
+        cards.add(end, "end");
 
         add(cards);
     }

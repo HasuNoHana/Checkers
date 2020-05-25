@@ -1,7 +1,9 @@
 package view;
 
 import controller.ViewStateHandler;
+import model.ConnectionStatus;
 import model.Constants;
+import model.Menu;
 import model.User;
 
 import javax.imageio.ImageIO;
@@ -21,7 +23,6 @@ import java.io.IOException;
 public class MainMenuFrame extends JFrame{
     private static class MenuPanel extends JPanel{
         private final JLabel logo;
-        private final JPanel enemyReady;
         private final JPanel usersInfo;
         private final JPanel playerName;
         private final JButton exitButton;
@@ -55,10 +56,10 @@ public class MainMenuFrame extends JFrame{
 
 
 
-            enemyReady = new JPanel();
-            enemyReady.add(new JLabel("Is enemy ready?", SwingConstants.CENTER));
-            enemyReady.setBackground(Color.RED);
-            usersInfo.add(enemyReady);
+            Menu.enemyReady = new JPanel();
+            Menu.enemyReady.add(new JLabel("Is enemy ready?", SwingConstants.CENTER));
+            Menu.enemyReady.setBackground(Color.RED);
+            usersInfo.add(Menu.enemyReady);
 
             playerName = new JPanel(new GridLayout(2,1));
             playerName.add(User.me.getNameLabel());
@@ -94,10 +95,10 @@ public class MainMenuFrame extends JFrame{
 
         void setEnemyReady(){
             if(isEnemyRead){
-                enemyReady.setBackground(Color.GREEN);
+                Menu.enemyReady.setBackground(Color.GREEN);
                 startButton.setEnabled(true);
             }else{
-                enemyReady.setBackground(Color.RED);
+                Menu.enemyReady.setBackground(Color.RED);
                 startButton.setEnabled(false);
             }
         }
@@ -130,19 +131,22 @@ public class MainMenuFrame extends JFrame{
             sendButton = new JButton("Send");
             sendButton.setEnabled(false);
             sendButton.addActionListener(e -> {
-                int len = messField.getText().length();
-                if(len>0){
-                    String text = "[MESS]: \t";
-                    int i = 0;
-                    while(i<messField.getText().length()/ Constants.ChatConstants.MAX_MESS_LEN){
-                        text = text.concat(messField.getText().substring(i*Constants.ChatConstants.MAX_MESS_LEN, (i+1)*Constants.ChatConstants.MAX_MESS_LEN));
-                        text = text.concat("\n\t");
-                        len -= Constants.ChatConstants.MAX_MESS_LEN;
-                        ++i;
+                if(ConnectionStatus.isSocketTaken&&ConnectionStatus.isEnemyThere){
+                    int len = messField.getText().length();
+                    if(len>0){
+                        String text = "["+User.me.getNameLabel().getText()+"]: \t";
+                        int i = 0;
+                        while(i<messField.getText().length()/ Constants.ChatConstants.MAX_MESS_LEN){
+                            text = text.concat(messField.getText().substring(i*Constants.ChatConstants.MAX_MESS_LEN, (i+1)*Constants.ChatConstants.MAX_MESS_LEN));
+                            text = text.concat("\n\t");
+                            len -= Constants.ChatConstants.MAX_MESS_LEN;
+                            ++i;
+                        }
+                        text = text.concat(messField.getText().substring(i*Constants.ChatConstants.MAX_MESS_LEN, i*Constants.ChatConstants.MAX_MESS_LEN+len));
+                        textArea.append(text+"\n\n");
+
+                        messField.setText("");
                     }
-                    text = text.concat(messField.getText().substring(i*Constants.ChatConstants.MAX_MESS_LEN, i*Constants.ChatConstants.MAX_MESS_LEN+len));
-                    textArea.append(text+"\n\n");
-                    messField.setText("");
                 }
             });
 
@@ -183,6 +187,10 @@ public class MainMenuFrame extends JFrame{
                     len -= Constants.ChatConstants.MAX_MESS_LEN;
                     ++i;
                 }
+                System.out.println(message.length());
+                System.out.println(len);
+                System.out.println(i*Constants.ChatConstants.MAX_MESS_LEN);
+                System.out.println(i*Constants.ChatConstants.MAX_MESS_LEN+len);
                 text = text.concat(message.substring(i*Constants.ChatConstants.MAX_MESS_LEN, i*Constants.ChatConstants.MAX_MESS_LEN+len));
                 textArea.append(text+"\n\n");
             }

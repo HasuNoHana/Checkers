@@ -34,4 +34,6 @@ public class Menu {
         }
     }
     public static final MenuLookPanel menuLookPanel = new MenuLookPanel();
+
+    public static JPanel enemyReady;
 }
