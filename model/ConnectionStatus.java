@@ -37,26 +37,5 @@ public class ConnectionStatus {
         return isEnemyThere;
     }
 
-//    public static boolean checkSocketStatus(){
-//        return isSocketTaken;
-//    }
-//
-//    public static Socket takeSocket(){
-//        if(!isSocketTaken){
-//            isSocketTaken = true;
-//            return socket;
-//        }
-//    }
-//    public static void releaseSocket(){
-//        if(isSocketTaken){
-//            isSocketTaken = false;
-//            socket = null;
-//        }
-//    }
-//    public static ServerSocket takeServerSocket(){
-//
-//    }
-//    public static void releaseServerSocket(){
 
-//    }
 }

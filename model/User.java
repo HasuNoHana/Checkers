@@ -76,6 +76,9 @@ public class User{
     public JLabel getNameLabel(){
         return this.userNameLabel;
     }
+    public String getName(){
+        return this.userName;
+    }
     public static User me = new User();
     public static User enemy = new User();
 }

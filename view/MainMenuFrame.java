@@ -1,5 +1,6 @@
 package view;
 
+import controller.ConnectionHandler;
 import controller.ViewStateHandler;
 import model.ConnectionStatus;
 import model.Constants;
@@ -131,10 +132,11 @@ public class MainMenuFrame extends JFrame{
             sendButton = new JButton("Send");
             sendButton.setEnabled(false);
             sendButton.addActionListener(e -> {
-                if(ConnectionStatus.isSocketTaken&&ConnectionStatus.isEnemyThere){
+                if(ConnectionStatus.isSocketTaken&&ConnectionStatus.getIsEnemyThere()){
                     int len = messField.getText().length();
                     if(len>0){
-                        String text = "["+User.me.getNameLabel().getText()+"]: \t";
+                        String text = "["+User.me.getName()+"]: \t";
+                        String message = messField.getText();
                         int i = 0;
                         while(i<messField.getText().length()/ Constants.ChatConstants.MAX_MESS_LEN){
                             text = text.concat(messField.getText().substring(i*Constants.ChatConstants.MAX_MESS_LEN, (i+1)*Constants.ChatConstants.MAX_MESS_LEN));
@@ -144,6 +146,8 @@ public class MainMenuFrame extends JFrame{
                         }
                         text = text.concat(messField.getText().substring(i*Constants.ChatConstants.MAX_MESS_LEN, i*Constants.ChatConstants.MAX_MESS_LEN+len));
                         textArea.append(text+"\n\n");
+
+                        ConnectionHandler.connectionHandler.sendMessage(Constants.ConnectionConstants.CHAT_MESSAGE, message);
 
                         messField.setText("");
                     }
@@ -179,7 +183,7 @@ public class MainMenuFrame extends JFrame{
         public void addEnemyMessToChat(String message){
             int len = message.length();
             if(len>0){
-                String text = "["+User.enemy.getNameLabel().getText()+"]: \t";
+                String text = "["+User.enemy.getName()+"]: \t";
                 int i = 0;
                 while(i<message.length()/ Constants.ChatConstants.MAX_MESS_LEN){
                     text = text.concat(message.substring(i*Constants.ChatConstants.MAX_MESS_LEN, (i+1)*Constants.ChatConstants.MAX_MESS_LEN));
@@ -187,10 +191,10 @@ public class MainMenuFrame extends JFrame{
                     len -= Constants.ChatConstants.MAX_MESS_LEN;
                     ++i;
                 }
-                System.out.println(message.length());
-                System.out.println(len);
-                System.out.println(i*Constants.ChatConstants.MAX_MESS_LEN);
-                System.out.println(i*Constants.ChatConstants.MAX_MESS_LEN+len);
+//                System.out.println(message.length());
+//                System.out.println(len);
+//                System.out.println(i*Constants.ChatConstants.MAX_MESS_LEN);
+//                System.out.println(i*Constants.ChatConstants.MAX_MESS_LEN+len);
                 text = text.concat(message.substring(i*Constants.ChatConstants.MAX_MESS_LEN, i*Constants.ChatConstants.MAX_MESS_LEN+len));
                 textArea.append(text+"\n\n");
             }

@@ -1,13 +1,11 @@
 package view;
 
-import controller.Client;
-import controller.Server;
+import controller.ConnectionHandler;
 import controller.ViewStateHandler;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 /*
  * @author Rafal Uzarowicz
  * @see "https://github.com/RafalUzarowicz"
@@ -25,14 +23,14 @@ public class ConnectionScreenFrame extends JFrame {
         setLayout(new GridLayout(1, 2));
 
         JPanel buttonsPanel = new JPanel();
-        buttonsPanel.setLayout(new GridLayout(3,1));
+        buttonsPanel.setLayout(new GridLayout(4,1));
 
 
         hostButton = new JButton("Host");
         hostButton.addActionListener(e -> {
             CardLayout cl = (CardLayout) cards.getLayout();
             cl.show(cards, "host");
-            Server.server.run();
+            ConnectionHandler.connectionHandler.runServer();
         });
         buttonsPanel.add(hostButton);
 
@@ -40,7 +38,7 @@ public class ConnectionScreenFrame extends JFrame {
         joinButton.addActionListener(e -> {
             CardLayout cl = (CardLayout) cards.getLayout();
             cl.show(cards, "join");
-            Client.client.run();
+            ConnectionHandler.connectionHandler.runClient();
         });
         buttonsPanel.add(joinButton);
 
@@ -48,8 +46,7 @@ public class ConnectionScreenFrame extends JFrame {
         endConnectionButton.addActionListener(e -> {
             CardLayout cl = (CardLayout) cards.getLayout();
             cl.show(cards, "end");
-            Client.client.end();
-            Server.server.end();
+            ConnectionHandler.connectionHandler.endHandler();
         });
         buttonsPanel.add(endConnectionButton);
 
