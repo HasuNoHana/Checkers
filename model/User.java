@@ -1,7 +1,11 @@
 package model;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /*
  * @author Rafal Uzarowicz
@@ -41,11 +45,25 @@ public class User{
 
     private User(){
         this.userName = "";
-        this.port = 0;
+        BufferedImage img = null;
+        try {
+            File imageFile = new File(".\\graphics\\logo.png");
+            img = ImageIO.read(imageFile);
+        } catch (IOException exception) {
+            exception.printStackTrace();
+            System.exit(1);
+        }
+        Image dimg = img.getScaledInstance(img.getWidth(), img.getHeight(), Image.SCALE_SMOOTH);
+        this.userAvatar = new ImageIcon(dimg);
         this.userNameLabel = new JLabel(this.userName, SwingConstants.CENTER);
     }
     private String userName;
-    private final int port;
+
+    public void setUserAvatar(ImageIcon userAvatar) {
+        this.userAvatar = userAvatar;
+    }
+
+    private ImageIcon userAvatar;
     private final JLabel userNameLabel;
 
     public void setName(String name){
@@ -54,6 +72,7 @@ public class User{
             this.userNameLabel.setText("Player: " + this.userName);
         }
     }
+
     public JLabel getNameLabel(){
         return this.userNameLabel;
     }

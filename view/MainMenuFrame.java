@@ -106,11 +106,12 @@ public class MainMenuFrame extends JFrame{
         private final JButton sendButton;
         private final JTextField messField;
         private final JPanel messagePanel;
+        private final JTextArea textArea;
         ChatPanel(){
             setLayout(new GridBagLayout());
             GridBagConstraints constraints = new GridBagConstraints();
 
-            JTextArea textArea = new JTextArea(8, 20);
+            textArea = new JTextArea(8, 20);
             DefaultCaret caret = (DefaultCaret)textArea.getCaret();
             caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
             textArea.setEditable(false);
@@ -171,7 +172,21 @@ public class MainMenuFrame extends JFrame{
         void setEnemyReady(){
             sendButton.setEnabled(isEnemyRead);
         }
-
+        public void addEnemyMessToChat(String message){
+            int len = message.length();
+            if(len>0){
+                String text = "["+User.enemy.getNameLabel().getText()+"]: \t";
+                int i = 0;
+                while(i<message.length()/ Constants.ChatConstants.MAX_MESS_LEN){
+                    text = text.concat(message.substring(i*Constants.ChatConstants.MAX_MESS_LEN, (i+1)*Constants.ChatConstants.MAX_MESS_LEN));
+                    text = text.concat("\n\t");
+                    len -= Constants.ChatConstants.MAX_MESS_LEN;
+                    ++i;
+                }
+                text = text.concat(message.substring(i*Constants.ChatConstants.MAX_MESS_LEN, i*Constants.ChatConstants.MAX_MESS_LEN+len));
+                textArea.append(text+"\n\n");
+            }
+        }
     }
     private static boolean isEnemyRead = false;
     private static MenuPanel menuPanel;
@@ -192,5 +207,8 @@ public class MainMenuFrame extends JFrame{
         isEnemyRead = bool;
         menuPanel.setEnemyReady();
         chatPanel.setEnemyReady();
+    }
+    public static void addMessage(String message){
+        chatPanel.addEnemyMessToChat(message);
     }
 }

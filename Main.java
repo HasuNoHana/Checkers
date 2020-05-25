@@ -1,4 +1,9 @@
+import controller.Client;
+import controller.Server;
 import controller.ViewStateHandler;
+import model.Constants;
+
+import java.lang.ref.Cleaner;
 
 /*
 * todo:
@@ -13,5 +18,11 @@ import controller.ViewStateHandler;
 public class Main{
     public static void main(String[] args){
         ViewStateHandler.start();
+//        Server.server.run();
+//
+//        Client.client.run();
+//
+//        Client.client.sendMessage(Constants.ConnectionConstants.CHAT_MESSAGE, "tak");
+
     }
 }
