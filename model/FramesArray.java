@@ -54,15 +54,6 @@ public class FramesArray {
         }catch (java.lang.InterruptedException e){
             System.exit(0);
         }
-        fadeOut(previous);
-    }
-
-    private static void fadeOut(JFrame frame){
-//        int steps = 20;
-//        float step = 1f/steps;
-//        for(int i = 0; i<steps-1; ++i){
-//            frame.setOpacity(frame.getOpacity()-step);
-//        }
-        frame.setVisible(false);
+        previous.setVisible(false);
     }
 }

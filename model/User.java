@@ -13,15 +13,13 @@ import java.io.IOException;
  */
 public class User{
     private static class UserPanel extends JPanel{
-        private final FlowLayout layout;
         private final JLabel nameLabel;
         private final JTextField nameField;
         private final JButton changeNameButton;
 
         public UserPanel(){
-            layout = new FlowLayout();
 
-            setLayout(this.layout);
+            setLayout(new FlowLayout(FlowLayout.CENTER));
             nameLabel = new JLabel("Type new username:");
             this.add(nameLabel);
 
@@ -61,6 +59,9 @@ public class User{
 
     public void setUserAvatar(ImageIcon userAvatar) {
         this.userAvatar = userAvatar;
+    }
+    public ImageIcon getUserAvatar() {
+        return this.userAvatar;
     }
 
     private ImageIcon userAvatar;

@@ -1,10 +1,15 @@
 package controller;
 
+import model.Board;
 import model.ConnectionStatus;
 import model.Constants;
 import model.User;
+import view.BoardFrame;
 import view.MainMenuFrame;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.image.BufferedImage;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -14,28 +19,24 @@ import java.net.Socket;
 
 public class ConnectionHandler {
     private ConnectionHandler(){
-
     }
     public static ConnectionHandler connectionHandler = new ConnectionHandler();
 
     public void runServer(){
-        System.out.println("SERVER URUCHOMIONY");
         Thread serverRunner = new Thread(new Runnable() {
             @Override
             public void run() {
-                System.out.println("SERVER WATEK");
                 if(!ConnectionStatus.isSocketTaken){
                     try{
                         ConnectionStatus.isSocketTaken = true;
-                        System.out.println("SERVER CZEKA");
-                        ConnectionStatus.serverSocket = new ServerSocket(1234);
+                        ConnectionStatus.connectionInfo.setText("Server is waiting...");
+                        ConnectionStatus.serverSocket = new ServerSocket(ConnectionStatus.port);
                         ConnectionStatus.socket = ConnectionStatus.serverSocket.accept();
-                        System.out.println("SERVER POLACZONY");
                         runHandler();
                     }catch (Exception e){
                         ConnectionStatus.setIsEnemyThere(false);
                         ConnectionStatus.isSocketTaken = false;
-                        e.printStackTrace();
+                        System.out.println("INFO: Could not host.");
                     }
                 }
             }
@@ -43,23 +44,21 @@ public class ConnectionHandler {
         serverRunner.start();
     }
     public void runClient(){
-        System.out.println("KLIENT URUCHOMIONY");
         Thread clientRunner = new Thread(new Runnable() {
             @Override
             public void run() {
-                System.out.println("KLIENT WATEK");
                 if(!ConnectionStatus.isSocketTaken){
                     try{
                         ConnectionStatus.isSocketTaken = true;
                         ConnectionStatus.inetAddress = InetAddress.getByName(ConnectionStatus.ip);
-                        System.out.println("KLIENT CZEKA");
+                        ConnectionStatus.connectionInfo.setText("Searchng for a server...");
                         ConnectionStatus.socket = new Socket(ConnectionStatus.inetAddress, ConnectionStatus.port);
-                        System.out.println("KLIENT POLACZONY");
                         runHandler();
                     }catch (Exception e){
                         ConnectionStatus.setIsEnemyThere(false);
                         ConnectionStatus.isSocketTaken = false;
-                        e.printStackTrace();
+                        ConnectionStatus.connectionInfo.setText("Host not found!");
+                        System.out.println("INFO: Host not found.");
                     }
                 }
             }
@@ -68,11 +67,10 @@ public class ConnectionHandler {
     }
 
     private static void runHandler(){
-        System.out.println("URUCHOMIONE");
         System.out.println(ConnectionStatus.isSocketTaken);
         if(ConnectionStatus.isSocketTaken){
             try{
-                System.out.println("POLACZONO");
+                ConnectionStatus.connectionInfo.setText("Connected!");
 
                 ConnectionStatus.dataInputStream = new DataInputStream(ConnectionStatus.socket.getInputStream());
                 ConnectionStatus.dataOutputStream = new DataOutputStream(ConnectionStatus.socket.getOutputStream());
@@ -87,7 +85,7 @@ public class ConnectionHandler {
             }catch (Exception e){
                 ConnectionStatus.setIsEnemyThere(false);
                 ConnectionStatus.isSocketTaken = false;
-                e.printStackTrace();
+                System.out.println("INFO: Streams problem.");
             }
         }
     }
@@ -99,26 +97,26 @@ public class ConnectionHandler {
             try
             {
                 ConnectionStatus.serverSocket.close();
-            }catch(IOException e){
-                e.printStackTrace();
+            }catch(Exception e){
+                System.out.println("INFO: Serversocket already closed.");
             }
             try
             {
                 ConnectionStatus.socket.close();
-            }catch(IOException e){
-                e.printStackTrace();
+            }catch(Exception e){
+                System.out.println("INFO: Socket already closed.");
             }
             try
             {
                 ConnectionStatus.dataInputStream.close();
-            }catch(IOException e){
-                e.printStackTrace();
+            }catch(Exception e){
+                System.out.println("INFO: Input stream already closed.");
             }
             try
             {
                 ConnectionStatus.dataOutputStream.close();
-            }catch(IOException e){
-                e.printStackTrace();
+            }catch(Exception e){
+                System.out.println("INFO: Output stream already closed.");
             }
             ConnectionStatus.isSocketTaken = false;
             User.enemy.setName("");
@@ -163,8 +161,9 @@ public class ConnectionHandler {
         try {
             ConnectionStatus.dataOutputStream.writeUTF(finalMessage);
         } catch (IOException e) {
+            System.out.println("INFO: Connection closed.");
+            ConnectionStatus.connectionInfo.setText("Connection closed.");
             endHandler();
-            e.printStackTrace();
         }
     }
     private static boolean canReadMess = false;
@@ -184,14 +183,12 @@ public class ConnectionHandler {
                                 text += lines[i];
                             }
                             text.strip();
-//                            System.out.println(text);
-//                            System.out.println(lines[1]);
                             switch (lines[1]){
                                 case Constants.ConnectionConstants.CHAT_MESSAGE:
                                     MainMenuFrame.addMessage(text);
                                     break;
                                 case Constants.ConnectionConstants.EMOTE_MESSAGE:
-
+                                    BoardFrame.addEmote(text);
                                     break;
                                 case Constants.ConnectionConstants.USER_NAME:
                                     User.enemy.setName(text);
@@ -207,8 +204,9 @@ public class ConnectionHandler {
                             }
                         }
                     } catch (IOException e) {
+                        System.out.println("INFO: Connection closed.");
+                        ConnectionStatus.connectionInfo.setText("Connection closed.");
                         endHandler();
-                        e.printStackTrace();
                     }
                 }
             }

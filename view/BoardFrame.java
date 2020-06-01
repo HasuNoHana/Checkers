@@ -1,6 +1,8 @@
 package view;
 
+import controller.ConnectionHandler;
 import controller.ViewStateHandler;
+import model.Constants;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -20,7 +22,7 @@ import java.util.ArrayList;
  */
 public class BoardFrame extends JFrame {
     private final JPanel board;
-    private final JTextArea smallChat;
+    private static final JTextArea smallChat = new JTextArea();
     private class EmotesPanel extends JPanel{
         private final ArrayList<JButton> emotes;
         private final JTextArea textArea;
@@ -28,6 +30,7 @@ public class BoardFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textArea.append(" "+e.getActionCommand()+"\n");
+                ConnectionHandler.connectionHandler.sendMessage(Constants.ConnectionConstants.EMOTE_MESSAGE, e.getActionCommand());
             }
         }
         public EmotesPanel(JTextArea textArea){
@@ -63,7 +66,6 @@ public class BoardFrame extends JFrame {
         constraints.weightx = 1;
         constraints.weighty = 1;
 
-        smallChat = new JTextArea();
         DefaultCaret caret = (DefaultCaret)smallChat.getCaret();
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
         smallChat.setEditable(false);
@@ -153,7 +155,9 @@ public class BoardFrame extends JFrame {
         constraints.gridwidth = 1;
         constraints.gridy = 1;
         add(menuButton, constraints);
+    }
 
-
+    public static void addEmote(String emote){
+        smallChat.append(" "+emote+"\n");
     }
 }

@@ -52,7 +52,7 @@ public class InitialPopUpFrame extends JFrame {
         nextButton.setEnabled(false);
         upperPanel.add(nextButton);
 
-        add(upperPanel);
+        this.add(upperPanel);
 
         lowerPanel = new JPanel();
 
@@ -61,6 +61,5 @@ public class InitialPopUpFrame extends JFrame {
         lowerPanel.add(infoLabel);
 
         this.add(lowerPanel);
-
     }
 }

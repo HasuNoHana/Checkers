@@ -21,10 +21,12 @@ public class Constants{
         public final static int MAX_MESS_LEN = 15;
     }
     public static class ConnectionConstants{
-        public final static String MESSAGE_START = "mess_start";
-        public final static String MESSAGE_END = "mess_end";
-        public final static String AVATAR_IMAGE = "avt_img";
-        public final static String USER_NAME = "usr_name";
+        public final static int PORT_LENGTH = 10;
+        public final static int IP_LENGTH = 15;
+        public final static String MESSAGE_START = "mes_start";
+        public final static String MESSAGE_END = "messe_end";
+        public final static String AVATAR_IMAGE = "avat_imag";
+        public final static String USER_NAME = "user_name";
         public final static String CHAT_MESSAGE = "chat_mess";
         public final static String EMOTE_MESSAGE = "emot_mess";
         public final static String BOARD_MOVE = "game_move";

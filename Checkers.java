@@ -1,6 +1,8 @@
 import controller.ViewStateHandler;
 import model.Constants;
 
+import javax.swing.*;
+import java.awt.*;
 import java.lang.ref.Cleaner;
 
 /*
@@ -13,8 +15,13 @@ import java.lang.ref.Cleaner;
 *
 * */
 
-public class Main{
+public class Checkers {
     public static void main(String[] args){
-        ViewStateHandler.start();
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                ViewStateHandler.start();
+            }
+        });
     }
 }

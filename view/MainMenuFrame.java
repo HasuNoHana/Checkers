@@ -58,6 +58,7 @@ public class MainMenuFrame extends JFrame{
 
 
             Menu.enemyReady = new JPanel();
+            Menu.enemyReady.setLayout(new GridLayout());
             Menu.enemyReady.add(new JLabel("Is enemy ready?", SwingConstants.CENTER));
             Menu.enemyReady.setBackground(Color.RED);
             usersInfo.add(Menu.enemyReady);
