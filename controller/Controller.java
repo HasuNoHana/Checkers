@@ -59,6 +59,7 @@ public class Controller {
                 if(len>0 && len< Constants.UserConstants.MAX_USERNAME_LENGTH){
                     String text = views.usernameChangeInitial.getNameField().getText();
                     models.me.setName(text);
+                    socketController.sendMessage(Constants.ConnectionConstants.USER_NAME, text);
                     views.mainMenu.getMenuPanel().setPlayerName(models.me.getName());
                     views.usernameChangeInitial.setInfo("Name changed to: "+text+".");
                     views.usernameChangeInitial.getNameField().setText("");
@@ -74,6 +75,7 @@ public class Controller {
                 if(len>0 && len< Constants.UserConstants.MAX_USERNAME_LENGTH){
                     String text = views.usernameChangeSettings.getNameField().getText();
                     models.me.setName(text);
+                    socketController.sendMessage(Constants.ConnectionConstants.USER_NAME, text);
                     views.mainMenu.getMenuPanel().setPlayerName(models.me.getName());
                     views.usernameChangeSettings.setInfo("Name changed to: "+text+".");
                     views.usernameChangeSettings.getNameField().setText("");
