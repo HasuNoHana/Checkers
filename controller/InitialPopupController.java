@@ -20,23 +20,17 @@ public class InitialPopupController {
         this.viewsController = viewsController;
 
         initialPopUp.addNextListener(viewsController.getChangeStateListener());
-        initialPopUp.addNextListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                views.usernameChangeInitial.setInfo("");
-                initialPopUp.setSize(Constants.FramesConstants.DEFAULT_WIDTH, Constants.FramesConstants.DEFAULT_HEIGHT);
-                initialPopUp.setLocation(initialPopUp.getWidth()-Constants.FramesConstants.DEFAULT_WIDTH/4, initialPopUp.getHeight()-+Constants.FramesConstants.DEFAULT_HEIGHT/2);
-            }
+        initialPopUp.addNextListener(e -> {
+            views.usernameChangeInitial.setInfo("");
+            initialPopUp.setSize(Constants.FramesConstants.DEFAULT_WIDTH, Constants.FramesConstants.DEFAULT_HEIGHT);
+            initialPopUp.setLocation(Math.max(initialPopUp.getX()-Constants.FramesConstants.DEFAULT_WIDTH/4, 0), Math.max(initialPopUp.getY()-Constants.FramesConstants.DEFAULT_HEIGHT*3/8, 0));
         });
         initialPopUp.getNextButton().setEnabled(false);
         initialPopUp.getNextButton().setActionCommand("Menu");
 
-        views.usernameChangeInitial.addButtonListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(!views.usernameChangeInitial.getNameField().getText().equals("")){
-                    initialPopUp.getNextButton().setEnabled(true);
-                }
+        views.usernameChangeInitial.addButtonListener(e -> {
+            if(!views.usernameChangeInitial.getNameField().getText().equals("")){
+                initialPopUp.getNextButton().setEnabled(true);
             }
         });
 

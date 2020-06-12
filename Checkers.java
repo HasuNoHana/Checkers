@@ -6,10 +6,9 @@ import java.awt.*;
 
 /*
 * todo:
-*  - polaczenie client-server
 *  - dodanie samej gry xd
 *  - lepsze rozlozenie struktur w frame'ach
-*  - dodanie roznych eventow do obslugi dodatkowych funkcjonalnosci
+*  - dodanie roznych eventow do obslugi dodatkowych funkcjonalnosci?
 *  - dodania awatara gracza
 *
 * */
