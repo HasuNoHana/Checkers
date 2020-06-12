@@ -1,7 +1,4 @@
-package model;
-
-import javax.swing.*;
-
+package oldModel;
 /*
  * @author Rafal Uzarowicz
  * @see "https://github.com/RafalUzarowicz"
@@ -9,7 +6,6 @@ import javax.swing.*;
 public class Constants{
     public static class UserConstants{
         public final static int MAX_USERNAME_LENGTH = 10;
-        public final static int MAX_INFO_LENGTH = 30;
     }
     public static class LayoutsConstants{
         public final static int H_GAP = 20;
@@ -23,7 +19,6 @@ public class Constants{
     }
     public static class ChatConstants{
         public final static int MAX_MESS_LEN = 15;
-        public final static String[] EMOTES = {":)", ":(", ":/", ":<", ":>", ":O", ":P"};
     }
     public static class ConnectionConstants{
         public final static int PORT_LENGTH = 10;

@@ -1,14 +1,13 @@
-package view;
+package oldView;
 
-import controller.ViewStateHandler;
-import model.Constants;
-import model.Menu;
-import model.User;
+import oldController.ViewStateHandler;
+import oldModel.Constants;
+import oldModel.Menu;
+import oldModel.User;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 /*
  * @author Rafal Uzarowicz
  * @see "https://github.com/RafalUzarowicz"

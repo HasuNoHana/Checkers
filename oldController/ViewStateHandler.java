@@ -1,7 +1,7 @@
-package controller;
+package oldController;
 
-import model.FramesArray;
-import view.*;
+import oldModel.FramesArray;
+import oldView.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

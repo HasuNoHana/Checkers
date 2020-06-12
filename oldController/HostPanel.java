@@ -1,7 +1,7 @@
-package controller;
+package oldController;
 
-import model.ConnectionStatus;
-import model.Constants;
+import oldModel.ConnectionStatus;
+import oldModel.Constants;
 
 import javax.swing.*;
 import java.awt.*;

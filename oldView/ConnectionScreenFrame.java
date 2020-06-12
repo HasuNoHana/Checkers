@@ -1,11 +1,11 @@
-package view;
+package oldView;
 
-import controller.ConnectionHandler;
-import controller.HostPanel;
-import controller.JoinPanel;
-import controller.ViewStateHandler;
-import model.ConnectionStatus;
-import model.Constants;
+import oldController.ConnectionHandler;
+import oldController.HostPanel;
+import oldController.JoinPanel;
+import oldController.ViewStateHandler;
+import oldModel.ConnectionStatus;
+import oldModel.Constants;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package model;
+package oldModel;
 /*
  * @author Rafal Uzarowicz
  * @see "https://github.com/RafalUzarowicz"

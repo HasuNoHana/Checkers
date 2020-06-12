@@ -1,11 +1,11 @@
-package view;
+package oldView;
 
-import controller.ConnectionHandler;
-import controller.ViewStateHandler;
-import model.ConnectionStatus;
-import model.Constants;
-import model.Menu;
-import model.User;
+import oldController.ConnectionHandler;
+import oldController.ViewStateHandler;
+import oldModel.ConnectionStatus;
+import oldModel.Constants;
+import oldModel.Menu;
+import oldModel.User;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

@@ -1,70 +1,33 @@
 package view;
 
-import controller.ConnectionHandler;
-import controller.ViewStateHandler;
-import model.Constants;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-/*
- * @author Rafal Uzarowicz
- * @see "https://github.com/RafalUzarowicz"
- */
-public class BoardFrame extends JFrame {
+
+public class Board extends JFrame{
     private final JPanel board;
-    private static final JTextArea smallChat = new JTextArea();
-    private class EmotesPanel extends JPanel{
-        private final ArrayList<JButton> emotes;
-        private final JTextArea textArea;
-        private class EmoteActionListener implements ActionListener {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                textArea.append(" "+e.getActionCommand()+"\n");
-                ConnectionHandler.connectionHandler.sendMessage(Constants.ConnectionConstants.EMOTE_MESSAGE, e.getActionCommand());
-            }
-        }
-        public EmotesPanel(JTextArea textArea){
-            this.textArea = textArea;
-            setLayout(new GridLayout());
-            emotes = new ArrayList<>();
-            emotes.add(new JButton(":)"));
-            emotes.add(new JButton(":)"));
-            emotes.add(new JButton(":("));
-            emotes.add(new JButton(":/"));
-            emotes.add(new JButton(":<"));
-            emotes.add(new JButton(":>"));
-            emotes.add(new JButton(":O"));
-            emotes.add(new JButton(":P"));
-
-
-            for( JButton button : emotes ){
-                button.addActionListener(new EmoteActionListener());
-                button.setActionCommand(button.getText());
-                add(button);
-            }
-        }
-    }
+    private final JTextArea smallChat;
     private final EmotesPanel emotesPanel;
     private final JButton menuButton;
 
 
-    public BoardFrame(){
+    public Board(){
         super("Board");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridBagLayout());
+
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.weightx = 1;
         constraints.weighty = 1;
+
+        smallChat = new JTextArea();
 
         DefaultCaret caret = (DefaultCaret)smallChat.getCaret();
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
@@ -81,6 +44,8 @@ public class BoardFrame extends JFrame {
 
         board = new JPanel();
         board.setLayout(new GridLayout());
+
+        // Todo: gra tutaj bedzie zamiast jlabel
         JLabel checkers = new JLabel();
         checkers.setSize(1000, 1000);
         board.add(checkers);
@@ -96,9 +61,11 @@ public class BoardFrame extends JFrame {
                     exception.printStackTrace();
                     System.exit(1);
                 }
-                Image dimg = img.getScaledInstance(checkers.getWidth(), checkers.getHeight(), Image.SCALE_SMOOTH);
-                ImageIcon imageIcon = new ImageIcon(dimg);
-                checkers.setIcon(imageIcon);
+                if( checkers.getWidth()>0 && checkers.getHeight()>0 ){
+                    Image dimg = img.getScaledInstance(checkers.getWidth(), checkers.getHeight(), Image.SCALE_SMOOTH);
+                    ImageIcon imageIcon = new ImageIcon(dimg);
+                    checkers.setIcon(imageIcon);
+                }
             }
         });
         board.setBackground(Color.RED);
@@ -123,9 +90,11 @@ public class BoardFrame extends JFrame {
                     exception.printStackTrace();
                     System.exit(1);
                 }
-                Image dimg = img.getScaledInstance(logo.getWidth(), logo.getHeight(), Image.SCALE_SMOOTH);
-                ImageIcon imageIcon = new ImageIcon(dimg);
-                logo.setIcon(imageIcon);
+                if( logo.getWidth()>0 && logo.getHeight()>0 ){
+                    Image dimg = img.getScaledInstance(logo.getWidth(), logo.getHeight(), Image.SCALE_SMOOTH);
+                    ImageIcon imageIcon = new ImageIcon(dimg);
+                    logo.setIcon(imageIcon);
+                }
             }
         });
         constraints.weightx = 0.1;
@@ -135,7 +104,7 @@ public class BoardFrame extends JFrame {
         constraints.gridy = 1;
         add(logo, constraints);
 
-        emotesPanel = new EmotesPanel(smallChat);
+        emotesPanel = new EmotesPanel();
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 0.9;
         constraints.weighty = 0.1;
@@ -145,8 +114,6 @@ public class BoardFrame extends JFrame {
         add(emotesPanel, constraints);
 
         menuButton = new JButton("Menu");
-        menuButton.addActionListener(ViewStateHandler.changeStateListener);
-        menuButton.setActionCommand("Menu");
         menuButton.setIcon(new ImageIcon(this.getClass().getResource("../graphics/back.png")));
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 0.1;
@@ -157,7 +124,20 @@ public class BoardFrame extends JFrame {
         add(menuButton, constraints);
     }
 
-    public static void addEmote(String emote){
-        smallChat.append(" "+emote+"\n");
+    public JTextArea getSmallChat(){
+        return smallChat;
+    }
+
+    public void addMessToChat(String message){
+        this.smallChat.append(message+"\n");
+    }
+
+    public EmotesPanel getEmotesPanel(){ return  emotesPanel; }
+
+    public void addBackListener(ActionListener actionListener){
+        this.menuButton.addActionListener(actionListener);
+    }
+    public JButton getMenuButton(){
+        return this.menuButton;
     }
 }

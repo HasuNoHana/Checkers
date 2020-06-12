@@ -1,8 +1,8 @@
-package view;
+package oldView;
 
-import controller.ViewStateHandler;
-import model.Constants;
-import model.User;
+import oldController.ViewStateHandler;
+import oldModel.Constants;
+import oldModel.User;
 
 import javax.swing.*;
 import java.awt.*;

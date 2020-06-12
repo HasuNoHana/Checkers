@@ -1,15 +1,11 @@
-package controller;
+package oldController;
 
-import model.Board;
-import model.ConnectionStatus;
-import model.Constants;
-import model.User;
-import view.BoardFrame;
-import view.MainMenuFrame;
+import oldModel.ConnectionStatus;
+import oldModel.Constants;
+import oldModel.User;
+import oldView.BoardFrame;
+import oldView.MainMenuFrame;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.image.BufferedImage;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
