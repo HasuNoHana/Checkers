@@ -1,13 +1,11 @@
 package controller;
-
+/*
+ * @author Rafal Uzarowicz
+ * @see "https://github.com/RafalUzarowicz"
+ */
 import model.ChatMessage;
-import model.Constants;
 import model.User;
 import view.MainMenu;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class MainMenuController {
     private MainMenu mainMenu;

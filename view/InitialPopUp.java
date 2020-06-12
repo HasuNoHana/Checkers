@@ -1,9 +1,11 @@
 package view;
-
+/*
+ * @author Rafal Uzarowicz
+ * @see "https://github.com/RafalUzarowicz"
+ */
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-
 
 public class InitialPopUp extends JFrame {
     private final JButton nextButton;

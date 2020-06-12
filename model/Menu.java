@@ -1,5 +1,8 @@
 package model;
-
+/*
+ * @author Rafal Uzarowicz
+ * @see "https://github.com/RafalUzarowicz"
+ */
 import javax.swing.*;
 
 public class Menu {

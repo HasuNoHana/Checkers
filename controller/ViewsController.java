@@ -1,5 +1,8 @@
 package controller;
-
+/*
+ * @author Rafal Uzarowicz
+ * @see "https://github.com/RafalUzarowicz"
+ */
 import model.FramesArray;
 import view.Views;
 

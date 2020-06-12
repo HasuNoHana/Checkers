@@ -1,5 +1,8 @@
 package view;
-
+/*
+ * @author Rafal Uzarowicz
+ * @see "https://github.com/RafalUzarowicz"
+ */
 import model.Constants;
 
 import javax.swing.*;
@@ -11,7 +14,7 @@ public class MenuLookPanel extends JPanel {
     private ArrayList<JButton> buttons;
     protected MenuLookPanel(){
         this.setLayout(new GridLayout(10,1, Constants.LayoutsConstants.H_GAP, Constants.LayoutsConstants.V_GAP));
-        buttons = new ArrayList<JButton>();
+        buttons = new ArrayList<>();
     }
     public void addButton(UIManager.LookAndFeelInfo lookAndFeelInfo, ActionListener actionListener){
         JButton button = new JButton(lookAndFeelInfo.getName());

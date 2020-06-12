@@ -1,5 +1,8 @@
 package controller;
-
+/*
+ * @author Rafal Uzarowicz
+ * @see "https://github.com/RafalUzarowicz"
+ */
 import model.FramesArray;
 import model.Menu;
 import view.Settings;
@@ -22,18 +25,15 @@ public class SettingsController {
 
         // Menu look and feel change
         for(UIManager.LookAndFeelInfo lookAndFeelInfo : menu.getInfos() ){
-            settings.getMenuLookPanel().addButton(lookAndFeelInfo, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    try{
-                        UIManager.setLookAndFeel(lookAndFeelInfo.getClassName());
-                        for(int i = 0; i< framesArray.len(); ++i){
-                            SwingUtilities.updateComponentTreeUI(framesArray.getFrames().get(i));
-                        }
-                    }catch(Exception exception){
-                        // Todo: obsluga exception
-                        exception.printStackTrace();
+            settings.getMenuLookPanel().addButton(lookAndFeelInfo, e -> {
+                try{
+                    UIManager.setLookAndFeel(lookAndFeelInfo.getClassName());
+                    for(int i = 0; i< framesArray.len(); ++i){
+                        SwingUtilities.updateComponentTreeUI(framesArray.getFrames().get(i));
                     }
+                }catch(Exception exception){
+                    // Todo: obsluga exception
+                    exception.printStackTrace();
                 }
             });
         }

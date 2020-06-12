@@ -1,5 +1,8 @@
 package controller;
-
+/*
+ * @author Rafal Uzarowicz
+ * @see "https://github.com/RafalUzarowicz"
+ */
 import model.*;
 import view.Views;
 
@@ -23,19 +26,16 @@ public class SocketController {
     public SocketController(Models models, Views views){
         this.models = models;
         this.views = views;
-        changingButtonsConnected = new ArrayList<JButton>();
-        changingButtonsNotConnecteed = new ArrayList<JButton>();
+        changingButtonsConnected = new ArrayList<>();
+        changingButtonsNotConnecteed = new ArrayList<>();
 
 
         // Main menu
-        views.mainMenu.getChatPanel().addSendListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ChatMessage message = new ChatMessage(views.mainMenu.getChatPanel().getMessField().getText(), models.me.getName());
-                sendMessage(Constants.ConnectionConstants.CHAT_MESSAGE, message.getText());
-                views.mainMenu.getChatPanel().addMessToChat(message);
-                views.mainMenu.getChatPanel().getMessField().setText("");
-            }
+        views.mainMenu.getChatPanel().addSendListener(e -> {
+            ChatMessage message = new ChatMessage(views.mainMenu.getChatPanel().getMessField().getText(), models.me.getName());
+            sendMessage(Constants.ConnectionConstants.CHAT_MESSAGE, message.getText());
+            views.mainMenu.getChatPanel().addMessToChat(message);
+            views.mainMenu.getChatPanel().getMessField().setText("");
         });
 
         addChangingButtonConnected(views.mainMenu.getMenuPanel().getStartButton());
@@ -43,13 +43,10 @@ public class SocketController {
 
         // Board
         for( JButton emote : views.board.getEmotesPanel().getEmotes() ){
-            emote.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    String message = emote.getText();
-                    sendMessage(Constants.ConnectionConstants.EMOTE_MESSAGE, message);
-                    views.board.addMessToChat(message);
-                }
+            emote.addActionListener(e -> {
+                String message = emote.getText();
+                sendMessage(Constants.ConnectionConstants.EMOTE_MESSAGE, message);
+                views.board.addMessToChat(message);
             });
             addChangingButtonConnected(emote);
         }
@@ -60,78 +57,63 @@ public class SocketController {
         addChangingButtonNotConnected(views.connection.getHostButton());
         addChangingButtonNotConnected(views.connection.getJoinButton());
 
-        views.connection.getHostButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                views.connection.getJoinButton().setEnabled(false);
-                runServer();
-            }
+        views.connection.getHostButton().addActionListener(e -> {
+            views.connection.getJoinButton().setEnabled(false);
+            runServer();
         });
 
-        views.connection.getJoinButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                views.connection.getHostButton().setEnabled(false);
-                runClient();
-            }
+        views.connection.getJoinButton().addActionListener(e -> {
+            views.connection.getHostButton().setEnabled(false);
+            runClient();
         });
 
         // End connection button
-        views.connection.getEndConnectionButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                closeConnection();
-                views.connection.getStatus().setBackground(Color.RED);
-                views.connection.getStatusLabel().setText("No connection.");
-            }
+        views.connection.getEndConnectionButton().addActionListener(e -> {
+            closeConnection();
+            views.connection.getStatus().setBackground(Color.RED);
+            views.connection.getStatusLabel().setText("No connection.");
         });
 
     }
     public void runServer(){
-        Thread serverRunner = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if(!models.connectionStatus.isSocketTaken()){
-                    try{
-                        models.connectionStatus.setSocketTaken(true);
+        Thread serverRunner = new Thread(() -> {
+            if(!models.connectionStatus.isSocketTaken()){
+                try{
+                    models.connectionStatus.setSocketTaken(true);
 //                        ConnectionStatus.connectionInfo.setText("Server is waiting...");
 //                        System.out.println("SERVER WAITING");
-                        models.connectionStatus.setServerSocket(new ServerSocket(models.connectionStatus.getPort()));
-                        models.connectionStatus.setSocket(models.connectionStatus.getServerSocket().accept());
-                        runHandler();
-                    }catch (Exception e){
+                    models.connectionStatus.setServerSocket(new ServerSocket(models.connectionStatus.getPort()));
+                    models.connectionStatus.setSocket(models.connectionStatus.getServerSocket().accept());
+                    runHandler();
+                }catch (Exception e){
 
-                        // Todo: exception handling
-                        models.connectionStatus.setEnemyThere(false);
-                        models.connectionStatus.setSocketTaken(false);
-                        deactivateChangingButtons();
-                        System.out.println("INFO: Could not host.");
-                    }
+                    // Todo: exception handling
+                    models.connectionStatus.setEnemyThere(false);
+                    models.connectionStatus.setSocketTaken(false);
+                    deactivateChangingButtons();
+                    System.out.println("INFO: Could not host.");
                 }
             }
         });
         serverRunner.start();
     }
     public void runClient(){
-        Thread clientRunner = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if(!models.connectionStatus.isSocketTaken()){
-                    try{
-                        models.connectionStatus.setSocketTaken(true);
-                        models.connectionStatus.setInetAddress(InetAddress.getByName(models.connectionStatus.getIp()));
+        Thread clientRunner = new Thread(() -> {
+            if(!models.connectionStatus.isSocketTaken()){
+                try{
+                    models.connectionStatus.setSocketTaken(true);
+                    models.connectionStatus.setInetAddress(InetAddress.getByName(models.connectionStatus.getIp()));
 //                        ConnectionStatus.connectionInfo.setText("Searchng for a server...");
 //                        System.out.println("CLIENT WAITING");
-                        models.connectionStatus.setSocket(new Socket(models.connectionStatus.getInetAddress(), models.connectionStatus.getPort()));
-                        runHandler();
-                    }catch (Exception e){
-                        // Todo: exception handling
-                        models.connectionStatus.setEnemyThere(false);
-                        models.connectionStatus.setSocketTaken(false);
-                        deactivateChangingButtons();
+                    models.connectionStatus.setSocket(new Socket(models.connectionStatus.getInetAddress(), models.connectionStatus.getPort()));
+                    runHandler();
+                }catch (Exception e){
+                    // Todo: exception handling
+                    models.connectionStatus.setEnemyThere(false);
+                    models.connectionStatus.setSocketTaken(false);
+                    deactivateChangingButtons();
 //                        ConnectionStatus.connectionInfo.setText("Host not found!");
-                        System.out.println("INFO: Host not found.");
-                    }
+                    System.out.println("INFO: Host not found.");
                 }
             }
         });
@@ -248,50 +230,46 @@ public class SocketController {
     }
     private boolean canReadMess = false;
     private void readMessage(){
-        Thread readMessage = new Thread(new Runnable()
-        {
-            @Override
-            public void run() {
-                while (canReadMess) {
-                    try {
-                        String message = models.connectionStatus.getDataInputStream().readUTF();
+        Thread readMessage = new Thread(() -> {
+            while (canReadMess) {
+                try {
+                    String message = models.connectionStatus.getDataInputStream().readUTF();
 //                        System.out.println("READ: "+message);
-                        String[] lines = message.split("\n");
-                        if(lines.length>1){
-                            String text = "";
-                            for( int i = 1; i < lines.length; ++i){
-                                text += lines[i];
-                            }
-                            text.strip();
-//                            System.out.println("t:"+text);
-                            switch (lines[0]){
-                                case Constants.ConnectionConstants.CHAT_MESSAGE:
-                                    views.mainMenu.getChatPanel().addMessToChat(text);
-                                    break;
-                                case Constants.ConnectionConstants.EMOTE_MESSAGE:
-                                    views.board.addMessToChat(text);
-                                    break;
-                                case Constants.ConnectionConstants.USER_NAME:
-                                    models.enemy.setName(text);
-                                    views.mainMenu.getMenuPanel().setEnemyName(models.enemy.getName());
-                                    break;
-                                case Constants.ConnectionConstants.BOARD_MOVE:
-
-                                    break;
-                                case Constants.ConnectionConstants.AVATAR_IMAGE:
-
-                                    break;
-                                default:
-                                    return;
-                            }
+                    String[] lines = message.split("\n");
+                    if(lines.length>1){
+                        StringBuilder text = new StringBuilder();
+                        for( int i = 1; i < lines.length; ++i){
+                            text.append(lines[i]);
                         }
-                    } catch (IOException e) {
-                        // Todo: exception handling
+//                        text.toString().strip();
+//                            System.out.println("t:"+text);
+                        switch (lines[0]){
+                            case Constants.ConnectionConstants.CHAT_MESSAGE:
+                                views.mainMenu.getChatPanel().addMessToChat(text.toString());
+                                break;
+                            case Constants.ConnectionConstants.EMOTE_MESSAGE:
+                                views.board.addMessToChat(text.toString());
+                                break;
+                            case Constants.ConnectionConstants.USER_NAME:
+                                models.enemy.setName(text.toString());
+                                views.mainMenu.getMenuPanel().setEnemyName(models.enemy.getName());
+                                break;
+                            case Constants.ConnectionConstants.BOARD_MOVE:
 
-                        System.out.println("INFO: Connection closed.");
-//                        ConnectionStatus.connectionInfo.setText("Connection closed.");
-                        closeConnection();
+                                break;
+                            case Constants.ConnectionConstants.AVATAR_IMAGE:
+
+                                break;
+                            default:
+                                return;
+                        }
                     }
+                } catch (IOException e) {
+                    // Todo: exception handling
+
+                    System.out.println("INFO: Connection closed.");
+//                        ConnectionStatus.connectionInfo.setText("Connection closed.");
+                    closeConnection();
                 }
             }
         });

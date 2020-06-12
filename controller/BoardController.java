@@ -1,11 +1,9 @@
 package controller;
-
-import model.Constants;
+/*
+ * @author Rafal Uzarowicz
+ * @see "https://github.com/RafalUzarowicz"
+ */
 import view.Board;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class BoardController {
     Board board;

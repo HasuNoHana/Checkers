@@ -1,5 +1,8 @@
 package model;
-
+/*
+ * @author Rafal Uzarowicz
+ * @see "https://github.com/RafalUzarowicz"
+ */
 public class ChatMessage {
     private String text;
     public ChatMessage(String message, String from){

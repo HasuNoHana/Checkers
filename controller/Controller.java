@@ -1,5 +1,8 @@
 package controller;
-
+/*
+ * @author Rafal Uzarowicz
+ * @see "https://github.com/RafalUzarowicz"
+ */
 import model.Models;
 import model.Constants;
 import view.Views;
@@ -52,36 +55,30 @@ public class Controller {
 
 
     private void initUserNameChange(){
-        views.usernameChangeInitial.addButtonListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int len = views.usernameChangeInitial.getNameField().getText().length();
-                if(len>0 && len< Constants.UserConstants.MAX_USERNAME_LENGTH){
-                    String text = views.usernameChangeInitial.getNameField().getText();
-                    models.me.setName(text);
-                    socketController.sendMessage(Constants.ConnectionConstants.USER_NAME, text);
-                    views.mainMenu.getMenuPanel().setPlayerName(models.me.getName());
-                    views.usernameChangeInitial.setInfo("Name changed to: "+text+".");
-                    views.usernameChangeInitial.getNameField().setText("");
-                }else{
-                    views.usernameChangeInitial.setInfo("Name length must be between 1 and " + Constants.UserConstants.MAX_USERNAME_LENGTH +".");
-                }
+        views.usernameChangeInitial.addButtonListener(e -> {
+            int len = views.usernameChangeInitial.getNameField().getText().length();
+            if(len>0 && len< Constants.UserConstants.MAX_USERNAME_LENGTH){
+                String text = views.usernameChangeInitial.getNameField().getText();
+                models.me.setName(text);
+                socketController.sendMessage(Constants.ConnectionConstants.USER_NAME, text);
+                views.mainMenu.getMenuPanel().setPlayerName(models.me.getName());
+                views.usernameChangeInitial.setInfo("Name changed to: "+text+".");
+                views.usernameChangeInitial.getNameField().setText("");
+            }else{
+                views.usernameChangeInitial.setInfo("Name length must be between 1 and " + Constants.UserConstants.MAX_USERNAME_LENGTH +".");
             }
         });
-        views.usernameChangeSettings.addButtonListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int len = views.usernameChangeSettings.getNameField().getText().length();
-                if(len>0 && len< Constants.UserConstants.MAX_USERNAME_LENGTH){
-                    String text = views.usernameChangeSettings.getNameField().getText();
-                    models.me.setName(text);
-                    socketController.sendMessage(Constants.ConnectionConstants.USER_NAME, text);
-                    views.mainMenu.getMenuPanel().setPlayerName(models.me.getName());
-                    views.usernameChangeSettings.setInfo("Name changed to: "+text+".");
-                    views.usernameChangeSettings.getNameField().setText("");
-                }else{
-                    views.usernameChangeSettings.setInfo("Name length must be between 1 and " + Constants.UserConstants.MAX_USERNAME_LENGTH +".");
-                }
+        views.usernameChangeSettings.addButtonListener(e -> {
+            int len = views.usernameChangeSettings.getNameField().getText().length();
+            if(len>0 && len< Constants.UserConstants.MAX_USERNAME_LENGTH){
+                String text = views.usernameChangeSettings.getNameField().getText();
+                models.me.setName(text);
+                socketController.sendMessage(Constants.ConnectionConstants.USER_NAME, text);
+                views.mainMenu.getMenuPanel().setPlayerName(models.me.getName());
+                views.usernameChangeSettings.setInfo("Name changed to: "+text+".");
+                views.usernameChangeSettings.getNameField().setText("");
+            }else{
+                views.usernameChangeSettings.setInfo("Name length must be between 1 and " + Constants.UserConstants.MAX_USERNAME_LENGTH +".");
             }
         });
     }

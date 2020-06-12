@@ -1,12 +1,12 @@
 package controller;
-
+/*
+ * @author Rafal Uzarowicz
+ * @see "https://github.com/RafalUzarowicz"
+ */
 import model.Constants;
 import model.User;
 import view.InitialPopUp;
 import view.Views;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class InitialPopupController {
     InitialPopUp initialPopUp;

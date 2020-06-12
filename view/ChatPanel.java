@@ -1,7 +1,9 @@
 package view;
-
+/*
+ * @author Rafal Uzarowicz
+ * @see "https://github.com/RafalUzarowicz"
+ */
 import model.ChatMessage;
-import model.Constants;
 
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;

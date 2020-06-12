@@ -1,11 +1,9 @@
 package model;
-
-import javax.swing.*;
-
 /*
  * @author Rafal Uzarowicz
  * @see "https://github.com/RafalUzarowicz"
  */
+
 public class Constants{
     public static class UserConstants{
         public final static int MAX_USERNAME_LENGTH = 10;

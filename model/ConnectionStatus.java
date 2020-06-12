@@ -1,15 +1,14 @@
 package model;
-
+/*
+ * @author Rafal Uzarowicz
+ * @see "https://github.com/RafalUzarowicz"
+ */
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-/*
- * @author Rafal Uzarowicz
- * @see "https://github.com/RafalUzarowicz"
- */
 public class ConnectionStatus {
     public ConnectionStatus(){
         this.ip = "localhost";

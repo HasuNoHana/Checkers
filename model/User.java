@@ -1,5 +1,8 @@
 package model;
-
+/*
+ * @author Rafal Uzarowicz
+ * @see "https://github.com/RafalUzarowicz"
+ */
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import java.awt.Image;
