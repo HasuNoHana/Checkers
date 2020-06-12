@@ -6,25 +6,25 @@ package view;
 import javax.swing.*;
 
 public class Views {
-    public UsernameChange usernameChangeInitial;
-    public UsernameChange usernameChangeSettings;
+    public UserInfoChangePanel userInfoChangePanelInitial;
+    public UserInfoChangePanel userInfoChangePanelSettings;
     public ChatPanel textChatPanel;
     public JTextArea emoteChatArea;
 
-    public InitialPopUp initialPopUp;
-    public MainMenu mainMenu;
-    public Board board;
-    public Connection connection;
-    public Settings settings;
+    public InitialPopUpFrame initialPopUpFrame;
+    public MainMenuFrame mainMenuFrame;
+    public BoardFrame boardFrame;
+    public ConnectionFrame connectionFrame;
+    public SettingsFrame settingsFrame;
     public Views(){
-        usernameChangeInitial = new UsernameChange();
-        usernameChangeSettings = new UsernameChange();
+        userInfoChangePanelInitial = new UserInfoChangePanel();
+        userInfoChangePanelSettings = new UserInfoChangePanel();
         textChatPanel = new ChatPanel();
 
-        initialPopUp = new InitialPopUp(usernameChangeInitial);
-        mainMenu = new MainMenu(textChatPanel);
-        board = new Board();
-        connection = new Connection();
-        settings = new Settings(usernameChangeSettings);
+        initialPopUpFrame = new InitialPopUpFrame(userInfoChangePanelInitial);
+        mainMenuFrame = new MainMenuFrame(textChatPanel);
+        boardFrame = new BoardFrame();
+        connectionFrame = new ConnectionFrame();
+        settingsFrame = new SettingsFrame(userInfoChangePanelSettings);
     }
 }

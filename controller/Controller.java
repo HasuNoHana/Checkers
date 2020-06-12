@@ -7,9 +7,6 @@ import model.Models;
 import model.Constants;
 import view.Views;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 public class Controller {
     Models models;
     Views views;
@@ -29,10 +26,10 @@ public class Controller {
         this.socketController = new SocketController(models, views);
         this.viewsController = new ViewsController(models.framesArray, views);
         this.initialPopupController = new InitialPopupController(views, viewsController, models.me);
-        this.mainMenuController = new MainMenuController(views.mainMenu, models.me, models.enemy, viewsController);
-        this.settingsController = new SettingsController(views.settings, models.menu, models.framesArray, viewsController);
-        this.boardController = new BoardController(views.board, viewsController);
-        this.connectionController = new ConnectionController(views.connection, models.connectionStatus, viewsController);
+        this.mainMenuController = new MainMenuController(views.mainMenuFrame, models.me, models.enemy, viewsController);
+        this.settingsController = new SettingsController(views.settingsFrame, models.menu, models.framesArray, viewsController);
+        this.boardController = new BoardController(views.boardFrame, viewsController);
+        this.connectionController = new ConnectionController(views.connectionFrame, models.connectionStatus, viewsController);
 
 
 
@@ -55,30 +52,30 @@ public class Controller {
 
 
     private void initUserNameChange(){
-        views.usernameChangeInitial.addButtonListener(e -> {
-            int len = views.usernameChangeInitial.getNameField().getText().length();
+        views.userInfoChangePanelInitial.addButtonListener(e -> {
+            int len = views.userInfoChangePanelInitial.getNameField().getText().length();
             if(len>0 && len< Constants.UserConstants.MAX_USERNAME_LENGTH){
-                String text = views.usernameChangeInitial.getNameField().getText();
+                String text = views.userInfoChangePanelInitial.getNameField().getText();
                 models.me.setName(text);
                 socketController.sendMessage(Constants.ConnectionConstants.USER_NAME, text);
-                views.mainMenu.getMenuPanel().setPlayerName(models.me.getName());
-                views.usernameChangeInitial.setInfo("Name changed to: "+text+".");
-                views.usernameChangeInitial.getNameField().setText("");
+                views.mainMenuFrame.getMenuPanel().setPlayerName(models.me.getName());
+                views.userInfoChangePanelInitial.setInfo("Name changed to: "+text+".");
+                views.userInfoChangePanelInitial.getNameField().setText("");
             }else{
-                views.usernameChangeInitial.setInfo("Name length must be between 1 and " + Constants.UserConstants.MAX_USERNAME_LENGTH +".");
+                views.userInfoChangePanelInitial.setInfo("Name length must be between 1 and " + Constants.UserConstants.MAX_USERNAME_LENGTH +".");
             }
         });
-        views.usernameChangeSettings.addButtonListener(e -> {
-            int len = views.usernameChangeSettings.getNameField().getText().length();
+        views.userInfoChangePanelSettings.addButtonListener(e -> {
+            int len = views.userInfoChangePanelSettings.getNameField().getText().length();
             if(len>0 && len< Constants.UserConstants.MAX_USERNAME_LENGTH){
-                String text = views.usernameChangeSettings.getNameField().getText();
+                String text = views.userInfoChangePanelSettings.getNameField().getText();
                 models.me.setName(text);
                 socketController.sendMessage(Constants.ConnectionConstants.USER_NAME, text);
-                views.mainMenu.getMenuPanel().setPlayerName(models.me.getName());
-                views.usernameChangeSettings.setInfo("Name changed to: "+text+".");
-                views.usernameChangeSettings.getNameField().setText("");
+                views.mainMenuFrame.getMenuPanel().setPlayerName(models.me.getName());
+                views.userInfoChangePanelSettings.setInfo("Name changed to: "+text+".");
+                views.userInfoChangePanelSettings.getNameField().setText("");
             }else{
-                views.usernameChangeSettings.setInfo("Name length must be between 1 and " + Constants.UserConstants.MAX_USERNAME_LENGTH +".");
+                views.userInfoChangePanelSettings.setInfo("Name length must be between 1 and " + Constants.UserConstants.MAX_USERNAME_LENGTH +".");
             }
         });
     }

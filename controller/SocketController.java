@@ -8,8 +8,6 @@ import view.Views;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -31,47 +29,47 @@ public class SocketController {
 
 
         // Main menu
-        views.mainMenu.getChatPanel().addSendListener(e -> {
-            ChatMessage message = new ChatMessage(views.mainMenu.getChatPanel().getMessField().getText(), models.me.getName());
+        views.mainMenuFrame.getChatPanel().addSendListener(e -> {
+            ChatMessage message = new ChatMessage(views.mainMenuFrame.getChatPanel().getMessField().getText(), models.me.getName());
             sendMessage(Constants.ConnectionConstants.CHAT_MESSAGE, message.getText());
-            views.mainMenu.getChatPanel().addMessToChat(message);
-            views.mainMenu.getChatPanel().getMessField().setText("");
+            views.mainMenuFrame.getChatPanel().addMessToChat(message);
+            views.mainMenuFrame.getChatPanel().getMessField().setText("");
         });
 
-        addChangingButtonConnected(views.mainMenu.getMenuPanel().getStartButton());
-        addChangingButtonConnected(views.mainMenu.getChatPanel().getSendButton());
+        addChangingButtonConnected(views.mainMenuFrame.getMenuPanel().getStartButton());
+        addChangingButtonConnected(views.mainMenuFrame.getChatPanel().getSendButton());
 
-        // Board
-        for( JButton emote : views.board.getEmotesPanel().getEmotes() ){
+        // BoardFrame
+        for( JButton emote : views.boardFrame.getEmotesPanel().getEmotes() ){
             emote.addActionListener(e -> {
                 String message = emote.getText();
                 sendMessage(Constants.ConnectionConstants.EMOTE_MESSAGE, message);
-                views.board.addMessToChat(message);
+                views.boardFrame.addMessToChat(message);
             });
             addChangingButtonConnected(emote);
         }
 
-        // Connection
+        // ConnectionFrame
 
-        //addChangingButtonConnected(connection.getEndConnectionButton());
-        addChangingButtonNotConnected(views.connection.getHostButton());
-        addChangingButtonNotConnected(views.connection.getJoinButton());
+        //addChangingButtonConnected(connectionFrame.getEndConnectionButton());
+        addChangingButtonNotConnected(views.connectionFrame.getHostButton());
+        addChangingButtonNotConnected(views.connectionFrame.getJoinButton());
 
-        views.connection.getHostButton().addActionListener(e -> {
-            views.connection.getJoinButton().setEnabled(false);
+        views.connectionFrame.getHostButton().addActionListener(e -> {
+            views.connectionFrame.getJoinButton().setEnabled(false);
             runServer();
         });
 
-        views.connection.getJoinButton().addActionListener(e -> {
-            views.connection.getHostButton().setEnabled(false);
+        views.connectionFrame.getJoinButton().addActionListener(e -> {
+            views.connectionFrame.getHostButton().setEnabled(false);
             runClient();
         });
 
-        // End connection button
-        views.connection.getEndConnectionButton().addActionListener(e -> {
+        // End connectionFrame button
+        views.connectionFrame.getEndConnectionButton().addActionListener(e -> {
             closeConnection();
-            views.connection.getStatus().setBackground(Color.RED);
-            views.connection.getStatusLabel().setText("No connection.");
+            views.connectionFrame.getStatus().setBackground(Color.RED);
+            views.connectionFrame.getStatusLabel().setText("No connectionFrame.");
         });
 
     }
@@ -223,8 +221,8 @@ public class SocketController {
             models.connectionStatus.getDataOutputStream().writeUTF(finalMessage);
         } catch (IOException e) {
             // Todo: exception handling
-            System.out.println("INFO: Connection closed.");
-//            ConnectionStatus.connectionInfo.setText("Connection closed.");
+            System.out.println("INFO: ConnectionFrame closed.");
+//            ConnectionStatus.connectionInfo.setText("ConnectionFrame closed.");
             closeConnection();
         }
     }
@@ -245,14 +243,14 @@ public class SocketController {
 //                            System.out.println("t:"+text);
                         switch (lines[0]){
                             case Constants.ConnectionConstants.CHAT_MESSAGE:
-                                views.mainMenu.getChatPanel().addMessToChat(text.toString());
+                                views.mainMenuFrame.getChatPanel().addMessToChat(text.toString());
                                 break;
                             case Constants.ConnectionConstants.EMOTE_MESSAGE:
-                                views.board.addMessToChat(text.toString());
+                                views.boardFrame.addMessToChat(text.toString());
                                 break;
                             case Constants.ConnectionConstants.USER_NAME:
                                 models.enemy.setName(text.toString());
-                                views.mainMenu.getMenuPanel().setEnemyName(models.enemy.getName());
+                                views.mainMenuFrame.getMenuPanel().setEnemyName(models.enemy.getName());
                                 break;
                             case Constants.ConnectionConstants.BOARD_MOVE:
 
@@ -267,8 +265,8 @@ public class SocketController {
                 } catch (IOException e) {
                     // Todo: exception handling
 
-                    System.out.println("INFO: Connection closed.");
-//                        ConnectionStatus.connectionInfo.setText("Connection closed.");
+                    System.out.println("INFO: ConnectionFrame closed.");
+//                        ConnectionStatus.connectionInfo.setText("ConnectionFrame closed.");
                     closeConnection();
                 }
             }

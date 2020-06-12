@@ -7,17 +7,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class InitialPopUp extends JFrame {
+public class InitialPopUpFrame extends JFrame {
     private final JButton nextButton;
-    private final UsernameChange usernameChange;
-    public InitialPopUp(UsernameChange usernameChange){
+    private final UserInfoChangePanel userInfoChangePanel;
+    public InitialPopUpFrame(UserInfoChangePanel userInfoChangePanel){
         super("Welcome");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new FlowLayout());
 
-        this.usernameChange = usernameChange;
+        this.userInfoChangePanel = userInfoChangePanel;
 
-        add(usernameChange);
+        add(userInfoChangePanel);
 
         nextButton = new JButton("Next");
         nextButton.setEnabled(false);
@@ -25,8 +25,8 @@ public class InitialPopUp extends JFrame {
         add(nextButton);
 
     }
-    public UsernameChange getUsernameChange(){
-        return this.usernameChange;
+    public UserInfoChangePanel getUserInfoChangePanel(){
+        return this.userInfoChangePanel;
     }
     public void addNextListener(ActionListener actionListener){
         this.nextButton.addActionListener(actionListener);

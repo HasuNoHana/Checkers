@@ -3,17 +3,17 @@ package controller;
  * @author Rafal Uzarowicz
  * @see "https://github.com/RafalUzarowicz"
  */
-import view.Board;
+import view.BoardFrame;
 
 public class BoardController {
-    Board board;
+    BoardFrame boardFrame;
 
-    public BoardController(Board board, ViewsController viewsController){
-        this.board = board;
+    public BoardController(BoardFrame boardFrame, ViewsController viewsController){
+        this.boardFrame = boardFrame;
 
         // Back to menu button
-        board.addBackListener(viewsController.getChangeStateListener());
-        board.getMenuButton().setActionCommand("Menu");
+        boardFrame.addBackListener(viewsController.getChangeStateListener());
+        boardFrame.getMenuButton().setActionCommand("Menu");
 
 
 

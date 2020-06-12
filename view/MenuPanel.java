@@ -74,7 +74,7 @@ public class MenuPanel extends JPanel {
         connectButton = new JButton("Connect");
         add(connectButton);
 
-        settingsButton = new JButton("Settings");
+        settingsButton = new JButton("SettingsFrame");
         add(settingsButton);
 
         exitButton = new JButton("Exit");

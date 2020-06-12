@@ -9,7 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class Settings extends JFrame{
+public class SettingsFrame extends JFrame{
     private final JButton userSettingsButton;
     private final JButton checkersSettingsButton;
     private final JButton menuSettingsButton;
@@ -19,12 +19,12 @@ public class Settings extends JFrame{
     private final JPanel buttonsPanel;
     private final JPanel settingsPanel;
     private final MenuLookPanel menu;
-    private final UsernameChange users;
+    private final UserInfoChangePanel users;
     private final JPanel checkers;
     private final JPanel chat;
 
-    public Settings( UsernameChange usernameChange ){
-        super("Settings");
+    public SettingsFrame(UserInfoChangePanel userInfoChangePanel){
+        super("SettingsFrame");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout());
 
@@ -69,7 +69,7 @@ public class Settings extends JFrame{
 
         add(buttonsPanel);
 
-        users = usernameChange;
+        users = userInfoChangePanel;
 
         checkers = new JPanel();
         checkers.setBackground(Color.RED);

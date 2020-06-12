@@ -14,15 +14,15 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Board extends JFrame{
+public class BoardFrame extends JFrame{
     private final JPanel board;
     private final JTextArea smallChat;
     private final EmotesPanel emotesPanel;
     private final JButton menuButton;
 
 
-    public Board(){
-        super("Board");
+    public BoardFrame(){
+        super("BoardFrame");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridBagLayout());
 

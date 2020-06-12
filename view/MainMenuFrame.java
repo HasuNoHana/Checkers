@@ -6,10 +6,10 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
-public class MainMenu extends JFrame {
+public class MainMenuFrame extends JFrame {
     private MenuPanel menuPanel;
     private ChatPanel chatPanel;
-    public MainMenu( ChatPanel chatPanel ){
+    public MainMenuFrame(ChatPanel chatPanel ){
         super("Menu");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout());

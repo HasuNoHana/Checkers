@@ -9,7 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class Connection extends JFrame {
+public class ConnectionFrame extends JFrame {
     private final JButton hostButton;
     private final JButton joinButton;
     private final JButton endConnectionButton;
@@ -19,8 +19,8 @@ public class Connection extends JFrame {
     private JPanel status;
     private JLabel statusLabel;
 
-    public Connection(){
-        super("Connection");
+    public ConnectionFrame(){
+        super("ConnectionFrame");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(1, 2));
 
@@ -45,7 +45,7 @@ public class Connection extends JFrame {
         changeConnectionInfoPanel = new ChangeConnectionInfoPanel();
 
         status = new JPanel(new FlowLayout());
-        statusLabel = new JLabel("No connection.", SwingConstants.CENTER);
+        statusLabel = new JLabel("No connectionFrame.", SwingConstants.CENTER);
         status.add(statusLabel);
         status.setBackground(Color.RED);
 

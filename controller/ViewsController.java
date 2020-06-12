@@ -30,12 +30,12 @@ public class ViewsController {
         this.views = views;
         changeStateListener = new ChangeStateListener();
 
-        this.framesArray.add(this.views.mainMenu);
-        this.framesArray.add(this.views.board);
-        this.framesArray.add(this.views.connection);
-        this.framesArray.add(this.views.settings);
+        this.framesArray.add(this.views.mainMenuFrame);
+        this.framesArray.add(this.views.boardFrame);
+        this.framesArray.add(this.views.connectionFrame);
+        this.framesArray.add(this.views.settingsFrame);
 
-        this.framesArray.addFirst(this.views.initialPopUp);
+        this.framesArray.addFirst(this.views.initialPopUpFrame);
     }
     public void showFirstView(){
         this.framesArray.getFrames().get(0).setVisible(true);

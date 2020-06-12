@@ -9,7 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class UsernameChange extends JPanel {
+public class UserInfoChangePanel extends JPanel {
     private JLabel newNameLabel;
     private JLabel infoLabel;
     private JTextField newNameField;
@@ -17,7 +17,7 @@ public class UsernameChange extends JPanel {
     private JTextField infoField;
     private JPanel upperPanel;
     private JPanel lowerPanel;
-    public UsernameChange(){
+    public UserInfoChangePanel(){
         this.setLayout(new GridLayout(2,1));
 
         this.upperPanel = new JPanel();
