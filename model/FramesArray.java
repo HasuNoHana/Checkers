@@ -12,14 +12,14 @@ public class FramesArray {
         return frames;
     }
     public void add( JFrame frame ){
-        frame.setSize(oldModel.Constants.FramesConstants.DEFAULT_WIDTH, oldModel.Constants.FramesConstants.DEFAULT_HEIGHT);
-        frame.setLocation(oldModel.Constants.FramesConstants.DEFAULT_X_POSITION, Constants.FramesConstants.DEFAULT_Y_POSITION);
+        frame.setSize(Constants.FramesConstants.DEFAULT_WIDTH, Constants.FramesConstants.DEFAULT_HEIGHT);
+        frame.setLocation(Constants.FramesConstants.DEFAULT_X_POSITION, Constants.FramesConstants.DEFAULT_Y_POSITION);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frames.add(frame);
     }
     public void addFirst( JFrame frame ){
-        frame.setSize(oldModel.Constants.FramesConstants.DEFAULT_WIDTH, oldModel.Constants.FramesConstants.DEFAULT_HEIGHT);
-        frame.setLocation(oldModel.Constants.FramesConstants.DEFAULT_X_POSITION, Constants.FramesConstants.DEFAULT_Y_POSITION);
+        frame.setSize(Constants.FramesConstants.DEFAULT_WIDTH, Constants.FramesConstants.DEFAULT_HEIGHT);
+        frame.setLocation(Constants.FramesConstants.DEFAULT_X_POSITION, Constants.FramesConstants.DEFAULT_Y_POSITION);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frames.add(0, frame);
     }

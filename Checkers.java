@@ -1,11 +1,6 @@
 import controller.Controller;
-import controller.MainMenuController;
-import controller.SocketController;
-import controller.ViewsController;
-import model.*;
-import model.Menu;
-import oldController.ViewStateHandler;
-import view.*;
+import model.Models;
+import view.Views;
 
 import java.awt.*;
 
@@ -21,21 +16,15 @@ import java.awt.*;
 
 public class Checkers {
     public static void main(String[] args){
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                initCheckers();
-            }
+        EventQueue.invokeLater(() -> {
+            // Model
+            Models models = new Models();
+
+            // View
+            Views views = new Views();
+
+            // Controller
+            Controller controller = new Controller(models, views);
         });
-    }
-    public static void initCheckers(){
-        // Model
-        Models models = new Models();
-
-        // View
-        Views views = new Views();
-
-        // Controller
-        Controller controller = new Controller(models, views);
     }
 }
