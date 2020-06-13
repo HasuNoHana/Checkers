@@ -8,6 +8,8 @@ import view.Views;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -18,42 +20,71 @@ import java.util.ArrayList;
 
 public class SocketController {
     private ArrayList<JButton> changingButtonsConnected;
-    private ArrayList<JButton> changingButtonsNotConnecteed;
+    private ArrayList<JButton> changingButtonsNotConnected;
     private Views views;
     private Models models;
     public SocketController(Models models, Views views){
         this.models = models;
         this.views = views;
         changingButtonsConnected = new ArrayList<>();
-        changingButtonsNotConnecteed = new ArrayList<>();
+        changingButtonsNotConnected = new ArrayList<>();
 
 
         // Main menu
-        views.mainMenuFrame.getChatPanel().addSendListener(e -> {
-            ChatMessage message = new ChatMessage(views.mainMenuFrame.getChatPanel().getMessField().getText(), models.me.getName());
-            sendMessage(Constants.ConnectionConstants.CHAT_MESSAGE, message.getText());
-            views.mainMenuFrame.getChatPanel().addMessToChat(message);
-            views.mainMenuFrame.getChatPanel().getMessField().setText("");
+        views.mainMenuFrame.getMenuChatPanel().addSendListener(e -> {
+            String message = views.mainMenuFrame.getMenuChatPanel().getMessField().getText();
+            if(!message.equals("")){
+                message = message.substring(0, Math.min(message.length(), Constants.ChatConstants.MAX_MESS_LEN));
+                sendMessage(Constants.ConnectionConstants.CHAT_MESSAGE, message);
+                views.mainMenuFrame.getMenuChatPanel().addYourMessToChat(message);
+                views.mainMenuFrame.getMenuChatPanel().getMessField().setText("");
+            }
+        });
+        views.mainMenuFrame.getMenuChatPanel().getMessField().addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    String message = views.mainMenuFrame.getMenuChatPanel().getMessField().getText();
+                    if(!message.equals("")){
+                        message = message.substring(0, Math.min(message.length(), Constants.ChatConstants.MAX_MESS_LEN));
+                        sendMessage(Constants.ConnectionConstants.CHAT_MESSAGE, message);
+                        views.mainMenuFrame.getMenuChatPanel().addYourMessToChat(message);
+                        views.mainMenuFrame.getMenuChatPanel().getMessField().setText("");
+                    }
+                }
+            }
         });
 
         addChangingButtonConnected(views.mainMenuFrame.getMenuPanel().getStartButton());
-        addChangingButtonConnected(views.mainMenuFrame.getChatPanel().getSendButton());
+        addChangingButtonConnected(views.mainMenuFrame.getMenuChatPanel().getSendButton());
 
         // BoardFrame
         for( JButton emote : views.boardFrame.getEmotesPanel().getEmotes() ){
             emote.addActionListener(e -> {
                 String message = emote.getText();
                 sendMessage(Constants.ConnectionConstants.EMOTE_MESSAGE, message);
-                views.boardFrame.addMessToChat(message);
+                views.boardFrame.addYourMessToChat(message);
             });
             addChangingButtonConnected(emote);
         }
 
-        // ConnectionFrame
+        // Connection
 
-        //addChangingButtonConnected(connectionFrame.getEndConnectionButton());
+        //addChangingButtonConnected(connection.getEndConnectionButton());
         addChangingButtonNotConnected(views.connectionFrame.getHostButton());
         addChangingButtonNotConnected(views.connectionFrame.getJoinButton());
+        addChangingButtonNotConnected(views.connectionFrame.getChangeConnectionInfoPanel().getChangeIPButton());
+        addChangingButtonNotConnected(views.connectionFrame.getChangeConnectionInfoPanel().getChangePortButton());
 
         views.connectionFrame.getHostButton().addActionListener(e -> {
             views.connectionFrame.getJoinButton().setEnabled(false);
@@ -65,11 +96,10 @@ public class SocketController {
             runClient();
         });
 
-        // End connectionFrame button
         views.connectionFrame.getEndConnectionButton().addActionListener(e -> {
             closeConnection();
             views.connectionFrame.getStatus().setBackground(Color.RED);
-            views.connectionFrame.getStatusLabel().setText("No connectionFrame.");
+            views.connectionFrame.getStatusLabel().setText("No connection.");
         });
 
     }
@@ -128,6 +158,9 @@ public class SocketController {
                 models.connectionStatus.setDataOutputStream(new DataOutputStream(models.connectionStatus.getSocket().getOutputStream()));
                 models.connectionStatus.setEnemyThere(true);
 
+                views.mainMenuFrame.getMenuPanel().setEnemyReady(true);
+                views.connectionFrame.setStatus(true);
+
                 canReadMess = true;
 
                 readMessage();
@@ -150,6 +183,10 @@ public class SocketController {
             // Todo: exception handling
             deactivateChangingButtons();
             canReadMess = false;
+            views.mainMenuFrame.getMenuChatPanel().getChatPanel().clearChat();
+            views.mainMenuFrame.getMenuPanel().setEnemyReady(false);
+            views.connectionFrame.setStatus(false);
+
             models.connectionStatus.setEnemyThere(false);
             try
             {
@@ -221,8 +258,8 @@ public class SocketController {
             models.connectionStatus.getDataOutputStream().writeUTF(finalMessage);
         } catch (IOException e) {
             // Todo: exception handling
-            System.out.println("INFO: ConnectionFrame closed.");
-//            ConnectionStatus.connectionInfo.setText("ConnectionFrame closed.");
+            System.out.println("INFO: Connection closed.");
+//            ConnectionStatus.connectionInfo.setText("Connection closed.");
             closeConnection();
         }
     }
@@ -232,21 +269,18 @@ public class SocketController {
             while (canReadMess) {
                 try {
                     String message = models.connectionStatus.getDataInputStream().readUTF();
-//                        System.out.println("READ: "+message);
                     String[] lines = message.split("\n");
                     if(lines.length>1){
                         StringBuilder text = new StringBuilder();
                         for( int i = 1; i < lines.length; ++i){
                             text.append(lines[i]);
                         }
-//                        text.toString().strip();
-//                            System.out.println("t:"+text);
                         switch (lines[0]){
                             case Constants.ConnectionConstants.CHAT_MESSAGE:
-                                views.mainMenuFrame.getChatPanel().addMessToChat(text.toString());
+                                views.mainMenuFrame.getMenuChatPanel().addEnemyMessToChat(text.toString());
                                 break;
                             case Constants.ConnectionConstants.EMOTE_MESSAGE:
-                                views.boardFrame.addMessToChat(text.toString());
+                                views.boardFrame.addEnemyMessToChat(text.toString());
                                 break;
                             case Constants.ConnectionConstants.USER_NAME:
                                 models.enemy.setName(text.toString());
@@ -265,8 +299,8 @@ public class SocketController {
                 } catch (IOException e) {
                     // Todo: exception handling
 
-                    System.out.println("INFO: ConnectionFrame closed.");
-//                        ConnectionStatus.connectionInfo.setText("ConnectionFrame closed.");
+                    System.out.println("INFO: Connection closed.");
+//                        ConnectionStatus.connectionInfo.setText("Connection closed.");
                     closeConnection();
                 }
             }
@@ -278,7 +312,7 @@ public class SocketController {
         changingButtonsConnected.add(button);
     }
     public void addChangingButtonNotConnected( JButton button ){
-        changingButtonsNotConnecteed.add(button);
+        changingButtonsNotConnected.add(button);
     }
 
     // Todo: zamien to na private
@@ -286,7 +320,7 @@ public class SocketController {
         for( JButton button : changingButtonsConnected ){
             button.setEnabled(true);
         }
-        for( JButton button : changingButtonsNotConnecteed ){
+        for( JButton button : changingButtonsNotConnected ){
             button.setEnabled(false);
         }
     }
@@ -295,7 +329,7 @@ public class SocketController {
         for( JButton button : changingButtonsConnected ){
             button.setEnabled(false);
         }
-        for( JButton button : changingButtonsNotConnecteed ){
+        for( JButton button : changingButtonsNotConnected ){
             button.setEnabled(true);
         }
     }

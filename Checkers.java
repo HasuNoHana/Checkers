@@ -1,5 +1,6 @@
 import controller.Controller;
 import model.Models;
+import view.ChatColorPanel;
 import view.Views;
 
 import java.awt.EventQueue;
@@ -12,15 +13,30 @@ import java.awt.EventQueue;
 *  - dodac monitory
 *  - dodac wlasny look and feel
 *  - dodac zmiane wygladu pionkow
-*  - dodac zmiane wygladu czatu
+*  - dodac zmiane wygladu czatu - czyli teraz dodac obsluge przyciskow do zmiany
 *  - dodac ladniejsze emoji
-*  - dodac lepszy wyglad czatu
 *  - upiekszyc wyglad menu
 * */
+
+import javax.swing.*;
 
 public class Checkers {
     public static void main(String[] args){
         EventQueue.invokeLater(() -> {
+
+//            JFrame frame = new JFrame();
+//            frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//            frame.setSize(800, 600);
+//            frame.setLocation(200, 100);
+//
+//            frame.setVisible(true);
+//
+//            ChatColorPanel chatColorPanel = new ChatColorPanel();
+//
+//            frame.add(chatColorPanel);
+
+
+
             // Model
             Models models = new Models();
 

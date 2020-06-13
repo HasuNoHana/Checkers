@@ -20,7 +20,7 @@ public class ConnectionFrame extends JFrame {
     private JLabel statusLabel;
 
     public ConnectionFrame(){
-        super("ConnectionFrame");
+        super("Connection");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(1, 2));
 
@@ -44,8 +44,8 @@ public class ConnectionFrame extends JFrame {
 
         changeConnectionInfoPanel = new ChangeConnectionInfoPanel();
 
-        status = new JPanel(new FlowLayout());
-        statusLabel = new JLabel("No connectionFrame.", SwingConstants.CENTER);
+        status = new JPanel(new GridLayout());
+        statusLabel = new JLabel("No connection.", SwingConstants.CENTER);
         status.add(statusLabel);
         status.setBackground(Color.RED);
 
@@ -64,4 +64,13 @@ public class ConnectionFrame extends JFrame {
     public ChangeConnectionInfoPanel getChangeConnectionInfoPanel(){ return changeConnectionInfoPanel; }
     public JPanel getStatus(){ return status; }
     public JLabel getStatusLabel(){ return statusLabel; }
+    public void setStatus( boolean bool ){
+        if(bool){
+            status.setBackground(Color.GREEN);
+            statusLabel.setText("Connected.");
+        }else{
+            status.setBackground(Color.RED);
+            statusLabel.setText("No connection.");
+        }
+    }
 }

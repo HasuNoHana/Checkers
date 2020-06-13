@@ -3,6 +3,8 @@ package view;
  * @author Rafal Uzarowicz
  * @see "https://github.com/RafalUzarowicz"
  */
+import model.Constants;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
@@ -16,7 +18,7 @@ import java.io.IOException;
 
 public class BoardFrame extends JFrame{
     private final JPanel board;
-    private final JTextArea smallChat;
+    private final ChatPanel smallChat;
     private final EmotesPanel emotesPanel;
     private final JButton menuButton;
 
@@ -30,12 +32,7 @@ public class BoardFrame extends JFrame{
         constraints.weightx = 1;
         constraints.weighty = 1;
 
-        smallChat = new JTextArea();
-
-        DefaultCaret caret = (DefaultCaret)smallChat.getCaret();
-        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-        smallChat.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(smallChat);
+        smallChat = new ChatPanel(Constants.ChatConstants.BUBBLE_GAP_EMOTES);
 
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 0.1;
@@ -43,7 +40,7 @@ public class BoardFrame extends JFrame{
         constraints.gridx = 0;
         constraints.gridwidth = 1;
         constraints.gridy = 0;
-        add(scrollPane, constraints);
+        add(smallChat, constraints);
 
         board = new JPanel();
         board.setLayout(new GridLayout());
@@ -127,12 +124,11 @@ public class BoardFrame extends JFrame{
         add(menuButton, constraints);
     }
 
-    public JTextArea getSmallChat(){
-        return smallChat;
+    public void addYourMessToChat(String message){
+        this.smallChat.addYourMessage(message);
     }
-
-    public void addMessToChat(String message){
-        this.smallChat.append(message+"\n");
+    public void addEnemyMessToChat(String message){
+        this.smallChat.addEnemyMessage(message);
     }
 
     public EmotesPanel getEmotesPanel(){ return  emotesPanel; }

@@ -23,18 +23,14 @@ public class MainMenuController {
         this.mainMenuFrame.getMenuPanel().getSettingsButton().setActionCommand("SettingsFrame");
 
         this.mainMenuFrame.getMenuPanel().addConnectListener(viewsController.getChangeStateListener());
-        this.mainMenuFrame.getMenuPanel().getConnectButton().setActionCommand("ConnectionFrame");
+        this.mainMenuFrame.getMenuPanel().getConnectButton().setActionCommand("Connection");
 
         this.mainMenuFrame.getMenuPanel().addStartListener(viewsController.getChangeStateListener());
         this.mainMenuFrame.getMenuPanel().getStartButton().setActionCommand("BoardFrame");
         this.mainMenuFrame.getMenuPanel().getStartButton().setEnabled(false);
     }
-
-    public void addChatMessage(ChatMessage message){
-        this.mainMenuFrame.getChatPanel().addMessToChat(message);
-    }
     public void addChatMessage(String message){
-        this.mainMenuFrame.getChatPanel().addMessToChat(message);
+        this.mainMenuFrame.getMenuChatPanel().addYourMessToChat(message);
     }
 
 }

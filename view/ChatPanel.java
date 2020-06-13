@@ -1,74 +1,132 @@
 package view;
-/*
- * @author Rafal Uzarowicz
- * @see "https://github.com/RafalUzarowicz"
- */
-import model.ChatMessage;
+
+import model.Constants;
 
 import javax.swing.*;
-import javax.swing.text.DefaultCaret;
 import java.awt.*;
-import java.awt.event.ActionListener;
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 
 public class ChatPanel extends JPanel {
-    private final JButton sendButton;
-    private final JTextField messField;
-    private final JPanel messagePanel;
-    private final JTextArea textArea;
+
+
+    private class MessageBubble extends JComponent{
+        private String message;
+        private boolean isRight = true;
+
+        private MessageBubble(){
+            super();
+        }
+        public MessageBubble(String message){
+            this();
+            this.message = message;
+        }
+        public MessageBubble(String message, boolean isRight){
+            this();
+            this.message = message;
+            this.isRight = isRight;
+        }
+        public String getMessage() {
+            return message;
+        }
+        public boolean isRight() {
+            return isRight;
+        }
+        public void paintComponent(Graphics g, int posY) {
+            super.paintComponent(g);
+            int width = getWidth();
+            FontMetrics fm = g.getFontMetrics();
+            int height = getHeight();
+            if (message != null) {
+                Rectangle2D rectangle2D = fm.getStringBounds(message, g);
+                int messWidth = (int)rectangle2D.getWidth();
+                int messHeight = (int)rectangle2D.getHeight();
+                int bubbleWidth = messWidth + gapWidth*2;
+                int bubbleHeight = messHeight + gapWidth*2;
+                if(this.isRight){
+                    g.setColor(yourBubbleColor);
+                    g.fillRoundRect(width-bubbleWidth-gapWidth, posY, bubbleWidth, bubbleHeight, 10, 10);
+                }else{
+                    g.setColor(enemyBubbleColor);
+                    g.fillRoundRect(gapWidth, posY, bubbleWidth, bubbleHeight, 10, 10);
+                }
+                if(this.isRight){
+                    g.setColor(yourTextColor);
+                    g.drawString(message, width-messWidth-gapWidth*2, posY+height/2+messHeight/2);
+                }else{
+                    g.setColor(enemyTextColor);
+                    g.drawString(message, gapWidth*2, posY+height/2+messHeight/2);
+                }
+            }
+        }
+
+    }
+
+    private ArrayList<MessageBubble> messageBubbles;
+    private int messNum = 0;
+    private int gapWidth = Constants.ChatConstants.BUBBLE_GAP;
+    private Color yourBubbleColor = new Color(0,132,255);
+    private Color yourTextColor = new Color(255- yourBubbleColor.getRed(), 255- yourBubbleColor.getGreen(), 255- yourBubbleColor.getBlue());
+    private Color enemyBubbleColor = new Color(0,198,255);
+    private Color enemyTextColor = new Color(255- enemyBubbleColor.getRed(), 255- enemyBubbleColor.getGreen(), 255- enemyBubbleColor.getBlue());
+
+    public ChatPanel(int gap){
+        this();
+        this.gapWidth = gap;
+    }
+
     public ChatPanel(){
-        setLayout(new GridBagLayout());
-        GridBagConstraints constraints = new GridBagConstraints();
-
-        textArea = new JTextArea(8, 20);
-        DefaultCaret caret = (DefaultCaret)textArea.getCaret();
-        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-        textArea.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(textArea);
-        constraints.fill = GridBagConstraints.BOTH;
-        constraints.weightx = 1;
-        constraints.weighty = 1;
-        constraints.gridx = 0;
-        constraints.gridy = 0;
-
-        add(scrollPane, constraints);
-
-
-        messField = new JTextField(10);
-        sendButton = new JButton("Send");
-        sendButton.setEnabled(false);
-
-
-        messagePanel = new JPanel();
-        messagePanel.setLayout(new GridBagLayout());
-        GridBagConstraints innerConstrains = new GridBagConstraints();
-        innerConstrains.fill = GridBagConstraints.BOTH;
-        innerConstrains.weightx = 0.9;
-        innerConstrains.weighty = 1;
-        innerConstrains.gridx = 0;
-        innerConstrains.gridy = 0;
-        messagePanel.add(messField, innerConstrains);
-        innerConstrains.fill = GridBagConstraints.BOTH;
-        innerConstrains.weightx = 0.1;
-        innerConstrains.weighty = 1;
-        innerConstrains.gridx = 1;
-        innerConstrains.gridy = 0;
-        messagePanel.add(sendButton, innerConstrains);
-
-        constraints.weightx = 1;
-        constraints.weighty = 0.025;
-        constraints.gridx = 0;
-        constraints.gridy = 1;
-        add(messagePanel, constraints);
+        messageBubbles = new ArrayList<>();
     }
-    public void addSendListener(ActionListener actionListener){
-        this.sendButton.addActionListener(actionListener);
+
+    public void clearChat(){
+        messageBubbles.clear();
+        this.paintComponent(this.getGraphics());
     }
-    public void addMessToChat(ChatMessage message){
-        this.textArea.append(message.getText());
+
+    public void addYourMessage(String message){
+        this.addMessage(message, true);
     }
-    public void addMessToChat(String message){
-        this.textArea.append(message+"\n");
+    public void addEnemyMessage(String message){
+        this.addMessage(message, false);
     }
-    public JTextField getMessField(){ return messField; }
-    public JButton getSendButton(){ return sendButton; }
+
+    private void addMessage(String message, boolean isRight){
+        if(message.length()>0){
+            if(messNum< Constants.ChatConstants.MAX_MESS_NUM){
+                messNum += 1;
+            }else{
+                messageBubbles.remove(0);
+            }
+            MessageBubble messageBubble = new MessageBubble(message, isRight);
+            messageBubble.setSize(100, 100);
+            messageBubbles.add(messageBubble);
+            this.paintComponent(this.getGraphics());
+        }
+    }
+
+    public void paintComponent(Graphics g) {
+        FontMetrics fontMetrics = g.getFontMetrics();
+        Font f = g.getFont();
+        float pt = f.getSize();
+        int height = (int)(this.getHeight()*0.05f);
+        while (fontMetrics.getHeight() < height) {
+            pt += 2;
+            f = f.deriveFont(pt);
+            fontMetrics = g.getFontMetrics(f);
+        }
+        g.setFont(f);
+        super.paintComponent(g);
+        int fromBottomLine = this.getHeight()-10;
+        for( int i = messageBubbles.size()-1; i>=0; --i ){
+            MessageBubble messageBubble = messageBubbles.get(i);
+            String message = messageBubble.getMessage();
+            messageBubble.setSize(getWidth(), gapWidth*2+(int)fontMetrics.getStringBounds(message, g).getHeight());
+            int bubbleHeight = messageBubble.getHeight();
+            messageBubble.paintComponent(g, fromBottomLine-bubbleHeight);
+            fromBottomLine -= bubbleHeight;
+            fromBottomLine -= 10;
+        }
+    }
+
 }

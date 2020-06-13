@@ -20,8 +20,12 @@ public class Constants{
         public final static int DEFAULT_Y_POSITION = 200;
     }
     public static class ChatConstants{
-        public final static int MAX_MESS_LEN = 15;
+        public final static int FONT_SIZE = 10;
+        public final static int BUBBLE_GAP = 10;
+        public final static int BUBBLE_GAP_EMOTES = 5;
+        public final static int MAX_MESS_LEN = 25;
         public final static String[] EMOTES = {":)", ":(", ":/", ":<", ":>", ":O", ":P"};
+        public final static int MAX_MESS_NUM = 15;
     }
     public static class ConnectionConstants{
         public final static int PORT_LENGTH = 10;

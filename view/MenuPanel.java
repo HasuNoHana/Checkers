@@ -52,16 +52,16 @@ public class MenuPanel extends JPanel {
 
         usersInfo = new JPanel(new GridLayout(1,2));
 
-        enemyReady = new JPanel();
+        enemyReady = new JPanel(new GridLayout());
         enemyReady.add(new JLabel("Is enemy ready?", SwingConstants.CENTER));
         enemyReady.setBackground(Color.RED);
 
         usersInfo.add(enemyReady);
 
         playerNames = new JPanel(new GridLayout(2,1));
-        yourName = new JLabel("You: ");
+        yourName = new JLabel("You: ", SwingConstants.CENTER);
         playerNames.add(yourName);
-        enemyName = new JLabel("Enemy: ");
+        enemyName = new JLabel("Enemy: ", SwingConstants.CENTER);
         playerNames.add(enemyName);
         usersInfo.add(playerNames);
 
@@ -74,7 +74,7 @@ public class MenuPanel extends JPanel {
         connectButton = new JButton("Connect");
         add(connectButton);
 
-        settingsButton = new JButton("SettingsFrame");
+        settingsButton = new JButton("Settings");
         add(settingsButton);
 
         exitButton = new JButton("Exit");
@@ -120,6 +120,7 @@ public class MenuPanel extends JPanel {
             enemyReady.setBackground(Color.GREEN);
         }else{
             enemyReady.setBackground(Color.RED);
+            this.setEnemyName("");
         }
     }
 }

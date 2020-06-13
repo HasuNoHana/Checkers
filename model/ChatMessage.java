@@ -5,14 +5,18 @@ package model;
  */
 public class ChatMessage {
     private String text;
+    private String rawText;
+    private String author;
     public ChatMessage(String message, String from){
         int len = message.length();
+        rawText = message;
+        author = from;
+        text = "";
         if(len>0){
-            text = "["+from+"]: \t";
             int i = 0;
             while(i<message.length()/ Constants.ChatConstants.MAX_MESS_LEN){
                 text = text.concat(message.substring(i*Constants.ChatConstants.MAX_MESS_LEN, (i+1)*Constants.ChatConstants.MAX_MESS_LEN));
-                text = text.concat("\n\t");
+                text = text.concat("\n");
                 len -= Constants.ChatConstants.MAX_MESS_LEN;
                 ++i;
             }
@@ -29,4 +33,5 @@ public class ChatMessage {
     public String getText() {
         return text;
     }
+    public String getRawText(){ return rawText; }
 }

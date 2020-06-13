@@ -8,7 +8,7 @@ import javax.swing.*;
 public class Views {
     public UserInfoChangePanel userInfoChangePanelInitial;
     public UserInfoChangePanel userInfoChangePanelSettings;
-    public ChatPanel textChatPanel;
+    public MenuChatPanel textMenuChatPanel;
     public JTextArea emoteChatArea;
 
     public InitialPopUpFrame initialPopUpFrame;
@@ -19,10 +19,10 @@ public class Views {
     public Views(){
         userInfoChangePanelInitial = new UserInfoChangePanel();
         userInfoChangePanelSettings = new UserInfoChangePanel();
-        textChatPanel = new ChatPanel();
+        textMenuChatPanel = new MenuChatPanel();
 
         initialPopUpFrame = new InitialPopUpFrame(userInfoChangePanelInitial);
-        mainMenuFrame = new MainMenuFrame(textChatPanel);
+        mainMenuFrame = new MainMenuFrame(textMenuChatPanel);
         boardFrame = new BoardFrame();
         connectionFrame = new ConnectionFrame();
         settingsFrame = new SettingsFrame(userInfoChangePanelSettings);

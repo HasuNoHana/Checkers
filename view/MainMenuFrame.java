@@ -8,8 +8,8 @@ import java.awt.*;
 
 public class MainMenuFrame extends JFrame {
     private MenuPanel menuPanel;
-    private ChatPanel chatPanel;
-    public MainMenuFrame(ChatPanel chatPanel ){
+    private MenuChatPanel menuChatPanel;
+    public MainMenuFrame(MenuChatPanel menuChatPanel){
         super("Menu");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout());
@@ -17,14 +17,14 @@ public class MainMenuFrame extends JFrame {
         menuPanel = new MenuPanel();
         add(menuPanel);
 
-        this.chatPanel = chatPanel;
-        add(chatPanel);
+        this.menuChatPanel = menuChatPanel;
+        add(menuChatPanel);
     }
 
     public MenuPanel getMenuPanel(){
         return menuPanel;
     }
-    public ChatPanel getChatPanel(){
-        return chatPanel;
+    public MenuChatPanel getMenuChatPanel(){
+        return menuChatPanel;
     }
 }

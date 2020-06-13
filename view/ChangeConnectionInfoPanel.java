@@ -26,7 +26,7 @@ public class ChangeConnectionInfoPanel extends JPanel {
     private boolean isIPReady = false;
 
     public ChangeConnectionInfoPanel(){
-        this.setLayout(new GridLayout(3,1, Constants.LayoutsConstants.H_GAP ,Constants.LayoutsConstants.V_GAP));
+        this.setLayout(new GridLayout(4,1, Constants.LayoutsConstants.H_GAP ,Constants.LayoutsConstants.V_GAP));
 
         upperPanel = new JPanel();
         upperPanel.setLayout(new GridLayout(2, 1));
@@ -73,8 +73,10 @@ public class ChangeConnectionInfoPanel extends JPanel {
         lowerPanel.add(ipInfoLabel);
         lowerPanel.add(portInfoLabel);
 
+        this.add(new JPanel());
         this.add(upperPanel);
         this.add(lowerPanel);
+        //this.add(new JPanel());
     }
 
     public JButton getChangeIPButton() {

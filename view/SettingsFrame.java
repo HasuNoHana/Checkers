@@ -26,7 +26,10 @@ public class SettingsFrame extends JFrame{
     public SettingsFrame(UserInfoChangePanel userInfoChangePanel){
         super("SettingsFrame");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridLayout());
+        setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.fill = GridBagConstraints.BOTH;
+        constraints.weighty = 1.0;
 
         settingsPanel = new JPanel(new CardLayout());
 
@@ -67,19 +70,23 @@ public class SettingsFrame extends JFrame{
         backButton.setIcon(new ImageIcon(this.getClass().getResource("../graphics/back.png")));
         buttonsPanel.add(backButton);
 
-        add(buttonsPanel);
 
+        constraints.weightx = 0.2;
+        constraints.gridx = 0;
+        add(buttonsPanel, constraints);
+
+        JPanel usersPanel = new JPanel(new FlowLayout());
         users = userInfoChangePanel;
+        usersPanel.add(users);
 
         checkers = new JPanel();
         checkers.setBackground(Color.RED);
 
         menu = new MenuLookPanel();
 
-        chat = new JPanel();
-        chat.setBackground(Color.BLUE);
+        chat = new ChatColorPanel();
 
-        settingsPanel.add(users, "user");
+        settingsPanel.add(usersPanel, "user");
         settingsPanel.add(checkers, "checkers");
         settingsPanel.add(menu, "menu");
         settingsPanel.add(chat, "chat");
@@ -87,7 +94,9 @@ public class SettingsFrame extends JFrame{
         CardLayout cl = (CardLayout) settingsPanel.getLayout();
         cl.show(settingsPanel, "user");
 
-        add(settingsPanel);
+        constraints.weightx = 0.8;
+        constraints.gridx = 1;
+        add(settingsPanel, constraints);
     }
 
     public MenuLookPanel getMenuLookPanel(){
