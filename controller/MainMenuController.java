@@ -3,34 +3,21 @@ package controller;
  * @author Rafal Uzarowicz
  * @see "https://github.com/RafalUzarowicz"
  */
-import model.ChatMessage;
-import model.User;
 import view.MainMenuFrame;
 
 public class MainMenuController {
-    private MainMenuFrame mainMenuFrame;
-    private ViewsController viewsController;
-    private User me;
-    public MainMenuController(MainMenuFrame mainMenuFrame, User meUsr, User enemy, ViewsController viewsController){
-        this.mainMenuFrame = mainMenuFrame;
-        this.viewsController = viewsController;
-        this.me = meUsr;
+    public MainMenuController(MainMenuFrame mainMenuFrame, ViewsController viewsController){
+        mainMenuFrame.getMenuPanel().addExitListener(viewsController.getChangeStateListener());
+        mainMenuFrame.getMenuPanel().getExitButton().setActionCommand("Exit");
 
-        this.mainMenuFrame.getMenuPanel().addExitListener(viewsController.getChangeStateListener());
-        this.mainMenuFrame.getMenuPanel().getExitButton().setActionCommand("Exit");
+        mainMenuFrame.getMenuPanel().addSettingsListener(viewsController.getChangeStateListener());
+        mainMenuFrame.getMenuPanel().getSettingsButton().setActionCommand("SettingsFrame");
 
-        this.mainMenuFrame.getMenuPanel().addSettingsListener(viewsController.getChangeStateListener());
-        this.mainMenuFrame.getMenuPanel().getSettingsButton().setActionCommand("SettingsFrame");
+        mainMenuFrame.getMenuPanel().addConnectListener(viewsController.getChangeStateListener());
+        mainMenuFrame.getMenuPanel().getConnectButton().setActionCommand("Connection");
 
-        this.mainMenuFrame.getMenuPanel().addConnectListener(viewsController.getChangeStateListener());
-        this.mainMenuFrame.getMenuPanel().getConnectButton().setActionCommand("Connection");
-
-        this.mainMenuFrame.getMenuPanel().addStartListener(viewsController.getChangeStateListener());
-        this.mainMenuFrame.getMenuPanel().getStartButton().setActionCommand("BoardFrame");
-        this.mainMenuFrame.getMenuPanel().getStartButton().setEnabled(false);
+        mainMenuFrame.getMenuPanel().addStartListener(viewsController.getChangeStateListener());
+        mainMenuFrame.getMenuPanel().getStartButton().setActionCommand("BoardFrame");
+        mainMenuFrame.getMenuPanel().getStartButton().setEnabled(false);
     }
-    public void addChatMessage(String message){
-        this.mainMenuFrame.getMenuChatPanel().addYourMessToChat(message);
-    }
-
 }

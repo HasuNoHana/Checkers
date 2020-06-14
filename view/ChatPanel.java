@@ -129,4 +129,19 @@ public class ChatPanel extends JPanel {
         }
     }
 
+    public void setYourBubbleColor(Color yourBubbleColor) {
+        this.yourBubbleColor = yourBubbleColor;
+    }
+
+    public void setYourTextColor(Color yourTextColor) {
+        this.yourTextColor = yourTextColor;
+    }
+
+    public void setEnemyBubbleColor(Color enemyBubbleColor) {
+        this.enemyBubbleColor = enemyBubbleColor;
+    }
+
+    public void setEnemyTextColor(Color enemyTextColor) {
+        this.enemyTextColor = enemyTextColor;
+    }
 }

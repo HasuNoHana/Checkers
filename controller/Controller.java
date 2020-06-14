@@ -26,8 +26,8 @@ public class Controller {
         this.socketController = new SocketController(models, views);
         this.viewsController = new ViewsController(models.framesArray, views);
         this.initialPopupController = new InitialPopupController(views, viewsController, models.me);
-        this.mainMenuController = new MainMenuController(views.mainMenuFrame, models.me, models.enemy, viewsController);
-        this.settingsController = new SettingsController(views.settingsFrame, models.menu, models.framesArray, viewsController);
+        this.mainMenuController = new MainMenuController(views.mainMenuFrame, viewsController);
+        this.settingsController = new SettingsController(views, models, models.framesArray, viewsController);
         this.boardController = new BoardController(views.boardFrame, viewsController);
         this.connectionController = new ConnectionController(views.connectionFrame, models.connectionStatus, viewsController);
 
@@ -35,17 +35,6 @@ public class Controller {
 
 
         //socketController.activateChangingButtons();
-
-
-
-
-
-
-
-
-
-
-
 
          viewsController.showFirstView();
     }

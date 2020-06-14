@@ -3,6 +3,8 @@ package view;
  * @author Rafal Uzarowicz
  * @see "https://github.com/RafalUzarowicz"
  */
+import model.Constants;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +28,7 @@ public class MenuPanel extends JPanel {
     private final JButton settingsButton;
     private final JButton exitButton;
     MenuPanel(){
-        setLayout(new GridLayout(6, 1, 20, 20));
+        setLayout(new GridLayout(6, 1, Constants.LayoutsConstants.H_GAP, Constants.LayoutsConstants.V_GAP));
 
         logo = new JLabel();
         logo.addComponentListener(new ComponentAdapter() {

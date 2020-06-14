@@ -27,41 +27,51 @@ public class ConnectionFrame extends JFrame {
         setLayout(new GridLayout(1, 2));
 
         JPanel buttonsPanel = new JPanel();
-        buttonsPanel.setLayout(new GridLayout(4,1, Constants.LayoutsConstants.H_GAP, Constants.LayoutsConstants.V_GAP));
+        buttonsPanel.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.fill = GridBagConstraints.BOTH;
+        constraints.weighty = 0.9;
+        constraints.weightx = 0.9;
+        constraints.insets = new Insets(10,10,10,10);
+        constraints.gridx = 0;
 
         hostButton = new JButton("Host");
         hostButton.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
-                hostButton.setFont(new Font(hostButton.getName(), Font.PLAIN, hostButton.getHeight()*3/4));
+                hostButton.setFont(new Font(hostButton.getName(), Font.PLAIN, hostButton.getHeight()*3/8));
             }
         });
-        buttonsPanel.add(hostButton);
+        constraints.gridy = 0;
+        buttonsPanel.add(hostButton, constraints);
 
         joinButton = new JButton("Join");
         joinButton.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
-                joinButton.setFont(new Font(joinButton.getName(), Font.PLAIN, joinButton.getHeight()*3/4));
+                joinButton.setFont(new Font(joinButton.getName(), Font.PLAIN, joinButton.getHeight()*3/8));
             }
         });
-        buttonsPanel.add(joinButton);
+        constraints.gridy = 1;
+        buttonsPanel.add(joinButton, constraints);
 
         endConnectionButton = new JButton("End");
         endConnectionButton.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
-                endConnectionButton.setFont(new Font(endConnectionButton.getName(), Font.PLAIN, endConnectionButton.getHeight()*3/4));
+                endConnectionButton.setFont(new Font(endConnectionButton.getName(), Font.PLAIN, endConnectionButton.getHeight()*3/8));
             }
         });
-        buttonsPanel.add(endConnectionButton);
+        constraints.gridy = 2;
+        buttonsPanel.add(endConnectionButton,constraints);
 
         backButton = new JButton("");
         backButton.setIcon(new ImageIcon(this.getClass().getResource("../graphics/back.png")));
-        buttonsPanel.add(backButton);
+        constraints.gridy = 3;
+        buttonsPanel.add(backButton, constraints);
 
         add(buttonsPanel);
 

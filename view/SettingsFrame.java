@@ -3,11 +3,11 @@ package view;
  * @author Rafal Uzarowicz
  * @see "https://github.com/RafalUzarowicz"
  */
-import model.Constants;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class SettingsFrame extends JFrame{
     private final JButton userSettingsButton;
@@ -21,7 +21,7 @@ public class SettingsFrame extends JFrame{
     private final MenuLookPanel menu;
     private final UserInfoChangePanel users;
     private final JPanel checkers;
-    private final JPanel chat;
+    private final ChatColorPanel chat;
 
     public SettingsFrame(UserInfoChangePanel userInfoChangePanel){
         super("SettingsFrame");
@@ -34,7 +34,13 @@ public class SettingsFrame extends JFrame{
         settingsPanel = new JPanel(new CardLayout());
 
         buttonsPanel = new JPanel();
-        buttonsPanel.setLayout(new GridLayout(5, 1, Constants.LayoutsConstants.H_GAP, Constants.LayoutsConstants.V_GAP));
+        buttonsPanel.setLayout(new GridBagLayout());
+        GridBagConstraints constraintsInner = new GridBagConstraints();
+        constraintsInner.fill = GridBagConstraints.BOTH;
+        constraintsInner.weighty = 0.9;
+        constraintsInner.weightx = 0.9;
+        constraintsInner.insets = new Insets(5,5,5,5);
+        constraintsInner.gridx = 0;
 
 
         userSettingsButton = new JButton("User");
@@ -42,33 +48,73 @@ public class SettingsFrame extends JFrame{
             CardLayout cl = (CardLayout) settingsPanel.getLayout();
             cl.show(settingsPanel, "user");
         });
-        buttonsPanel.add(userSettingsButton);
+        userSettingsButton.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                userSettingsButton.setFont(new Font(userSettingsButton.getName(), Font.PLAIN, userSettingsButton.getHeight()*3/8));
+            }
+        });
+        constraintsInner.gridy = 0;
+        buttonsPanel.add(userSettingsButton, constraintsInner);
 
         checkersSettingsButton = new JButton("Checkers");
         checkersSettingsButton.addActionListener(e -> {
             CardLayout cl = (CardLayout) settingsPanel.getLayout();
             cl.show(settingsPanel, "checkers");
         });
-        buttonsPanel.add(checkersSettingsButton);
+        checkersSettingsButton.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                checkersSettingsButton.setFont(new Font(checkersSettingsButton.getName(), Font.PLAIN, checkersSettingsButton.getHeight()*3/8));
+            }
+        });
+        constraintsInner.gridy = 1;
+        buttonsPanel.add(checkersSettingsButton, constraintsInner);
 
         menuSettingsButton = new JButton("Menu");
         menuSettingsButton.addActionListener(e -> {
             CardLayout cl = (CardLayout) settingsPanel.getLayout();
             cl.show(settingsPanel, "menu");
         });
-        buttonsPanel.add(menuSettingsButton);
+        menuSettingsButton.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                menuSettingsButton.setFont(new Font(menuSettingsButton.getName(), Font.PLAIN, menuSettingsButton.getHeight()*3/8));
+            }
+        });
+        constraintsInner.gridy = 2;
+        buttonsPanel.add(menuSettingsButton, constraintsInner);
 
         chatSettingsButton = new JButton("Chat");
         chatSettingsButton.addActionListener(e -> {
             CardLayout cl = (CardLayout) settingsPanel.getLayout();
             cl.show(settingsPanel, "chat");
         });
-        buttonsPanel.add(chatSettingsButton);
+        chatSettingsButton.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                chatSettingsButton.setFont(new Font(chatSettingsButton.getName(), Font.PLAIN, chatSettingsButton.getHeight()*3/8));
+            }
+        });
+        constraintsInner.gridy = 3;
+        buttonsPanel.add(chatSettingsButton, constraintsInner);
 
         backButton = new JButton("Back");
         backButton.setActionCommand("Menu");
         backButton.setIcon(new ImageIcon(this.getClass().getResource("../graphics/back.png")));
-        buttonsPanel.add(backButton);
+        backButton.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                backButton.setFont(new Font(backButton.getName(), Font.PLAIN, backButton.getHeight()*3/8));
+            }
+        });
+        constraintsInner.gridy = 4;
+        buttonsPanel.add(backButton, constraintsInner);
 
 
         constraints.weightx = 0.2;
@@ -107,5 +153,8 @@ public class SettingsFrame extends JFrame{
     }
     public JButton getBackButton(){
         return this.backButton;
+    }
+    public ChatColorPanel getChat() {
+        return chat;
     }
 }

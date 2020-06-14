@@ -4,26 +4,24 @@ package controller;
  * @see "https://github.com/RafalUzarowicz"
  */
 import model.FramesArray;
-import model.Menu;
-import view.SettingsFrame;
+import model.Models;
+import view.Views;
 
 import javax.swing.*;
 
 public class SettingsController {
-    private SettingsFrame settingsFrame;
 
-    public SettingsController(SettingsFrame settingsFrame, Menu menu, FramesArray framesArray, ViewsController viewsController){
-        this.settingsFrame = settingsFrame;
+    public SettingsController(Views views, Models models, FramesArray framesArray, ViewsController viewsController){
 
         // User information change
-        this.settingsFrame.addBackListener(viewsController.getChangeStateListener());
-        this.settingsFrame.getBackButton().setActionCommand("Menu");
+        views.settingsFrame.addBackListener(viewsController.getChangeStateListener());
+        views.settingsFrame.getBackButton().setActionCommand("Menu");
 
         // Todo: Change checkers look
 
         // Menu look and feel change
-        for(UIManager.LookAndFeelInfo lookAndFeelInfo : menu.getInfos() ){
-            settingsFrame.getMenuLookPanel().addButton(lookAndFeelInfo, e -> {
+        for(UIManager.LookAndFeelInfo lookAndFeelInfo : models.menu.getInfos() ){
+            views.settingsFrame.getMenuLookPanel().addButton(lookAndFeelInfo, e -> {
                 try{
                     UIManager.setLookAndFeel(lookAndFeelInfo.getClassName());
                     for(int i = 0; i< framesArray.len(); ++i){
@@ -36,7 +34,16 @@ public class SettingsController {
             });
         }
 
-        // Todo: Change chat look
+        // Chat colors
+        views.settingsFrame.getChat().getEnemyChangeButton().addActionListener(e -> {
+            views.mainMenuFrame.getMenuChatPanel().getChatPanel().setEnemyBubbleColor(views.settingsFrame.getChat().getEnemyBubbleColor());
+            views.mainMenuFrame.getMenuChatPanel().getChatPanel().setEnemyTextColor(views.settingsFrame.getChat().getEnemyTextColor());
+        });
+        views.settingsFrame.getChat().getYourChangeButton().addActionListener(e -> {
+            views.mainMenuFrame.getMenuChatPanel().getChatPanel().setYourBubbleColor(views.settingsFrame.getChat().getYourBubbleColor());
+            views.mainMenuFrame.getMenuChatPanel().getChatPanel().setYourTextColor(views.settingsFrame.getChat().getYourTextColor());
+        });
+
 
 
     }
