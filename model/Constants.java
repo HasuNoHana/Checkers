@@ -35,11 +35,12 @@ public class Constants{
     public static class ConnectionConstants{
         public final static int PORT_LENGTH = 10;
         public final static int IP_LENGTH = 15;
-        public final static String AVATAR_IMAGE = "avat_imag";
         public final static String USER_NAME = "user_name";
         public final static String CHAT_MESSAGE = "chat_mess";
         public final static String EMOTE_MESSAGE = "emot_mess";
         public final static String BOARD_MOVE = "game_move";
-        public final static String CONNECTION_END = "conn_exit";
+    }
+    public static class GameConstants{
+        public final static int BOARD_SIZE = 8;
     }
 }

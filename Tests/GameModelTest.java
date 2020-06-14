@@ -1,8 +1,10 @@
-package checkers;
+package Tests;
 
-import org.junit.Test;
+import Game.*;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GameModelTest {
 

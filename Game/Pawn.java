@@ -1,4 +1,4 @@
-package checkers;
+package Game;
 
 public enum Pawn {
     WHITENORMAL, WHITEQUIEEN, BROWNNORMAL, BROWNQUIEEN, EMPTY;

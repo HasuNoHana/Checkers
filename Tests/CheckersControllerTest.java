@@ -1,14 +1,16 @@
-package checkers;
+package Tests;
 
-import org.junit.Test;
+import Game.*;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CheckersControllerTest {
 
     @Test
     public void makeMove() {
-        CheckersController controller = new CheckersController(new GameModel(), new GameView());
+        //CheckersController controller = new CheckersController(new GameModel(), new GameView());
 
     }
 }

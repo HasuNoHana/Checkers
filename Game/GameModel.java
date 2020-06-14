@@ -1,11 +1,9 @@
-package checkers;
+package Game;
 
 import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import static checkers.Pawn.WHITENORMAL;
 
 public class GameModel {
     private Field[][] board;
@@ -165,7 +163,7 @@ public class GameModel {
             if (i < 2)
                 f.setPawn(Pawn.BROWNNORMAL);
             if (i > sideSize - 3)
-                f.setPawn(WHITENORMAL);
+                f.setPawn(Pawn.WHITENORMAL);
         }
     }
 
@@ -248,7 +246,7 @@ public class GameModel {
     }
 
     private boolean isCurrentPlayerPawn(Field oldField) {
-        return (currentPlayer == Player.WHITE && (oldField.getPawn() == WHITENORMAL || oldField.getPawn() == Pawn.WHITEQUIEEN)) ||
+        return (currentPlayer == Player.WHITE && (oldField.getPawn() == Pawn.WHITENORMAL || oldField.getPawn() == Pawn.WHITEQUIEEN)) ||
                 (currentPlayer == Player.BROWN && (oldField.getPawn() == Pawn.BROWNNORMAL || oldField.getPawn() == Pawn.BROWNQUIEEN));
     }
 
@@ -338,7 +336,7 @@ public class GameModel {
             if (board[oponentRow][oponentCol].getPawn() == Pawn.BROWNQUIEEN || board[oponentRow][oponentCol].getPawn() == Pawn.BROWNNORMAL)
                 return false;
         } else {
-            if (board[oponentRow][oponentCol].getPawn() == Pawn.WHITEQUIEEN || board[oponentRow][oponentCol].getPawn() == WHITENORMAL)
+            if (board[oponentRow][oponentCol].getPawn() == Pawn.WHITEQUIEEN || board[oponentRow][oponentCol].getPawn() == Pawn.WHITENORMAL)
                 return false;
         }
         return true;

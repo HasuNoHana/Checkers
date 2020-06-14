@@ -3,6 +3,10 @@ package view;
  * @author Rafal Uzarowicz
  * @see "https://github.com/RafalUzarowicz"
  */
+import Game.CheckersController;
+import Game.GameModel;
+import Game.GameView;
+import Game.ImageRepository;
 import model.Constants;
 
 import javax.imageio.ImageIO;
@@ -44,30 +48,37 @@ public class BoardFrame extends JFrame{
         board = new JPanel();
         board.setLayout(new GridLayout());
 
-        // Todo: gra tutaj bedzie zamiast jlabel
-        JLabel checkers = new JLabel();
-        checkers.setSize(1000, 1000);
-        board.add(checkers);
-        checkers.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                super.componentResized(e);
-                BufferedImage img = null;
-                try {
-                    File imageFile = new File(".\\graphics\\checkers.png");
-                    img = ImageIO.read(imageFile);
-                } catch (IOException exception) {
-                    exception.printStackTrace();
-                    System.exit(1);
-                }
-                if( checkers.getWidth()>0 && checkers.getHeight()>0 ){
-                    Image dimg = img.getScaledInstance(checkers.getWidth(), checkers.getHeight(), Image.SCALE_SMOOTH);
-                    ImageIcon imageIcon = new ImageIcon(dimg);
-                    checkers.setIcon(imageIcon);
-                }
-            }
-        });
-        board.setBackground(Color.RED);
+        ImageRepository imageRepository = new ImageRepository();
+        GameModel gameModel = new GameModel();
+        GameView game = new GameView(imageRepository);
+        CheckersController checkersController = new CheckersController(gameModel, game, imageRepository);
+
+        board.add(game);
+
+//        // Todo: gra tutaj bedzie zamiast jlabel
+//        JLabel checkers = new JLabel();
+//        checkers.setSize(1000, 1000);
+//        board.add(checkers);
+//        checkers.addComponentListener(new ComponentAdapter() {
+//            @Override
+//            public void componentResized(ComponentEvent e) {
+//                super.componentResized(e);
+//                BufferedImage img = null;
+//                try {
+//                    File imageFile = new File(".\\graphics\\checkers.png");
+//                    img = ImageIO.read(imageFile);
+//                } catch (IOException exception) {
+//                    exception.printStackTrace();
+//                    System.exit(1);
+//                }
+//                if( checkers.getWidth()>0 && checkers.getHeight()>0 ){
+//                    Image dimg = img.getScaledInstance(checkers.getWidth(), checkers.getHeight(), Image.SCALE_SMOOTH);
+//                    ImageIcon imageIcon = new ImageIcon(dimg);
+//                    checkers.setIcon(imageIcon);
+//                }
+//            }
+//        });
+//        board.setBackground(Color.RED);
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 0.9;
         constraints.weighty = 0.9;

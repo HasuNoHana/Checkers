@@ -1,4 +1,4 @@
-package checkers;
+package Game;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,8 +12,8 @@ public class PicturePanel extends JPanel {
     private double pawnScale = 0.85;
 
 
-    public PicturePanel(int row, int col) {
-        imageRepository = ImageRepository.getInstance();
+    public PicturePanel(int row, int col, ImageRepository imageRepository) {
+        this.imageRepository = imageRepository;
         this.row =row;
         this.col = col;
     }

@@ -38,10 +38,14 @@ public class SettingsController {
         views.settingsFrame.getChat().getEnemyChangeButton().addActionListener(e -> {
             views.mainMenuFrame.getMenuChatPanel().getChatPanel().setEnemyBubbleColor(views.settingsFrame.getChat().getEnemyBubbleColor());
             views.mainMenuFrame.getMenuChatPanel().getChatPanel().setEnemyTextColor(views.settingsFrame.getChat().getEnemyTextColor());
+            views.mainMenuFrame.getMenuChatPanel().getChatPanel().setYourBubbleColor(views.settingsFrame.getChat().getYourBubbleColor());
+            views.mainMenuFrame.getMenuChatPanel().getChatPanel().setYourTextColor(views.settingsFrame.getChat().getYourTextColor());
         });
         views.settingsFrame.getChat().getYourChangeButton().addActionListener(e -> {
             views.mainMenuFrame.getMenuChatPanel().getChatPanel().setYourBubbleColor(views.settingsFrame.getChat().getYourBubbleColor());
             views.mainMenuFrame.getMenuChatPanel().getChatPanel().setYourTextColor(views.settingsFrame.getChat().getYourTextColor());
+            views.mainMenuFrame.getMenuChatPanel().getChatPanel().setEnemyBubbleColor(views.settingsFrame.getChat().getEnemyBubbleColor());
+            views.mainMenuFrame.getMenuChatPanel().getChatPanel().setEnemyTextColor(views.settingsFrame.getChat().getEnemyTextColor());
         });
 
 

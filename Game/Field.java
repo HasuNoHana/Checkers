@@ -1,4 +1,4 @@
-package checkers;
+package Game;
 
 import java.awt.*;
 

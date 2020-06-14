@@ -1,4 +1,4 @@
-package checkers;
+package Game;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -7,30 +7,20 @@ import java.util.HashMap;
 
 public class ImageRepository {
     private final HashMap<Pawn, Image> pawnDispatch;
-    public static ImageRepository INSTANCE = null;
 
-    public static ImageRepository getInstance() {
-        return getInstance("White", "Brown");
+    public ImageRepository(){
+        this("White", "Brown");
     }
 
-    public static ImageRepository getInstance(String Player1Color, String Player2Color) {
-        if (INSTANCE != null)
-            return INSTANCE;
-        else {
-            INSTANCE = new ImageRepository(Player1Color, Player2Color);
-            return INSTANCE;
-        }
-    }
-
-    private ImageRepository(String Player1Color, String Player2Color) {
-        String whiteNormalPath = "/PawnPictures/" + Player1Color + "/Normal.png";
-        String whiteQueenPath = "/PawnPictures/" + Player1Color + "/Queen.png";
-        String brownNormalPath = "/PawnPictures/" + Player2Color + "/Normal.png";
-        String brownQueenPath = "/PawnPictures/" + Player2Color + "/Queen.png";
-        String EmptyPath = "/PawnPictures/EmptyImage.png";
+    public ImageRepository(String Player1Color, String Player2Color) {
+        String whiteNormalPath = "../graphics/" + Player1Color + "/Normal.png";
+        String whiteQueenPath = "../graphics/" + Player1Color + "/Queen.png";
+        String brownNormalPath = "../graphics/" + Player2Color + "/Normal.png";
+        String brownQueenPath = "../graphics/" + Player2Color + "/Queen.png";
+        String EmptyPath = "../graphics/EmptyImage.png";
 
 
-        this.pawnDispatch = new HashMap<Pawn, Image>();
+        this.pawnDispatch = new HashMap<>();
         pawnDispatch.put(Pawn.WHITENORMAL, getImageFromPath(whiteNormalPath));
         pawnDispatch.put(Pawn.WHITEQUIEEN, getImageFromPath(whiteQueenPath));
         pawnDispatch.put(Pawn.BROWNNORMAL, getImageFromPath(brownNormalPath));
@@ -44,7 +34,6 @@ public class ImageRepository {
             image = ImageIO.read(getClass().getResourceAsStream(imagePath));
         } catch (IOException e) {
             System.err.println("Blad odczytu obrazka" + imagePath);
-            e.printStackTrace();
         }
         return image;
     }

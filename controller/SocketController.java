@@ -229,10 +229,6 @@ public class SocketController {
                 finalMessage = finalMessage + Constants.ConnectionConstants.BOARD_MOVE+"\n";
                 finalMessage = finalMessage + message+"\n";
                 break;
-            case Constants.ConnectionConstants.AVATAR_IMAGE:
-                finalMessage = finalMessage + Constants.ConnectionConstants.AVATAR_IMAGE+"\n";
-                finalMessage = finalMessage + message+"\n";
-                break;
             default:
                 return;
         }
@@ -269,9 +265,6 @@ public class SocketController {
                             case Constants.ConnectionConstants.BOARD_MOVE:
 
                                 break;
-                            case Constants.ConnectionConstants.AVATAR_IMAGE:
-
-                                break;
                             default:
                                 return;
                         }
@@ -292,7 +285,8 @@ public class SocketController {
         changingButtonsNotConnected.add(button);
     }
 
-    private void activateChangingButtons(){
+    // Todo: zamien na private
+    public void activateChangingButtons(){
         for( JButton button : changingButtonsConnected ){
             button.setEnabled(true);
         }
@@ -301,7 +295,7 @@ public class SocketController {
         }
     }
 
-    private void deactivateChangingButtons(){
+    public void deactivateChangingButtons(){
         for( JButton button : changingButtonsConnected ){
             button.setEnabled(false);
         }

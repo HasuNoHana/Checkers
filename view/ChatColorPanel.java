@@ -37,13 +37,13 @@ public class ChatColorPanel extends JPanel {
         }
 
     }
-    private JColorChooser yourBubbleColorChooser;
-    private JColorChooser yourTextColorChooser;
-    private JColorChooser enemyBubbleColorChooser;
-    private JColorChooser enemyTextColorChooser;
+    private final JColorChooser yourBubbleColorChooser;
+    private final JColorChooser yourTextColorChooser;
+    private final JColorChooser enemyBubbleColorChooser;
+    private final JColorChooser enemyTextColorChooser;
 
-    private JButton yourChangeButton;
-    private JButton enemyChangeButton;
+    private final JButton yourChangeButton;
+    private final JButton enemyChangeButton;
 
     public ChatColorPanel(){
         setLayout(new GridLayout());
@@ -164,7 +164,6 @@ public class ChatColorPanel extends JPanel {
 
         upperTabbedPane.addTab("Enemy", null, enemyChangePanel, "Choose enemy chat colors.");
         upperTabbedPane.setMnemonicAt(1, KeyEvent.VK_1);
-
 
         add(upperTabbedPane);
     }

@@ -1,12 +1,8 @@
-package checkers;
+package Game;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.HashSet;
-import java.util.Set;
-
-import static checkers.Pawn.WHITENORMAL;
 
 public class CheckersController implements MouseListener {
     private GameModel model;
@@ -14,18 +10,12 @@ public class CheckersController implements MouseListener {
     private boolean fieldIsClicked;
     private PicturePanel oldFieldPanel;
     private Field lastEnteredField;
+    private ImageRepository imageRepository;
 
-    public CheckersController(GameModel g, GameView mf, String Color1, String Color2) {
+    public CheckersController(GameModel g, GameView mf, ImageRepository imageRepository) {
         model = g;
         view = mf;
-        ImageRepository.getInstance(Color1,Color2); //color seter
-        play();
-    }
-
-    public CheckersController(GameModel g, GameView mf) {
-        model = g;
-        view = mf;
-        ImageRepository.getInstance();
+        imageRepository = imageRepository;
         play();
     }
 
