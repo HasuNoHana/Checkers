@@ -315,8 +315,7 @@ public class SocketController {
         changingButtonsNotConnected.add(button);
     }
 
-    // Todo: zamien to na private
-    public void activateChangingButtons(){
+    private void activateChangingButtons(){
         for( JButton button : changingButtonsConnected ){
             button.setEnabled(true);
         }
@@ -325,7 +324,7 @@ public class SocketController {
         }
     }
 
-    public void deactivateChangingButtons(){
+    private void deactivateChangingButtons(){
         for( JButton button : changingButtonsConnected ){
             button.setEnabled(false);
         }

@@ -76,7 +76,6 @@ public class ChangeConnectionInfoPanel extends JPanel {
         this.add(new JPanel());
         this.add(upperPanel);
         this.add(lowerPanel);
-        //this.add(new JPanel());
     }
 
     public JButton getChangeIPButton() {

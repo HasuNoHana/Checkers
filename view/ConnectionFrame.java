@@ -3,8 +3,6 @@ package view;
  * @author Rafal Uzarowicz
  * @see "https://github.com/RafalUzarowicz"
  */
-import model.Constants;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;

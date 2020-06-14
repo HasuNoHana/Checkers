@@ -7,7 +7,6 @@ import model.Constants;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;

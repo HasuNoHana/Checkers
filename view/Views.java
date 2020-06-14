@@ -9,7 +9,6 @@ public class Views {
     public UserInfoChangePanel userInfoChangePanelInitial;
     public UserInfoChangePanel userInfoChangePanelSettings;
     public MenuChatPanel textMenuChatPanel;
-    public JTextArea emoteChatArea;
 
     public InitialPopUpFrame initialPopUpFrame;
     public MainMenuFrame mainMenuFrame;

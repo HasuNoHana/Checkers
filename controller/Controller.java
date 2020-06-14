@@ -31,12 +31,10 @@ public class Controller {
         this.boardController = new BoardController(views.boardFrame, viewsController);
         this.connectionController = new ConnectionController(views.connectionFrame, models.connectionStatus, viewsController);
 
+    }
 
-
-
-        //socketController.activateChangingButtons();
-
-         viewsController.showFirstView();
+    public void start(){
+        viewsController.showFirstView();
     }
 
 

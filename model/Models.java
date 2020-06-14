@@ -9,8 +9,6 @@ public class Models {
     public User me;
     public User enemy;
     public Menu menu;
-    public Chat bigChat;
-    public Chat smallChat;
     public Models(){
         // Models
         framesArray = new FramesArray();
@@ -19,7 +17,5 @@ public class Models {
         me = new User("");
         enemy = new User("");
         menu = new Menu();
-        bigChat = new Chat();
-        smallChat = new Chat();
     }
 }

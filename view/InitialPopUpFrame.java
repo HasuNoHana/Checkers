@@ -9,13 +9,10 @@ import java.awt.event.ActionListener;
 
 public class InitialPopUpFrame extends JFrame {
     private final JButton nextButton;
-    private final UserInfoChangePanel userInfoChangePanel;
     public InitialPopUpFrame(UserInfoChangePanel userInfoChangePanel){
         super("Welcome");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new FlowLayout());
-
-        this.userInfoChangePanel = userInfoChangePanel;
 
         add(userInfoChangePanel);
 
@@ -24,9 +21,6 @@ public class InitialPopUpFrame extends JFrame {
 
         add(nextButton);
 
-    }
-    public UserInfoChangePanel getUserInfoChangePanel(){
-        return this.userInfoChangePanel;
     }
     public void addNextListener(ActionListener actionListener){
         this.nextButton.addActionListener(actionListener);

@@ -8,9 +8,7 @@ import java.awt.EventQueue;
 * todo:
 *  - dodanie samej gry xd
 *  - dodac monitory
-*  - dodac wlasny look and feel
 *  - dodac zmiane wygladu pionkow
-*  - dodac ladniejsze emoji
 *  - testy jednostkowe
 *  - dodac etykiety do przyciskow
 * */
@@ -27,6 +25,8 @@ public class Checkers {
 
             // Controller
             Controller controller = new Controller(models, views);
+
+            controller.start();
         });
     }
 }

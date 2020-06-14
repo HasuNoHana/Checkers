@@ -20,7 +20,6 @@ public class Constants{
         public final static int DEFAULT_Y_POSITION = 200;
     }
     public static class ChatConstants{
-        public final static int FONT_SIZE = 10;
         public final static int BUBBLE_GAP = 10;
         public final static int BUBBLE_GAP_EMOTES = 5;
         public final static int MAX_MESS_LEN = 25;
@@ -30,8 +29,6 @@ public class Constants{
     public static class ConnectionConstants{
         public final static int PORT_LENGTH = 10;
         public final static int IP_LENGTH = 15;
-        public final static String MESSAGE_START = "mes_start";
-        public final static String MESSAGE_END = "messe_end";
         public final static String AVATAR_IMAGE = "avat_imag";
         public final static String USER_NAME = "user_name";
         public final static String CHAT_MESSAGE = "chat_mess";
