@@ -8,6 +8,8 @@ import model.Constants;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class ConnectionFrame extends JFrame {
     private final JButton hostButton;
@@ -28,12 +30,33 @@ public class ConnectionFrame extends JFrame {
         buttonsPanel.setLayout(new GridLayout(4,1, Constants.LayoutsConstants.H_GAP, Constants.LayoutsConstants.V_GAP));
 
         hostButton = new JButton("Host");
+        hostButton.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                hostButton.setFont(new Font(hostButton.getName(), Font.PLAIN, hostButton.getHeight()*3/4));
+            }
+        });
         buttonsPanel.add(hostButton);
 
         joinButton = new JButton("Join");
+        joinButton.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                joinButton.setFont(new Font(joinButton.getName(), Font.PLAIN, joinButton.getHeight()*3/4));
+            }
+        });
         buttonsPanel.add(joinButton);
 
         endConnectionButton = new JButton("End");
+        endConnectionButton.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                endConnectionButton.setFont(new Font(endConnectionButton.getName(), Font.PLAIN, endConnectionButton.getHeight()*3/4));
+            }
+        });
         buttonsPanel.add(endConnectionButton);
 
         backButton = new JButton("");

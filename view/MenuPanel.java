@@ -38,6 +38,7 @@ public class MenuPanel extends JPanel {
                     File imageFile = new File(".\\graphics\\logo.png");
                     img = ImageIO.read(imageFile);
                 } catch (IOException exception) {
+                    // Todo: obsluga exception
                     exception.printStackTrace();
                     System.exit(1);
                 }
@@ -64,20 +65,47 @@ public class MenuPanel extends JPanel {
         enemyName = new JLabel("Enemy: ", SwingConstants.CENTER);
         playerNames.add(enemyName);
         usersInfo.add(playerNames);
-
         add(usersInfo);
 
         startButton = new JButton("Start");
+        startButton.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                startButton.setFont(new Font(startButton.getName(), Font.PLAIN, settingsButton.getHeight()*3/4));
+            }
+        });
         startButton.setEnabled(false);
         add(startButton);
 
         connectButton = new JButton("Connect");
+        connectButton.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                connectButton.setFont(new Font(connectButton.getName(), Font.PLAIN, connectButton.getHeight()*3/4));
+            }
+        });
         add(connectButton);
 
         settingsButton = new JButton("Settings");
+        settingsButton.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                settingsButton.setFont(new Font(settingsButton.getName(), Font.PLAIN, settingsButton.getHeight()*3/4));
+            }
+        });
         add(settingsButton);
 
         exitButton = new JButton("Exit");
+        exitButton.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                exitButton.setFont(new Font(exitButton.getName(), Font.PLAIN, exitButton.getHeight()*3/4));
+            }
+        });
         add(exitButton);
 
         setBackground(Color.white);

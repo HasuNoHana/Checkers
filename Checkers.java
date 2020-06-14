@@ -16,6 +16,7 @@ import java.awt.EventQueue;
 *  - dodac zmiane wygladu czatu - czyli teraz dodac obsluge przyciskow do zmiany
 *  - dodac ladniejsze emoji
 *  - upiekszyc wyglad menu
+*  - testy jednostkowe
 * */
 
 import javax.swing.*;
@@ -28,6 +29,11 @@ public class Checkers {
 //            frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 //            frame.setSize(800, 600);
 //            frame.setLocation(200, 100);
+//            JColorChooser colorChooser = new JColorChooser();
+//
+//            frame.add(colorChooser);
+//
+//
 //
 //            frame.setVisible(true);
 //
