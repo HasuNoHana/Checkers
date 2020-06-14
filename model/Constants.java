@@ -4,6 +4,8 @@ package model;
  * @see "https://github.com/RafalUzarowicz"
  */
 
+import java.awt.*;
+
 public class Constants{
     public static class UserConstants{
         public final static int MAX_USERNAME_LENGTH = 10;
@@ -25,6 +27,10 @@ public class Constants{
         public final static int MAX_MESS_LEN = 25;
         public final static String[] EMOTES = {":)", ":(", ":/", ":<", ":>", ":O", ":P"};
         public final static int MAX_MESS_NUM = 15;
+        public final static Color YOUR_BUBBLE_COLOR = new Color(0,132,255);
+        public final static Color YOUR_TEXT_COLOR = new Color(255,123,0);
+        public final static Color ENEMY_BUBBLE_COLOR = new Color(0,198,255);
+        public final static Color ENEMY_TEXT_COLOR = new Color(255,57,0);
     }
     public static class ConnectionConstants{
         public final static int PORT_LENGTH = 10;

@@ -19,10 +19,10 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class SocketController {
-    private ArrayList<JButton> changingButtonsConnected;
-    private ArrayList<JButton> changingButtonsNotConnected;
-    private Views views;
-    private Models models;
+    private final ArrayList<JButton> changingButtonsConnected;
+    private final ArrayList<JButton> changingButtonsNotConnected;
+    private final Views views;
+    private final Models models;
     public SocketController(Models models, Views views){
         this.models = models;
         this.views = views;
@@ -55,7 +55,7 @@ public class SocketController {
             public void keyReleased(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     String message = views.mainMenuFrame.getMenuChatPanel().getMessField().getText();
-                    if(!message.equals("")){
+                    if(!message.equals("")&&models.connectionStatus.isEnemyThere()){
                         message = message.substring(0, Math.min(message.length(), Constants.ChatConstants.MAX_MESS_LEN));
                         sendMessage(Constants.ConnectionConstants.CHAT_MESSAGE, message);
                         views.mainMenuFrame.getMenuChatPanel().addYourMessToChat(message);
@@ -80,7 +80,6 @@ public class SocketController {
 
         // Connection
 
-        //addChangingButtonConnected(connection.getEndConnectionButton());
         addChangingButtonNotConnected(views.connectionFrame.getHostButton());
         addChangingButtonNotConnected(views.connectionFrame.getJoinButton());
         addChangingButtonNotConnected(views.connectionFrame.getChangeConnectionInfoPanel().getChangeIPButton());
@@ -105,19 +104,14 @@ public class SocketController {
     }
     public void runServer(){
         Thread serverRunner = new Thread(() -> {
-            if(!models.connectionStatus.isSocketTaken()){
+            if(!models.connectionStatus.setAndGetSocketTaken(true)){
                 try{
-                    models.connectionStatus.setSocketTaken(true);
-//                        ConnectionStatus.connectionInfo.setText("Server is waiting...");
-//                        System.out.println("SERVER WAITING");
                     models.connectionStatus.setServerSocket(new ServerSocket(models.connectionStatus.getPort()));
                     models.connectionStatus.setSocket(models.connectionStatus.getServerSocket().accept());
                     runHandler();
                 }catch (Exception e){
-
-                    // Todo: exception handling
                     models.connectionStatus.setEnemyThere(false);
-                    models.connectionStatus.setSocketTaken(false);
+                    models.connectionStatus.setIsSocketTaken(false);
                     deactivateChangingButtons();
                     System.out.println("INFO: Could not host.");
                 }
@@ -127,20 +121,15 @@ public class SocketController {
     }
     public void runClient(){
         Thread clientRunner = new Thread(() -> {
-            if(!models.connectionStatus.isSocketTaken()){
+            if(!models.connectionStatus.setAndGetSocketTaken(true)){
                 try{
-                    models.connectionStatus.setSocketTaken(true);
                     models.connectionStatus.setInetAddress(InetAddress.getByName(models.connectionStatus.getIp()));
-//                        ConnectionStatus.connectionInfo.setText("Searchng for a server...");
-//                        System.out.println("CLIENT WAITING");
                     models.connectionStatus.setSocket(new Socket(models.connectionStatus.getInetAddress(), models.connectionStatus.getPort()));
                     runHandler();
                 }catch (Exception e){
-                    // Todo: exception handling
                     models.connectionStatus.setEnemyThere(false);
-                    models.connectionStatus.setSocketTaken(false);
+                    models.connectionStatus.setIsSocketTaken(false);
                     deactivateChangingButtons();
-//                        ConnectionStatus.connectionInfo.setText("Host not found!");
                     System.out.println("INFO: Host not found.");
                 }
             }
@@ -149,11 +138,9 @@ public class SocketController {
     }
 
     private void runHandler(){
-        if(models.connectionStatus.isSocketTaken()){
+        if(models.connectionStatus.setAndGetSocketTaken(true)){
             try{
                 deactivateChangingButtons();
-//                ConnectionStatus.connectionInfo.setText("Connected!");
-//                System.out.println("CONNECTED");
                 models.connectionStatus.setDataInputStream(new DataInputStream(models.connectionStatus.getSocket().getInputStream()));
                 models.connectionStatus.setDataOutputStream(new DataOutputStream(models.connectionStatus.getSocket().getOutputStream()));
                 models.connectionStatus.setEnemyThere(true);
@@ -170,15 +157,14 @@ public class SocketController {
                 activateChangingButtons();
 
             }catch (Exception e){
-                // Todo: exception handling
                 models.connectionStatus.setEnemyThere(false);
-                models.connectionStatus.setSocketTaken(false);
-                System.out.println("INFO: Streams problem.");
+                models.connectionStatus.setIsSocketTaken(false);
+                System.out.println("INFO: Could not create streams.");
             }
         }
     }
 
-    public void closeConnection(){
+    public synchronized void closeConnection(){
         if(models.connectionStatus.isSocketTaken()){
             // Todo: exception handling
             deactivateChangingButtons();
@@ -212,7 +198,7 @@ public class SocketController {
             }catch(Exception e){
                 System.out.println("INFO: Output stream already closed.");
             }
-            models.connectionStatus.setSocketTaken(false);
+            models.connectionStatus.setIsSocketTaken(false);
             models.enemy.setName("");
         }
     }
@@ -222,11 +208,9 @@ public class SocketController {
     }
 
     public void sendMessage(String command, String message){
-//        System.out.println("WRITE: "+message);
         if(!models.connectionStatus.isSocketTaken()||!models.connectionStatus.isEnemyThere()){
             return;
         }
-        //String finalMessage = Constants.ConnectionConstants.MESSAGE_START+"\n";
         String finalMessage = "";
         switch (command){
             case Constants.ConnectionConstants.CHAT_MESSAGE:
@@ -252,14 +236,10 @@ public class SocketController {
             default:
                 return;
         }
-        //finalMessage = finalMessage+Constants.ConnectionConstants.MESSAGE_END;
-//        System.out.println(finalMessage);
         try {
             models.connectionStatus.getDataOutputStream().writeUTF(finalMessage);
         } catch (IOException e) {
-            // Todo: exception handling
-            System.out.println("INFO: Connection closed.");
-//            ConnectionStatus.connectionInfo.setText("Connection closed.");
+            System.out.println("INFO: Could not send message.");
             closeConnection();
         }
     }
@@ -297,10 +277,7 @@ public class SocketController {
                         }
                     }
                 } catch (IOException e) {
-                    // Todo: exception handling
-
                     System.out.println("INFO: Connection closed.");
-//                        ConnectionStatus.connectionInfo.setText("Connection closed.");
                     closeConnection();
                 }
             }

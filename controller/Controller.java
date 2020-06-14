@@ -17,6 +17,7 @@ public class Controller {
     BoardController boardController;
     ConnectionController connectionController;
     SocketController socketController;
+
     public Controller(Models models, Views views){
         this.models = models;
         this.views = views;
@@ -36,7 +37,6 @@ public class Controller {
     public void start(){
         viewsController.showFirstView();
     }
-
 
     private void initUserNameChange(){
         views.userInfoChangePanelInitial.addButtonListener(e -> {

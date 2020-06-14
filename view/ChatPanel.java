@@ -65,10 +65,10 @@ public class ChatPanel extends JPanel {
     private ArrayList<MessageBubble> messageBubbles;
     private int messNum = 0;
     private int gapWidth = Constants.ChatConstants.BUBBLE_GAP;
-    private Color yourBubbleColor = new Color(0,132,255);
-    private Color yourTextColor = new Color(255- yourBubbleColor.getRed(), 255- yourBubbleColor.getGreen(), 255- yourBubbleColor.getBlue());
-    private Color enemyBubbleColor = new Color(0,198,255);
-    private Color enemyTextColor = new Color(255- enemyBubbleColor.getRed(), 255- enemyBubbleColor.getGreen(), 255- enemyBubbleColor.getBlue());
+    private Color yourBubbleColor = Constants.ChatConstants.YOUR_BUBBLE_COLOR;
+    private Color yourTextColor = Constants.ChatConstants.YOUR_TEXT_COLOR;
+    private Color enemyBubbleColor = Constants.ChatConstants.ENEMY_BUBBLE_COLOR;
+    private Color enemyTextColor = Constants.ChatConstants.ENEMY_TEXT_COLOR;
 
     public ChatPanel(int gap){
         this();

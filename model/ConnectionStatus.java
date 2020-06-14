@@ -8,13 +8,14 @@ import java.io.DataOutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ConnectionStatus {
     public ConnectionStatus(){
         this.ip = "localhost";
         this.port = 1234;
-        this.isEnemyThere = false;
-        this.isSocketTaken = false;
+        this.isEnemyThere = new AtomicBoolean(false);
+        this.isSocketTaken = new AtomicBoolean(false);
     }
     // IP ADDRESS
     private String ip;
@@ -94,24 +95,26 @@ public class ConnectionStatus {
     }
 
     // Is enemy connected?
-    private boolean isEnemyThere;
+    private AtomicBoolean isEnemyThere;
 
-    public boolean isEnemyThere() {
-        return isEnemyThere;
+    public synchronized boolean isEnemyThere() {
+        return isEnemyThere.get();
     }
 
-    public void setEnemyThere(boolean enemyThere) {
-        isEnemyThere = enemyThere;
+    public synchronized void setEnemyThere(boolean enemyThere) {
+        isEnemyThere.set(enemyThere);
     }
 
     // Is socket taken?
-    private boolean isSocketTaken;
+    private AtomicBoolean isSocketTaken;
 
     public boolean isSocketTaken() {
-        return isSocketTaken;
+        return isSocketTaken.get();
     }
 
-    public void setSocketTaken(boolean socketTaken) {
-        isSocketTaken = socketTaken;
+    public boolean setAndGetSocketTaken(boolean socketTaken) {
+        return isSocketTaken.getAndSet(socketTaken);
     }
+
+    public void setIsSocketTaken(boolean socketTaken){ isSocketTaken.set(socketTaken);}
 }

@@ -20,7 +20,7 @@ public class SettingsFrame extends JFrame{
     private final JPanel settingsPanel;
     private final MenuLookPanel menu;
     private final UserInfoChangePanel users;
-    private final JPanel checkers;
+    private final JPanel board;
     private final ChatColorPanel chat;
 
     public SettingsFrame(UserInfoChangePanel userInfoChangePanel){
@@ -58,10 +58,10 @@ public class SettingsFrame extends JFrame{
         constraintsInner.gridy = 0;
         buttonsPanel.add(userSettingsButton, constraintsInner);
 
-        checkersSettingsButton = new JButton("Checkers");
+        checkersSettingsButton = new JButton("Board");
         checkersSettingsButton.addActionListener(e -> {
             CardLayout cl = (CardLayout) settingsPanel.getLayout();
-            cl.show(settingsPanel, "checkers");
+            cl.show(settingsPanel, "board");
         });
         checkersSettingsButton.addComponentListener(new ComponentAdapter() {
             @Override
@@ -123,17 +123,17 @@ public class SettingsFrame extends JFrame{
 
         JPanel usersPanel = new JPanel(new FlowLayout());
         users = userInfoChangePanel;
-        usersPanel.add(users);
+        usersPanel.add(users, SwingConstants.CENTER);
 
-        checkers = new JPanel();
-        checkers.setBackground(Color.RED);
+        board = new JPanel();
+        board.setBackground(Color.RED);
 
         menu = new MenuLookPanel();
 
         chat = new ChatColorPanel();
 
         settingsPanel.add(usersPanel, "user");
-        settingsPanel.add(checkers, "checkers");
+        settingsPanel.add(board, "board");
         settingsPanel.add(menu, "menu");
         settingsPanel.add(chat, "chat");
 

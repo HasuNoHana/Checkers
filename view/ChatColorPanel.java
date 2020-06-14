@@ -54,14 +54,14 @@ public class ChatColorPanel extends JPanel {
         // You
         JTabbedPane yourTabbedPane = new JTabbedPane();
 
-        yourBubbleColorChooser = new JColorChooser();
+        yourBubbleColorChooser = new JColorChooser(Constants.ChatConstants.YOUR_BUBBLE_COLOR);
         AbstractColorChooserPanel[] panels = yourBubbleColorChooser.getChooserPanels();
         for (AbstractColorChooserPanel accp : panels) {
             if(!accp.getDisplayName().equals("RGB")){
                 yourBubbleColorChooser.removeChooserPanel(accp);
             }
         }
-        yourTextColorChooser = new JColorChooser();
+        yourTextColorChooser = new JColorChooser(Constants.ChatConstants.YOUR_TEXT_COLOR);
         panels = yourTextColorChooser.getChooserPanels();
         for (AbstractColorChooserPanel accp : panels) {
             if(!accp.getDisplayName().equals("RGB")){
@@ -97,14 +97,14 @@ public class ChatColorPanel extends JPanel {
         // Enemy
         JTabbedPane enemyTabbedPane = new JTabbedPane();
 
-        enemyBubbleColorChooser = new JColorChooser();
+        enemyBubbleColorChooser = new JColorChooser(Constants.ChatConstants.ENEMY_BUBBLE_COLOR);
         panels = enemyBubbleColorChooser.getChooserPanels();
         for (AbstractColorChooserPanel accp : panels) {
             if(!accp.getDisplayName().equals("RGB")){
                 enemyBubbleColorChooser.removeChooserPanel(accp);
             }
         }
-        enemyTextColorChooser = new JColorChooser();
+        enemyTextColorChooser = new JColorChooser(Constants.ChatConstants.ENEMY_TEXT_COLOR);
         panels = enemyTextColorChooser.getChooserPanels();
         for (AbstractColorChooserPanel accp : panels) {
             if(!accp.getDisplayName().equals("RGB")){

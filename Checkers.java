@@ -7,10 +7,8 @@ import java.awt.EventQueue;
 /*
 * todo:
 *  - dodanie samej gry xd
-*  - dodac monitory
 *  - dodac zmiane wygladu pionkow
 *  - testy jednostkowe
-*  - dodac etykiety do przyciskow
 * */
 
 

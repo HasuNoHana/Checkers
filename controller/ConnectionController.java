@@ -43,8 +43,6 @@ public class ConnectionController {
                 }
             }else{
                 connectionFrame.getChangeConnectionInfoPanel().getInfoLabel().setText("Wrong port length!");
-                connectionFrame.getHostButton().setEnabled(false);
-                connectionFrame.getJoinButton().setEnabled(false);
             }
         });
         connectionFrame.getChangeConnectionInfoPanel().getChangeIPButton().addActionListener(e -> {
@@ -61,10 +59,8 @@ public class ConnectionController {
                     connectionFrame.getJoinButton().setEnabled(true);
                 }
             }else{
-                connectionFrame.getChangeConnectionInfoPanel().getInfoLabel().setText("WRONG IP");
+                connectionFrame.getChangeConnectionInfoPanel().getInfoLabel().setText("Wrong IP!");
                 connectionFrame.getChangeConnectionInfoPanel().setIPReady(false);
-                connectionFrame.getHostButton().setEnabled(false);
-                connectionFrame.getJoinButton().setEnabled(false);
             }
         });
 
