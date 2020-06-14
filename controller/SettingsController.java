@@ -8,6 +8,8 @@ import model.Models;
 import view.Views;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class SettingsController {
 
@@ -17,7 +19,17 @@ public class SettingsController {
         views.settingsFrame.addBackListener(viewsController.getChangeStateListener());
         views.settingsFrame.getBackButton().setActionCommand("Menu");
 
-        // Todo: Change checkers look
+        // Checkers look
+
+        for( JButton button : views.settingsFrame.getBoard().buttons ){
+            button.addActionListener(e -> {
+                if(!button.getActionCommand().equals(models.checkersModel.getEnemyColor())){
+                    models.checkersModel.setYourColor(button.getActionCommand());
+                    views.boardFrame.getGameView().changeImageRepository(models.pawnImagesModel.getImagesRepo(button.getActionCommand(), models.checkersModel.getEnemyColor()));
+                    views.boardFrame.getGameView().updateView(models.checkersModel);
+                }
+            });
+        }
 
         // Menu look and feel change
         for(UIManager.LookAndFeelInfo lookAndFeelInfo : models.menu.getInfos() ){

@@ -62,14 +62,14 @@ public class Field {
     }
 
     public boolean isQueen() {
-    return (this.pawn==Pawn.BROWNQUIEEN || this.pawn == Pawn.WHITEQUIEEN);
+    return (this.pawn==Pawn.BROWN_QUEEN || this.pawn == Pawn.WHITE_QUEEN);
     }
 
     public boolean isWhite() {
-        return (this.pawn==Pawn.WHITENORMAL || this.pawn == Pawn.WHITEQUIEEN);
+        return (this.pawn==Pawn.WHITE_NORMAL || this.pawn == Pawn.WHITE_QUEEN);
     }
 
     public boolean isBrown() {
-        return (this.pawn==Pawn.BROWNNORMAL || this.pawn == Pawn.BROWNQUIEEN);
+        return (this.pawn==Pawn.BROWN_NORMAL || this.pawn == Pawn.BROWN_QUEEN);
     }
 }

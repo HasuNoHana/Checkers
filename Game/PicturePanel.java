@@ -36,6 +36,10 @@ public class PicturePanel extends JPanel {
         this.pawn = field.getPawn();
     }
 
+    public void setImageRepository( ImageRepository imageRepository ){
+        this.imageRepository = imageRepository;
+    }
+
     public int getRow() {
         return this.row;
     }

@@ -19,8 +19,7 @@ public class SettingsFrame extends JFrame{
     private final JPanel buttonsPanel;
     private final JPanel settingsPanel;
     private final MenuLookPanel menu;
-    private final UserInfoChangePanel users;
-    private final JPanel board;
+    private final PawnsColorPanel board;
     private final ChatColorPanel chat;
 
     public SettingsFrame(UserInfoChangePanel userInfoChangePanel){
@@ -122,11 +121,9 @@ public class SettingsFrame extends JFrame{
         add(buttonsPanel, constraints);
 
         JPanel usersPanel = new JPanel(new FlowLayout());
-        users = userInfoChangePanel;
-        usersPanel.add(users, SwingConstants.CENTER);
+        usersPanel.add(userInfoChangePanel, SwingConstants.CENTER);
 
-        board = new JPanel();
-        board.setBackground(Color.RED);
+        board = new PawnsColorPanel();
 
         menu = new MenuLookPanel();
 
@@ -157,4 +154,5 @@ public class SettingsFrame extends JFrame{
     public ChatColorPanel getChat() {
         return chat;
     }
+    public PawnsColorPanel getBoard(){ return board; }
 }

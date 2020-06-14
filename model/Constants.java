@@ -39,8 +39,10 @@ public class Constants{
         public final static String CHAT_MESSAGE = "chat_mess";
         public final static String EMOTE_MESSAGE = "emot_mess";
         public final static String BOARD_MOVE = "game_move";
+        public final static String PAWN_COLOR = "pawn_colo";
     }
     public static class GameConstants{
         public final static int BOARD_SIZE = 8;
+        public final static String[] PAWN_COLORS = { "WHITE", "BROWN", "BLUE", "VIOLET", "GRAY", "GREEN" };
     }
 }

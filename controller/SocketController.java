@@ -101,6 +101,14 @@ public class SocketController {
             views.connectionFrame.getStatusLabel().setText("No connection.");
         });
 
+        // Settings
+
+        for( JButton button : views.settingsFrame.getBoard().buttons ){
+            button.addActionListener(e -> sendMessage(Constants.ConnectionConstants.PAWN_COLOR, button.getActionCommand()));
+            addChangingButtonConnected(button);
+            button.setEnabled(false);
+        }
+
     }
     public void runServer(){
         Thread serverRunner = new Thread(() -> {
@@ -125,6 +133,10 @@ public class SocketController {
                 try{
                     models.connectionStatus.setInetAddress(InetAddress.getByName(models.connectionStatus.getIp()));
                     models.connectionStatus.setSocket(new Socket(models.connectionStatus.getInetAddress(), models.connectionStatus.getPort()));
+                    views.boardFrame.getGameView().changeImageRepository(models.pawnImagesModel.getImagesRepo(models.checkersModel.getEnemyColor(), models.checkersModel.getYourColor()));
+                    String temp = models.checkersModel.getEnemyColor();
+                    models.checkersModel.setEnemyColor(models.checkersModel.getYourColor());
+                    models.checkersModel.setYourColor(temp);
                     runHandler();
                 }catch (Exception e){
                     models.connectionStatus.setEnemyThere(false);
@@ -153,6 +165,7 @@ public class SocketController {
                 readMessage();
 
                 sendMessage(Constants.ConnectionConstants.USER_NAME, models.me.getName());
+                sendMessage(Constants.ConnectionConstants.PAWN_COLOR, models.checkersModel.getYourColor());
 
                 activateChangingButtons();
 
@@ -172,6 +185,10 @@ public class SocketController {
             views.mainMenuFrame.getMenuChatPanel().getChatPanel().clearChat();
             views.mainMenuFrame.getMenuPanel().setEnemyReady(false);
             views.connectionFrame.setStatus(false);
+
+            models.checkersModel.setYourColor(Constants.GameConstants.PAWN_COLORS[0]);
+            models.checkersModel.setEnemyColor(Constants.GameConstants.PAWN_COLORS[1]);
+            views.boardFrame.getGameView().changeImageRepository(models.pawnImagesModel.getImagesRepo(models.checkersModel.getYourColor(), models.checkersModel.getEnemyColor()));
 
             models.connectionStatus.setEnemyThere(false);
             try
@@ -229,6 +246,10 @@ public class SocketController {
                 finalMessage = finalMessage + Constants.ConnectionConstants.BOARD_MOVE+"\n";
                 finalMessage = finalMessage + message+"\n";
                 break;
+            case Constants.ConnectionConstants.PAWN_COLOR:
+                finalMessage = finalMessage + Constants.ConnectionConstants.PAWN_COLOR+"\n";
+                finalMessage = finalMessage + message+"\n";
+                break;
             default:
                 return;
         }
@@ -264,6 +285,13 @@ public class SocketController {
                                 break;
                             case Constants.ConnectionConstants.BOARD_MOVE:
 
+                                break;
+                            case Constants.ConnectionConstants.PAWN_COLOR:
+                                if(!lines[1].equals(models.checkersModel.getYourColor())){
+                                    models.checkersModel.setEnemyColor(lines[1]);
+                                    views.boardFrame.getGameView().changeImageRepository(models.pawnImagesModel.getImagesRepo(models.checkersModel.getYourColor(), models.checkersModel.getEnemyColor()));
+                                    views.boardFrame.getGameView().updateView(models.checkersModel);
+                                }
                                 break;
                             default:
                                 return;

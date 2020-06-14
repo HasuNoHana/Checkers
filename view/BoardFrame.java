@@ -4,54 +4,48 @@ package view;
  * @see "https://github.com/RafalUzarowicz"
  */
 import Game.CheckersController;
-import Game.GameModel;
-import Game.GameView;
+import Game.CheckersModel;
+import Game.CheckersView;
 import Game.ImageRepository;
 import model.Constants;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class BoardFrame extends JFrame{
-    private final JPanel board;
+    private final CheckersView game;
     private final ChatPanel smallChat;
     private final EmotesPanel emotesPanel;
     private final JButton menuButton;
+
+    private final JPanel upperPanel;
+    private final JPanel lowerPanel;
 
 
     public BoardFrame(){
         super("BoardFrame");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridBagLayout());
+        setLayout(new BorderLayout());
 
+        upperPanel = new JPanel(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
-        constraints.weightx = 1;
-        constraints.weighty = 1;
+        constraints.weightx = 0.5;
+        constraints.weighty = 0.5;
+        constraints.fill = GridBagConstraints.BOTH;
+        constraints.gridy = 0;
 
         smallChat = new ChatPanel(Constants.ChatConstants.BUBBLE_GAP_EMOTES);
 
-        constraints.fill = GridBagConstraints.BOTH;
-        constraints.weightx = 0.1;
-        constraints.weighty = 0.9;
         constraints.gridx = 0;
-        constraints.gridwidth = 1;
-        constraints.gridy = 0;
-        add(smallChat, constraints);
+        constraints.weightx = 0.1;
+        upperPanel.add(smallChat, constraints);
 
-        board = new JPanel();
+        JPanel board = new JPanel();
         board.setLayout(new GridLayout());
 
         ImageRepository imageRepository = new ImageRepository();
-        GameModel gameModel = new GameModel();
-        GameView game = new GameView(imageRepository);
-        CheckersController checkersController = new CheckersController(gameModel, game, imageRepository);
+        game = new CheckersView(imageRepository);
 
         board.add(game);
 
@@ -79,59 +73,24 @@ public class BoardFrame extends JFrame{
 //            }
 //        });
 //        board.setBackground(Color.RED);
-        constraints.fill = GridBagConstraints.BOTH;
-        constraints.weightx = 0.9;
-        constraints.weighty = 0.9;
-        constraints.gridx = 1;
-        constraints.gridwidth = 2;
-        constraints.gridy = 0;
-        add(board, constraints);
 
-        JLabel logo = new JLabel();
-        logo.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                super.componentResized(e);
-                BufferedImage img = null;
-                try {
-                    File imageFile = new File(".\\graphics\\logo.png");
-                    img = ImageIO.read(imageFile);
-                } catch (IOException exception) {
-                    exception.printStackTrace();
-                    System.exit(1);
-                }
-                if( logo.getWidth()>0 && logo.getHeight()>0 ){
-                    Image dimg = img.getScaledInstance(logo.getWidth(), logo.getHeight(), Image.SCALE_SMOOTH);
-                    ImageIcon imageIcon = new ImageIcon(dimg);
-                    logo.setIcon(imageIcon);
-                }
-            }
-        });
-        constraints.weightx = 0.1;
-        constraints.weighty = 0.1;
-        constraints.gridx = 0;
-        constraints.gridwidth = 1;
-        constraints.gridy = 1;
-        add(logo, constraints);
+        constraints.gridx = 1;
+        constraints.weightx = 0.9;
+        upperPanel.add(board, constraints);
+
+
+        lowerPanel = new JPanel(new BorderLayout());
 
         emotesPanel = new EmotesPanel();
-        constraints.fill = GridBagConstraints.BOTH;
-        constraints.weightx = 0.9;
-        constraints.weighty = 0.1;
-        constraints.gridx = 1;
-        constraints.gridwidth = 1;
-        constraints.gridy = 1;
-        add(emotesPanel, constraints);
+
+        lowerPanel.add(emotesPanel, BorderLayout.CENTER);
 
         menuButton = new JButton("Menu");
         menuButton.setIcon(new ImageIcon(this.getClass().getResource("../graphics/back.png")));
-        constraints.fill = GridBagConstraints.BOTH;
-        constraints.weightx = 0.1;
-        constraints.weighty = 0.1;
-        constraints.gridx = 2;
-        constraints.gridwidth = 1;
-        constraints.gridy = 1;
-        add(menuButton, constraints);
+        lowerPanel.add(menuButton, BorderLayout.LINE_END);
+
+        add(upperPanel, BorderLayout.CENTER);
+        add(lowerPanel, BorderLayout.SOUTH);
     }
 
     public void addYourMessToChat(String message){
@@ -149,4 +108,5 @@ public class BoardFrame extends JFrame{
     public JButton getMenuButton(){
         return this.menuButton;
     }
+    public CheckersView getGameView(){ return game; }
 }

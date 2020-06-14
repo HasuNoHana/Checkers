@@ -21,10 +21,10 @@ public class ImageRepository {
 
 
         this.pawnDispatch = new HashMap<>();
-        pawnDispatch.put(Pawn.WHITENORMAL, getImageFromPath(whiteNormalPath));
-        pawnDispatch.put(Pawn.WHITEQUIEEN, getImageFromPath(whiteQueenPath));
-        pawnDispatch.put(Pawn.BROWNNORMAL, getImageFromPath(brownNormalPath));
-        pawnDispatch.put(Pawn.BROWNQUIEEN, getImageFromPath(brownQueenPath));
+        pawnDispatch.put(Pawn.WHITE_NORMAL, getImageFromPath(whiteNormalPath));
+        pawnDispatch.put(Pawn.WHITE_QUEEN, getImageFromPath(whiteQueenPath));
+        pawnDispatch.put(Pawn.BROWN_NORMAL, getImageFromPath(brownNormalPath));
+        pawnDispatch.put(Pawn.BROWN_QUEEN, getImageFromPath(brownQueenPath));
         pawnDispatch.put(Pawn.EMPTY, getImageFromPath(EmptyPath));
     }
 

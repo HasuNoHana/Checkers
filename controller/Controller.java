@@ -3,6 +3,7 @@ package controller;
  * @author Rafal Uzarowicz
  * @see "https://github.com/RafalUzarowicz"
  */
+import Game.CheckersController;
 import model.Models;
 import model.Constants;
 import view.Views;
@@ -17,6 +18,7 @@ public class Controller {
     BoardController boardController;
     ConnectionController connectionController;
     SocketController socketController;
+    CheckersController checkersController;
 
     public Controller(Models models, Views views){
         this.models = models;
@@ -31,9 +33,10 @@ public class Controller {
         this.settingsController = new SettingsController(views, models, models.framesArray, viewsController);
         this.boardController = new BoardController(views.boardFrame, viewsController);
         this.connectionController = new ConnectionController(views.connectionFrame, models.connectionStatus, viewsController);
+        this.checkersController = new CheckersController(models.checkersModel, views.boardFrame.getGameView());
 
 
-        socketController.activateChangingButtons();
+        //socketController.activateChangingButtons();
 
     }
 
