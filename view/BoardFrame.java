@@ -46,35 +46,9 @@ public class BoardFrame extends JFrame{
 
         board.add(game);
 
-//        // Todo: gra tutaj bedzie zamiast jlabel
-//        JLabel checkers = new JLabel();
-//        checkers.setSize(1000, 1000);
-//        board.add(checkers);
-//        checkers.addComponentListener(new ComponentAdapter() {
-//            @Override
-//            public void componentResized(ComponentEvent e) {
-//                super.componentResized(e);
-//                BufferedImage img = null;
-//                try {
-//                    File imageFile = new File(".\\graphics\\checkers.png");
-//                    img = ImageIO.read(imageFile);
-//                } catch (IOException exception) {
-//                    exception.printStackTrace();
-//                    System.exit(1);
-//                }
-//                if( checkers.getWidth()>0 && checkers.getHeight()>0 ){
-//                    Image dimg = img.getScaledInstance(checkers.getWidth(), checkers.getHeight(), Image.SCALE_SMOOTH);
-//                    ImageIcon imageIcon = new ImageIcon(dimg);
-//                    checkers.setIcon(imageIcon);
-//                }
-//            }
-//        });
-//        board.setBackground(Color.RED);
-
         constraints.gridx = 1;
         constraints.weightx = 0.9;
         upperPanel.add(board, constraints);
-
 
         lowerPanel = new JPanel(new BorderLayout());
 

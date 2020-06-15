@@ -45,5 +45,6 @@ public class Constants{
     public static class GameConstants{
         public final static int BOARD_SIZE = 8;
         public final static String[] PAWN_COLORS = { "WHITE", "BROWN", "BLUE", "VIOLET", "GRAY", "GREEN" };
+        public final static double PAWN_SCALE = 0.85;
     }
 }

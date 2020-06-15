@@ -40,8 +40,7 @@ public class MenuPanel extends JPanel {
                     File imageFile = new File(".\\graphics\\logo.png");
                     img = ImageIO.read(imageFile);
                 } catch (IOException exception) {
-                    // Todo: obsluga exception
-                    exception.printStackTrace();
+                    System.err.println("INFO: Could not open logo file.");
                     System.exit(1);
                 }
                 if( logo.getWidth()>0 && logo.getHeight()>0 ){

@@ -1,5 +1,8 @@
 package view;
-
+/*
+ * @author Rafal Uzarowicz
+ * @see "https://github.com/RafalUzarowicz"
+ */
 import model.Constants;
 
 import javax.imageio.ImageIO;

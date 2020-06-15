@@ -1,14 +1,12 @@
+/*
+ * @author Rafal Uzarowicz
+ * @see "https://github.com/RafalUzarowicz"
+ */
 import controller.Controller;
 import model.Models;
 import view.Views;
 
 import java.awt.*;
-
-/*
-* todo:
-*  - testy jednostkowe
-* */
-
 
 public class Checkers {
     public static void main(String[] args){

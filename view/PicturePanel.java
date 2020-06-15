@@ -1,5 +1,6 @@
 package view;
 
+import model.Constants;
 import model.Field;
 import model.ImageRepository;
 import model.Pawn;
@@ -13,8 +14,6 @@ public class PicturePanel extends JPanel {
     private ImageRepository imageRepository;
     Color background;
     private Pawn pawn;
-    private double pawnScale = 0.85;
-
 
     public PicturePanel(int row, int col, ImageRepository imageRepository) {
         this.imageRepository = imageRepository;
@@ -26,8 +25,8 @@ public class PicturePanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Image image = imageRepository.getPawnImage(pawn);
-        int width = (int) ( this.getWidth() * this.pawnScale);
-        int height = (int) (this.getHeight() * this.pawnScale);
+        int width = (int) ( this.getWidth() * Constants.GameConstants.PAWN_SCALE);
+        int height = (int) (this.getHeight() * Constants.GameConstants.PAWN_SCALE);
         image = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         int x = (this.getWidth() - image.getWidth(null)) / 2;
         int y = (this.getHeight() - image.getHeight(null)) / 2;

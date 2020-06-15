@@ -7,8 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainMenuFrame extends JFrame {
-    private MenuPanel menuPanel;
-    private MenuChatPanel menuChatPanel;
+    private final MenuPanel menuPanel;
+    private final MenuChatPanel menuChatPanel;
     public MainMenuFrame(MenuChatPanel menuChatPanel){
         super("Menu");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

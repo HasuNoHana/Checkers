@@ -1,5 +1,8 @@
 package view;
-
+/*
+ * @author Rafal Uzarowicz
+ * @see "https://github.com/RafalUzarowicz"
+ */
 import model.Constants;
 
 import javax.swing.*;
@@ -62,7 +65,7 @@ public class ChatPanel extends JPanel {
 
     }
 
-    private ArrayList<MessageBubble> messageBubbles;
+    private final ArrayList<MessageBubble> messageBubbles;
     private int messNum = 0;
     private int gapWidth = Constants.ChatConstants.BUBBLE_GAP;
     private Color yourBubbleColor = Constants.ChatConstants.YOUR_BUBBLE_COLOR;

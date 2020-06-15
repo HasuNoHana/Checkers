@@ -18,15 +18,11 @@ public class CheckersController implements MouseListener {
     private PicturePanel oldFieldPanel;
     private Field lastEnteredField;
     private Thread waitingThread;
-    private Thread mainThread;
 
     private int MyVictories = 0;
     private boolean duringCombo;
 
     private Field FieldInCombo;
-    private boolean isGameFinished;
-    private int playerWhitePoints = 0;
-    private int playerBrownPoints = 0;
 
     public void setCurrentPlayer(Player currentPlayer) {
         this.model.setCurrentPlayer(currentPlayer);
@@ -141,20 +137,12 @@ public class CheckersController implements MouseListener {
 
     }
 
-
-
-
-
     public boolean isCapture() {
         return model.isCapture();
     }
 
     public void setCapture(boolean capture) {
         model.setCapture(capture);
-    }
-
-    public boolean isGameFinished() {
-        return isGameFinished;
     }
 
     public Player getCurrentPlayer() {
@@ -297,10 +285,6 @@ public class CheckersController implements MouseListener {
     public void destroyOpponentsPawn() {
         this.model.getOpponent().setPawn(Pawn.EMPTY);
         this.model.getOpponent().setOccupied(false);
-        if (this.model.getCurrentPlayer() == Player.WHITE)
-            this.playerWhitePoints += 1;
-        else
-            this.playerBrownPoints += 1;
     }
 
     private boolean isNotOpponent(int opponentRow, int opponentCol) {

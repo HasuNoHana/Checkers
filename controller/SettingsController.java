@@ -8,8 +8,6 @@ import model.Models;
 import view.Views;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class SettingsController {
 
@@ -40,8 +38,7 @@ public class SettingsController {
                         SwingUtilities.updateComponentTreeUI(framesArray.getFrames().get(i));
                     }
                 }catch(Exception exception){
-                    // Todo: obsluga exception
-                    exception.printStackTrace();
+                    System.err.println("INFO: Could not open LookAndFeel.");
                 }
             });
         }

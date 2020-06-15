@@ -18,8 +18,7 @@ public class User {
             File imageFile = new File(".\\graphics\\logo.png");
             img = ImageIO.read(imageFile);
         } catch (IOException exception) {
-            // todo: obsluga exception
-            exception.printStackTrace();
+            System.err.println("INFO: Could not open logo file.");
             System.exit(1);
         }
         Image dimg = img.getScaledInstance(img.getWidth(), img.getHeight(), Image.SCALE_SMOOTH);

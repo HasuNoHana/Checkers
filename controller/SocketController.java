@@ -186,7 +186,6 @@ public class SocketController {
 
     public synchronized void closeConnection(){
         if(models.connectionStatus.isSocketTaken()){
-            // Todo: exception handling
             deactivateChangingButtons();
             canReadMess = false;
             views.mainMenuFrame.getMenuChatPanel().getChatPanel().clearChat();

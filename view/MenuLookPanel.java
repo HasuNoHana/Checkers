@@ -13,8 +13,8 @@ import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 
 public class MenuLookPanel extends JPanel {
-    private ArrayList<JButton> buttons;
-    private GridBagConstraints constraints;
+    private final ArrayList<JButton> buttons;
+    private final GridBagConstraints constraints;
     protected MenuLookPanel(){
         this.setLayout(new GridBagLayout());
         constraints = new GridBagConstraints();

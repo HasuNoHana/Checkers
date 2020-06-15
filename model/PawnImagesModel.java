@@ -1,5 +1,8 @@
 package model;
-
+/*
+ * @author Rafal Uzarowicz
+ * @see "https://github.com/RafalUzarowicz"
+ */
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;

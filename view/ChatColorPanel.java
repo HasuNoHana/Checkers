@@ -1,5 +1,8 @@
 package view;
-
+/*
+ * @author Rafal Uzarowicz
+ * @see "https://github.com/RafalUzarowicz"
+ */
 import model.Constants;
 
 import javax.swing.*;
@@ -11,7 +14,7 @@ import java.awt.geom.Rectangle2D;
 
 public class ChatColorPanel extends JPanel {
     private class MessageBubble extends JComponent{
-        private String message;
+        private final String message;
         public Color bubbleColor;
         public Color textColor;
         private MessageBubble(JColorChooser bubbleColorChooser, JColorChooser textColorChooser){
