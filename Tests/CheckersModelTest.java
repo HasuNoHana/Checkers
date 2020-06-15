@@ -207,20 +207,21 @@ public class CheckersModelTest {
         CheckersView view = new CheckersView(pawnImagesModel.getImagesRepo(Constants.GameConstants.PAWN_COLORS[0], Constants.GameConstants.PAWN_COLORS[1]));
         CheckersController checkersController = new CheckersController(model, view, socketController);
 
-        checkersController.getBoard()[5][2].setPawn(Pawn.BROWN_NORMAL);
-        Field oponnentField = checkersController.getField(5,2);
+        model.getBoard()[5][2].setPawn(Pawn.BROWN_NORMAL);
+        Field oponnentField = checkersController.getField(4,3);
 
-        Field oldField = checkersController.getField(6, 1);
-        Field newField = checkersController.getField(5, 2);
+        Field oldField = checkersController.getField(5, 2);
+        Field newField = checkersController.getField(4, 3);
+
         assertTrue(oldField.isOccupied());
         assertFalse(newField.isOccupied());
 
-        boolean moveDone = model.makeMove(oldField,newField);
+        boolean moveDone = checkersController.makeMove(oldField,newField);
 
-        assertTrue(moveDone);
+        assertFalse(moveDone);
         assertFalse(oponnentField.isOccupied());
-        assertFalse(oldField.isOccupied());
-        assertTrue(newField.isOccupied());
+        assertTrue(oldField.isOccupied());
+        assertFalse(newField.isOccupied());
         
     }
     
@@ -233,13 +234,13 @@ public class CheckersModelTest {
         CheckersModel model = new CheckersModel();
         CheckersView view = new CheckersView(pawnImagesModel.getImagesRepo(Constants.GameConstants.PAWN_COLORS[0], Constants.GameConstants.PAWN_COLORS[1]));
         CheckersController checkersController = new CheckersController(model, view, socketController);
-        
-        checkersController.getBoard()[0][3].setPawn(Pawn.WHITEQUIEEN);
+
+        model.getBoard()[0][3].setPawn(Pawn.WHITE_QUEEN);
         Field oldField = checkersController.getField(0, 3);
         Field oponentField = checkersController.getField(1, 4);
         Field newField = checkersController.getField(2, 5);
 
-        moveDone = checkersController.makeMove(oldField,newField);
+        boolean moveDone = checkersController.makeMove(oldField,newField);
 
         assertTrue(moveDone);
 
