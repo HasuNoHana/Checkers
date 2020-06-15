@@ -308,41 +308,6 @@ public class CheckersModelTest {
     }
 
     @Test
-    public void captureWrongPawnDuringCombo() {
-        Models models = new Models();
-        Views views = new Views();
-        SocketController socketController = new SocketController(models, views);
-        PawnImagesModel pawnImagesModel = new PawnImagesModel();
-        CheckersModel model = new CheckersModel();
-        CheckersView view = new CheckersView(pawnImagesModel.getImagesRepo(Constants.GameConstants.PAWN_COLORS[0], Constants.GameConstants.PAWN_COLORS[1]));
-        CheckersController checkersController = new CheckersController(model, view, socketController);
-
-        checkersController.changePlayer();
-        Field oponnentField = model.getField(2,1);
-        checkersController.movePawn(model.getField(6,1),oponnentField);
-        checkersController.movePawn(model.getField(6,3),model.getField(4,3));
-
-        Field oldField = model.getField(1, 0);
-        Field newField = model.getField(3, 2);
-        assertTrue(oldField.isOccupied());
-        assertFalse(newField.isOccupied());
-        assertTrue(model.getCurrentPlayer()==Player.BROWN);
-
-        boolean moveDone = checkersController.makeMove(oldField,newField);
-
-        assertTrue(moveDone);
-        assertFalse(oponnentField.isOccupied());
-        assertFalse(oldField.isOccupied());
-        assertTrue(newField.isOccupied());
-        assertTrue(model.getCurrentPlayer()==Player.BROWN);
-
-        checkersController.movePawn(model.getField(6,5),model.getField(2,5));
-        moveDone = checkersController.makeMove(model.getField(1,4),model.getField(3,6));
-
-        assertFalse(moveDone);
-    }
-
-    @Test
     public void QueenSingleCapture() {
         Models models = new Models();
         Views views = new Views();
