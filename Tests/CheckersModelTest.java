@@ -226,23 +226,21 @@ public class CheckersModelTest {
         CheckersView view = new CheckersView(pawnImagesModel.getImagesRepo(Constants.GameConstants.PAWN_COLORS[0], Constants.GameConstants.PAWN_COLORS[1]));
         CheckersController checkersController = new CheckersController(model, view, socketController);
 
-        checkersController.changePlayer();
-        Field oponnentField = model.getField(2,1);
-        checkersController.movePawn(model.getField(6,1),oponnentField);
+        checkersController.getBoard()[5][2].setPawn(Pawn.BROWN_NORMAL);
+        Field oponnentField = checkersController.getField(5,2);
 
-        Field oldField = model.getField(1, 0);
-        Field newField = model.getField(3, 2);
+        Field oldField = checkersController.getField(6, 1);
+        Field newField = checkersController.getField(5, 2);
         assertTrue(oldField.isOccupied());
         assertFalse(newField.isOccupied());
-        assertTrue(model.getCurrentPlayer()==Player.BROWN);
 
-        boolean moveDone = checkersController.makeMove(oldField,newField);
+        boolean moveDone = model.makeMove(oldField,newField);
 
         assertTrue(moveDone);
         assertFalse(oponnentField.isOccupied());
         assertFalse(oldField.isOccupied());
         assertTrue(newField.isOccupied());
-        assertFalse(model.getCurrentPlayer()==Player.BROWN);
+        
     }
 
     @Test
