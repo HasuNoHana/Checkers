@@ -1,4 +1,7 @@
-package Game;
+package view;
+
+import model.ImageRepository;
+import model.CheckersModel;
 
 import javax.swing.*;
 import java.awt.*;

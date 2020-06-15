@@ -1,4 +1,4 @@
-package Game;
+package model;
 
 import java.awt.*;
 
@@ -35,10 +35,7 @@ public class Field {
 
     public void setPawn(Pawn pawn) {
         this.pawn = pawn;
-        if (pawn == Pawn.EMPTY)
-            occupied = false;
-        else
-            occupied = true;
+        occupied = pawn != Pawn.EMPTY;
     }
 
     public Field(int row, int col) {

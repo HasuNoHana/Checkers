@@ -3,6 +3,7 @@ package controller;
  * @author Rafal Uzarowicz
  * @see "https://github.com/RafalUzarowicz"
  */
+import model.Player;
 import model.*;
 import view.Views;
 
@@ -123,7 +124,7 @@ public class SocketController {
                     models.connectionStatus.setEnemyThere(false);
                     models.connectionStatus.setIsSocketTaken(false);
                     deactivateChangingButtons();
-                    System.out.println("INFO: Could not host.");
+                    System.err.println("INFO: Could not host.");
                 }
             }
         });
@@ -146,7 +147,7 @@ public class SocketController {
                     models.connectionStatus.setEnemyThere(false);
                     models.connectionStatus.setIsSocketTaken(false);
                     deactivateChangingButtons();
-                    System.out.println("INFO: Host not found.");
+                    System.err.println("INFO: Host not found.");
                 }
             }
         });
@@ -164,6 +165,8 @@ public class SocketController {
                 views.mainMenuFrame.getMenuPanel().setEnemyReady(true);
                 views.connectionFrame.setStatus(true);
 
+                views.resetBoardButton.doClick();
+
                 canReadMess = true;
 
                 readMessage();
@@ -176,7 +179,7 @@ public class SocketController {
             }catch (Exception e){
                 models.connectionStatus.setEnemyThere(false);
                 models.connectionStatus.setIsSocketTaken(false);
-                System.out.println("INFO: Could not create streams.");
+                System.err.println("INFO: Could not create streams.");
             }
         }
     }
@@ -201,25 +204,25 @@ public class SocketController {
             {
                 models.connectionStatus.getServerSocket().close();
             }catch(Exception e){
-                System.out.println("INFO: Serversocket already closed.");
+                System.err.println("INFO: Serversocket already closed.");
             }
             try
             {
                 models.connectionStatus.getSocket().close();
             }catch(Exception e){
-                System.out.println("INFO: Socket already closed.");
+                System.err.println("INFO: Socket already closed.");
             }
             try
             {
                 models.connectionStatus.getDataInputStream().close();
             }catch(Exception e){
-                System.out.println("INFO: Input stream already closed.");
+                System.err.println("INFO: Input stream already closed.");
             }
             try
             {
                 models.connectionStatus.getDataOutputStream().close();
             }catch(Exception e){
-                System.out.println("INFO: Output stream already closed.");
+                System.err.println("INFO: Output stream already closed.");
             }
             models.connectionStatus.setIsSocketTaken(false);
             models.enemy.setName("");
@@ -266,7 +269,7 @@ public class SocketController {
         try {
             models.connectionStatus.getDataOutputStream().writeUTF(finalMessage);
         } catch (IOException e) {
-            System.out.println("INFO: Could not send message.");
+            System.err.println("INFO: Could not send message.");
             closeConnection();
         }
     }
@@ -295,6 +298,7 @@ public class SocketController {
                                 break;
                             case Constants.ConnectionConstants.BOARD_MOVE:
                                 this.models.checkersModel.setOpponentMove(text.toString());
+                                System.out.println("ruch "  +text.toString());
                                 this.models.checkersModel.isMyTurn.set(true);
                                 break;
                             case Constants.ConnectionConstants.PAWN_COLOR:
@@ -306,18 +310,16 @@ public class SocketController {
                                 break;
                             case Constants.ConnectionConstants.GAME_OVER:
                                 System.out.println("GAME+OBERA");
-                                this.models.checkersModel.setEnemyFirst(!this.models.checkersModel.isEnemyFirst());
-                                this.models.checkersModel.isMyTurn.set(false);
+                                this.models.checkersModel.setEnemyFirst(this.models.checkersModel.isEnemyFirst());
+                                this.models.checkersModel.setCurrentPlayer(Player.WHITE);
                                 this.views.resetBoardButton.doClick();
-                                this.models.checkersModel.resetBoard();
-                                this.views.boardFrame.getGameView().updateView(this.models.checkersModel);
                                 break;
                             default:
                                 return;
                         }
                     }
                 } catch (IOException e) {
-                    System.out.println("INFO: Connection closed.");
+                    System.err.println("INFO: Connection closed.");
                     closeConnection();
                 }
             }
@@ -332,8 +334,7 @@ public class SocketController {
         changingButtonsNotConnected.add(button);
     }
 
-    // Todo: zamien na private
-    public void activateChangingButtons(){
+    private void activateChangingButtons(){
         for( JButton button : changingButtonsConnected ){
             button.setEnabled(true);
         }
@@ -342,7 +343,7 @@ public class SocketController {
         }
     }
 
-    public void deactivateChangingButtons(){
+    private void deactivateChangingButtons(){
         for( JButton button : changingButtonsConnected ){
             button.setEnabled(false);
         }

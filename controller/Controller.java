@@ -3,7 +3,6 @@ package controller;
  * @author Rafal Uzarowicz
  * @see "https://github.com/RafalUzarowicz"
  */
-import Game.CheckersController;
 import model.Models;
 import model.Constants;
 import view.Views;
@@ -39,8 +38,6 @@ public class Controller {
         this.checkersController = new CheckersController(models.checkersModel, views.boardFrame.getGameView(), socketController);
 
         this.initGameReset();
-
-        //socketController.activateChangingButtons();
 
     }
 
@@ -78,11 +75,6 @@ public class Controller {
     }
 
     private void initGameReset(){
-        this.views.resetBoardButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                checkersController.resetBoard();
-            }
-        });
+        this.views.resetBoardButton.addActionListener(e -> checkersController.resetBoard());
     }
 }

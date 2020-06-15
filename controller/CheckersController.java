@@ -1,13 +1,12 @@
-package Game;
+package controller;
 
-import controller.SocketController;
-import model.Constants;
+import model.*;
+import view.CheckersView;
+import view.PicturePanel;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -127,7 +126,7 @@ public class CheckersController implements MouseListener {
         if(this.model.isMyTurn.get()){
             for (Field field:getAvailableMoves(lastEnteredField)) {
                 PicturePanel currentPicturePanel = view.getPicturePanel(field.getRow(), field.getCol());
-                currentPicturePanel.setBackground(currentPicturePanel.background);
+                currentPicturePanel.setBackground(currentPicturePanel.getBackground());
             }
         }
     }
@@ -172,19 +171,24 @@ public class CheckersController implements MouseListener {
         this.model.setMyMove(myMove);
     }
 
+    public void gameWon(){
+        this.model.setEnemyFirst(this.model.isEnemyFirst());
+        this.model.setCurrentPlayer(Player.WHITE);
+        resetBoard();
+    }
+
     public void resetBoard(){
         if(noMoreOpositePawns()) {
             if(didIWon())
                 MyVictories++;
         }
         socketController.sendMessage(Constants.ConnectionConstants.GAME_OVER);
-        model.setThreadRunning(false);
         model.resetBoard();
         model.setOpponentMove("");
         this.model.setMyMove("");
         view.updateView(model);
-        this.model.isMyTurn.set(!this.model.isEnemyFirst());
-        System.out.println("RESET "+model.getYourColor());
+        this.model.isMyTurn.set(this.model.isEnemyFirst());
+        model.setThreadRunning(!this.model.isMyTurn.get());
         waitForEnemy();
     }
 
@@ -349,7 +353,7 @@ public class CheckersController implements MouseListener {
     }
 
     private Set<Field> getAvailableNormalMoves(Field oldField) {
-        Set<Field> availableNormalMoves = new HashSet<Field>();
+        Set<Field> availableNormalMoves = new HashSet<>();
 
         if(this.duringCombo){
             return availableNormalMoves;
@@ -373,7 +377,7 @@ public class CheckersController implements MouseListener {
     }
 
     private Set<Field> getAvailableCapturesMoves(Field oldField) {
-        Set<Field> availableCaptureMoves = new HashSet<Field>();
+        Set<Field> availableCaptureMoves = new HashSet<>();
         if (this.duringCombo) {
             if (!oldField.equals(this.FieldInCombo)) {
                 return availableCaptureMoves;
@@ -424,7 +428,7 @@ public class CheckersController implements MouseListener {
     }
 
 
-    public void makeOpponentMove(){
+    public synchronized void makeOpponentMove(){
         this.setCurrentPlayer(Player.BROWN);
         String[] parts = this.model.getOpponentMove().split(";");
         for (int i = 1; i < parts.length; i++){
@@ -445,7 +449,8 @@ public class CheckersController implements MouseListener {
             }
             tryMakeQueen(newField);
             if(noMoreOpositePawns()){
-                resetBoard();
+                gameWon();
+
             }
             this.view.updateView(this.model);
         }
@@ -476,7 +481,7 @@ public class CheckersController implements MouseListener {
         }
         tryMakeQueen(newField);
         if(noMoreOpositePawns()){
-            resetBoard();
+            gameWon();
         }
         return true;
     }
@@ -486,8 +491,6 @@ public class CheckersController implements MouseListener {
             socketController.sendMessage(Constants.ConnectionConstants.BOARD_MOVE, this.model.getMyMove());
             this.model.setMyMove("");
         }
-//        System.out.println(model.getYourColor());
-
         this.model.isMyTurn.set(false);
         this.waitForEnemy();
     }
@@ -497,14 +500,13 @@ public class CheckersController implements MouseListener {
             waitingThread.stop();
         }
         waitingThread = new Thread(() -> {
-//            System.out.println("czekam " +this.model.getOpponentMove());
-            while (!this.model.isMyTurn.get()&&this.model.isThreadRunning()){
-            }
-            if(this.model.isThreadRunning()){
-//                System.out.println("przeciwnik..."+this.model.getOpponentMove());
+            if(!this.model.getOpponentMove().equals("")){
                 makeOpponentMove();
             }
-//            System.out.println("przeciwnik2..."+this.model.getOpponentMove());
+            while (!this.model.isMyTurn.get()&&this.model.isThreadRunning()){ }
+            if(this.model.isThreadRunning()){
+                makeOpponentMove();
+            }
             this.model.setThreadRunning(true);
         });
         waitingThread.start();

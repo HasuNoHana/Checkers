@@ -1,6 +1,4 @@
-package Game;
-
-import model.Constants;
+package model;
 
 import java.awt.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -8,7 +6,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class CheckersModel {
 
     public boolean isEnemyFirst() {
-        return isEnemyFirst;
+        return !isEnemyFirst;
     }
 
     public void setEnemyFirst(boolean enemyFirst) {
@@ -67,11 +65,11 @@ public class CheckersModel {
 
     public AtomicBoolean isMyTurn;
 
-    public void setOpponentMove(String opponentMove){
+    public synchronized void setOpponentMove(String opponentMove){
         this.opponentMove = opponentMove;
     }
 
-    public String getOpponentMove() {
+    public synchronized String getOpponentMove() {
         return opponentMove;
     }
 

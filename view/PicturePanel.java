@@ -1,4 +1,8 @@
-package Game;
+package view;
+
+import model.Field;
+import model.ImageRepository;
+import model.Pawn;
 
 import javax.swing.*;
 import java.awt.*;

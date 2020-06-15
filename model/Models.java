@@ -1,7 +1,5 @@
 package model;
 
-import Game.CheckersModel;
-
 /*
  * @author Rafal Uzarowicz
  * @see "https://github.com/RafalUzarowicz"

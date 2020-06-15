@@ -3,10 +3,7 @@ package view;
  * @author Rafal Uzarowicz
  * @see "https://github.com/RafalUzarowicz"
  */
-import Game.CheckersController;
-import Game.CheckersModel;
-import Game.CheckersView;
-import Game.ImageRepository;
+import model.ImageRepository;
 import model.Constants;
 
 import javax.swing.*;

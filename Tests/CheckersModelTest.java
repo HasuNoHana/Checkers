@@ -1,7 +1,7 @@
 package Tests;
 
-import Game.*;
-
+import model.CheckersModel;
+import model.Field;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
