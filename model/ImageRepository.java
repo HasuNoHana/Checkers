@@ -33,7 +33,7 @@ public class ImageRepository {
         try {
             image = ImageIO.read(getClass().getResourceAsStream(imagePath));
         } catch (IOException e) {
-            System.err.println("Blad odczytu obrazka" + imagePath);
+            System.err.println("INFO: Could not open " + imagePath);
         }
         return image;
     }

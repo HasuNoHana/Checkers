@@ -23,7 +23,7 @@ public class BoardPanel extends JPanel {
             File imageFile = new File(".\\graphics\\EmptyImage.png");
             img = ImageIO.read(imageFile);
         } catch (IOException exception) {
-            exception.printStackTrace();
+            System.err.println("INFO: Could not open EmptyImage.");
             System.exit(1);
         }
 

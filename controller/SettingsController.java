@@ -19,7 +19,7 @@ public class SettingsController {
 
         // Checkers look
 
-        for( JButton button : views.settingsFrame.getBoard().buttons ){
+        for( JButton button : views.settingsFrame.getBoard().getButtons() ){
             button.addActionListener(e -> {
                 if(!button.getActionCommand().equals(models.checkersModel.getEnemyColor())){
                     models.checkersModel.setYourColor(button.getActionCommand());

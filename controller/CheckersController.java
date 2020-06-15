@@ -137,26 +137,13 @@ public class CheckersController implements MouseListener {
 
     }
 
-    public boolean isCapture() {
-        return model.isCapture();
-    }
-
     public void setCapture(boolean capture) {
         model.setCapture(capture);
     }
 
-    public Player getCurrentPlayer() {
-        return model.getCurrentPlayer();
-    }
-
-
     private boolean isEndField(Field newField) {
         return ((newField.isWhite() && newField.getRow() == 0) ||
                 (newField.isBrown() && newField.getRow() == Constants.GameConstants.BOARD_SIZE - 1));
-    }
-
-    public void setMyMove(String myMove) {
-        this.model.setMyMove(myMove);
     }
 
     public void gameWon(){

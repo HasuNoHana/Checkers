@@ -11,21 +11,18 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class BoardFrame extends JFrame{
+
     private final CheckersView game;
     private final ChatPanel smallChat;
     private final EmotesPanel emotesPanel;
     private final JButton menuButton;
-
-    private final JPanel upperPanel;
-    private final JPanel lowerPanel;
-
 
     public BoardFrame(){
         super("BoardFrame");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        upperPanel = new JPanel(new GridBagLayout());
+        JPanel upperPanel = new JPanel(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.weightx = 0.5;
         constraints.weighty = 0.5;
@@ -50,7 +47,7 @@ public class BoardFrame extends JFrame{
         constraints.weightx = 0.9;
         upperPanel.add(board, constraints);
 
-        lowerPanel = new JPanel(new BorderLayout());
+        JPanel lowerPanel = new JPanel(new BorderLayout());
 
         emotesPanel = new EmotesPanel();
 

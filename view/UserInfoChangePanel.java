@@ -10,41 +10,38 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class UserInfoChangePanel extends JPanel {
-    private JLabel newNameLabel;
-    private JLabel infoLabel;
-    private JTextField newNameField;
-    private JButton changeNameButton;
-    private JTextField infoField;
-    private JPanel upperPanel;
-    private JPanel lowerPanel;
+    private final JTextField newNameField;
+    private final JButton changeNameButton;
+    private final JTextField infoField;
+
     public UserInfoChangePanel(){
         this.setLayout(new GridLayout(2,1));
 
-        this.upperPanel = new JPanel();
-        this.upperPanel.setLayout(new FlowLayout());
+        JPanel upperPanel = new JPanel();
+        upperPanel.setLayout(new FlowLayout());
 
-        this.newNameLabel = new JLabel("Type new username:");
-        this.upperPanel.add(this.newNameLabel);
+        JLabel newNameLabel = new JLabel("Type new username:");
+        upperPanel.add(newNameLabel);
 
         this.newNameField = new JTextField(Constants.UserConstants.MAX_USERNAME_LENGTH);
-        this.upperPanel.add(this.newNameField);
+        upperPanel.add(this.newNameField);
 
         this.changeNameButton = new JButton("Change");
-        this.upperPanel.add(this.changeNameButton);
+        upperPanel.add(this.changeNameButton);
 
-        this.add(this.upperPanel);
+        this.add(upperPanel);
 
-        this.lowerPanel = new JPanel();
-        this.lowerPanel.setLayout(new FlowLayout());
+        JPanel lowerPanel = new JPanel();
+        lowerPanel.setLayout(new FlowLayout());
 
-        this.infoLabel = new JLabel("Info:");
-        this.lowerPanel.add(this.infoLabel);
+        JLabel infoLabel = new JLabel("Info:");
+        lowerPanel.add(infoLabel);
 
         this.infoField = new JTextField(Constants.UserConstants.MAX_INFO_LENGTH);
         this.infoField.setEditable(false);
-        this.lowerPanel.add(this.infoField);
+        lowerPanel.add(this.infoField);
 
-        this.add(this.lowerPanel);
+        this.add(lowerPanel);
     }
 
     public void addButtonListener(ActionListener actionListener){

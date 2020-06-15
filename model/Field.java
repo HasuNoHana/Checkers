@@ -43,12 +43,6 @@ public class Field {
         this.row = row;
     }
 
-    public Field(int row, int col, Color c){
-        this.col = col;
-        this.row = row;
-        color = c;
-    }
-
     @Override
     public String toString() {
         return pawn + " row "+ row + " col "+col;

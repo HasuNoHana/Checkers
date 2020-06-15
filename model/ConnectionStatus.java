@@ -95,7 +95,7 @@ public class ConnectionStatus {
     }
 
     // Is enemy connected?
-    private AtomicBoolean isEnemyThere;
+    private final AtomicBoolean isEnemyThere;
 
     public synchronized boolean isEnemyThere() {
         return isEnemyThere.get();
@@ -106,7 +106,7 @@ public class ConnectionStatus {
     }
 
     // Is socket taken?
-    private AtomicBoolean isSocketTaken;
+    private final AtomicBoolean isSocketTaken;
 
     public boolean isSocketTaken() {
         return isSocketTaken.get();

@@ -16,7 +16,6 @@ public class SettingsFrame extends JFrame{
     private final JButton chatSettingsButton;
     private final JButton backButton;
 
-    private final JPanel buttonsPanel;
     private final JPanel settingsPanel;
     private final MenuLookPanel menu;
     private final PawnsColorPanel board;
@@ -32,7 +31,7 @@ public class SettingsFrame extends JFrame{
 
         settingsPanel = new JPanel(new CardLayout());
 
-        buttonsPanel = new JPanel();
+        JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new GridBagLayout());
         GridBagConstraints constraintsInner = new GridBagConstraints();
         constraintsInner.fill = GridBagConstraints.BOTH;

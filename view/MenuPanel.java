@@ -17,9 +17,7 @@ import java.io.IOException;
 
 public class MenuPanel extends JPanel {
     private final JLabel logo;
-    private final JPanel usersInfo;
     private final JPanel enemyReady;
-    private final JPanel playerNames;
     private final JLabel yourName;
     private final JLabel enemyName;
 
@@ -52,7 +50,7 @@ public class MenuPanel extends JPanel {
         });
         add(logo);
 
-        usersInfo = new JPanel(new GridLayout(1,2));
+        JPanel usersInfo = new JPanel(new GridLayout(1, 2));
 
         enemyReady = new JPanel(new GridLayout());
         enemyReady.add(new JLabel("Is enemy ready?", SwingConstants.CENTER));
@@ -60,7 +58,7 @@ public class MenuPanel extends JPanel {
 
         usersInfo.add(enemyReady);
 
-        playerNames = new JPanel(new GridLayout(2,1));
+        JPanel playerNames = new JPanel(new GridLayout(2, 1));
         yourName = new JLabel("You: ", SwingConstants.CENTER);
         playerNames.add(yourName);
         enemyName = new JLabel("Enemy: ", SwingConstants.CENTER);

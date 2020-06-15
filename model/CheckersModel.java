@@ -109,7 +109,7 @@ public class CheckersModel {
     public Field createField(int i, int j) {
         Field f = new Field(i, j);
         setFieldColor(f, i, j);
-        setFieldPawn(f, i, j);
+        setFieldPawn(f, i);
         return f;
     }
     private void setFieldColor(Field f, int i, int j) {
@@ -124,7 +124,7 @@ public class CheckersModel {
             f.setColor(Color.WHITE);
     }
 
-    private void setFieldPawn(Field f, int i, int j) {
+    private void setFieldPawn(Field f, int i) {
         if (f.getColor() == Color.DARK_GRAY) {
             if (i < 2)
                 f.setPawn(Pawn.BROWN_NORMAL);

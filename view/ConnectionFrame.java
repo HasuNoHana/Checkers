@@ -15,9 +15,9 @@ public class ConnectionFrame extends JFrame {
     private final JButton endConnectionButton;
     private final JButton backButton;
 
-    private ChangeConnectionInfoPanel changeConnectionInfoPanel;
-    private JPanel status;
-    private JLabel statusLabel;
+    private final ChangeConnectionInfoPanel changeConnectionInfoPanel;
+    private final JPanel status;
+    private final JLabel statusLabel;
 
     public ConnectionFrame(){
         super("Connection");

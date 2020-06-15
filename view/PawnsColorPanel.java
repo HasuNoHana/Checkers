@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class PawnsColorPanel extends JPanel {
-    public ArrayList<JButton> buttons;
+    private final ArrayList<JButton> buttons;
     public PawnsColorPanel(){
         setLayout(new GridLayout(Constants.GameConstants.PAWN_COLORS.length/2, 2));
 
@@ -34,6 +34,7 @@ public class PawnsColorPanel extends JPanel {
                         File imageFile = new File(".\\graphics\\"+color.substring(0, 1).toUpperCase()+color.substring(1, color.length()).toLowerCase()+"\\Normal.png");
                         img = ImageIO.read(imageFile);
                     } catch (IOException exception) {
+                        System.err.println("INFO: Could not open Normal texture.");
                         System.exit(1);
                     }
                     if( button.getWidth()>0 && button.getHeight()>0 ){

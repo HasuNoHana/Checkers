@@ -9,6 +9,7 @@ public class Menu {
     public Menu(){
         infos = UIManager.getInstalledLookAndFeels();
     }
+
     // Menu looks and feels
     private final UIManager.LookAndFeelInfo[] infos;
 

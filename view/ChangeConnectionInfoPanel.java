@@ -9,8 +9,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ChangeConnectionInfoPanel extends JPanel {
-    private final JPanel upperPanel;
-    private final JPanel lowerPanel;
 
     private final JLabel infoLabel;
     private final JLabel ipInfoLabel;
@@ -28,7 +26,7 @@ public class ChangeConnectionInfoPanel extends JPanel {
     public ChangeConnectionInfoPanel(){
         this.setLayout(new GridLayout(4,1, Constants.LayoutsConstants.H_GAP ,Constants.LayoutsConstants.V_GAP));
 
-        upperPanel = new JPanel();
+        JPanel upperPanel = new JPanel();
         upperPanel.setLayout(new GridLayout(2, 1));
 
         JPanel upperUpperPanel = new JPanel();
@@ -62,7 +60,7 @@ public class ChangeConnectionInfoPanel extends JPanel {
         upperPanel.add(upperUpperPanel);
         upperPanel.add(lowerUpperPanel);
 
-        lowerPanel = new JPanel();
+        JPanel lowerPanel = new JPanel();
         lowerPanel.setLayout(new GridLayout(3,1, Constants.LayoutsConstants.H_GAP, Constants.LayoutsConstants.V_GAP));
 
         infoLabel = new JLabel("", SwingConstants.CENTER);

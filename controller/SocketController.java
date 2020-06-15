@@ -104,7 +104,7 @@ public class SocketController {
 
         // Settings
 
-        for( JButton button : views.settingsFrame.getBoard().buttons ){
+        for( JButton button : views.settingsFrame.getBoard().getButtons() ){
             button.addActionListener(e -> sendMessage(Constants.ConnectionConstants.PAWN_COLOR, button.getActionCommand()));
             addChangingButtonConnected(button);
             button.setEnabled(false);
@@ -203,25 +203,25 @@ public class SocketController {
             {
                 models.connectionStatus.getServerSocket().close();
             }catch(Exception e){
-                System.err.println("INFO: Serversocket already closed.");
+                System.out.println("INFO: Serversocket already closed.");
             }
             try
             {
                 models.connectionStatus.getSocket().close();
             }catch(Exception e){
-                System.err.println("INFO: Socket already closed.");
+                System.out.println("INFO: Socket already closed.");
             }
             try
             {
                 models.connectionStatus.getDataInputStream().close();
             }catch(Exception e){
-                System.err.println("INFO: Input stream already closed.");
+                System.out.println("INFO: Input stream already closed.");
             }
             try
             {
                 models.connectionStatus.getDataOutputStream().close();
             }catch(Exception e){
-                System.err.println("INFO: Output stream already closed.");
+                System.out.println("INFO: Output stream already closed.");
             }
             models.connectionStatus.setIsSocketTaken(false);
             models.enemy.setName("");
@@ -268,7 +268,7 @@ public class SocketController {
         try {
             models.connectionStatus.getDataOutputStream().writeUTF(finalMessage);
         } catch (IOException e) {
-            System.err.println("INFO: Could not send message.");
+            System.out.println("INFO: Could not send message.");
             closeConnection();
         }
     }
@@ -316,7 +316,7 @@ public class SocketController {
                         }
                     }
                 } catch (IOException e) {
-                    System.err.println("INFO: Connection closed.");
+                    System.out.println("INFO: Connection closed.");
                     closeConnection();
                 }
             }

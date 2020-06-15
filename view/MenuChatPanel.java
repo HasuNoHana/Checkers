@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 public class MenuChatPanel extends JPanel {
     private final JButton sendButton;
     private final JTextField messField;
-    private final JPanel messagePanel;
     private final ChatPanel chatPanel;
     public MenuChatPanel(){
         setLayout(new GridBagLayout());
@@ -31,7 +30,7 @@ public class MenuChatPanel extends JPanel {
         sendButton.setEnabled(false);
 
 
-        messagePanel = new JPanel();
+        JPanel messagePanel = new JPanel();
         messagePanel.setLayout(new GridBagLayout());
         GridBagConstraints innerConstrains = new GridBagConstraints();
         innerConstrains.fill = GridBagConstraints.BOTH;

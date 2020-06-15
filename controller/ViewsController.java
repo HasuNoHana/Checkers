@@ -22,20 +22,19 @@ public class ViewsController {
             changeVisibleFrame(source);
         }
     }
-    private FramesArray framesArray;
-    private ChangeStateListener changeStateListener;
-    private Views views;
+    private final FramesArray framesArray;
+    private final ChangeStateListener changeStateListener;
+
     public ViewsController(FramesArray framesArray, Views views){
         this.framesArray = framesArray;
-        this.views = views;
         changeStateListener = new ChangeStateListener();
 
-        this.framesArray.add(this.views.mainMenuFrame);
-        this.framesArray.add(this.views.boardFrame);
-        this.framesArray.add(this.views.connectionFrame);
-        this.framesArray.add(this.views.settingsFrame);
+        this.framesArray.add(views.mainMenuFrame);
+        this.framesArray.add(views.boardFrame);
+        this.framesArray.add(views.connectionFrame);
+        this.framesArray.add(views.settingsFrame);
 
-        this.framesArray.addFirst(this.views.initialPopUpFrame);
+        this.framesArray.addFirst(views.initialPopUpFrame);
     }
     public void showFirstView(){
         this.framesArray.getFrames().get(0).setVisible(true);

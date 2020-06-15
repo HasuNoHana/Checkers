@@ -14,26 +14,16 @@ public class ChatPanel extends JPanel {
 
 
     private class MessageBubble extends JComponent{
-        private String message;
-        private boolean isRight = true;
+        private final String message;
+        private final boolean isRight;
 
-        private MessageBubble(){
-            super();
-        }
-        public MessageBubble(String message){
-            this();
-            this.message = message;
-        }
         public MessageBubble(String message, boolean isRight){
-            this();
+            super();
             this.message = message;
             this.isRight = isRight;
         }
         public String getMessage() {
             return message;
-        }
-        public boolean isRight() {
-            return isRight;
         }
         public void paintComponent(Graphics g, int posY) {
             super.paintComponent(g);
@@ -82,18 +72,6 @@ public class ChatPanel extends JPanel {
         messageBubbles = new ArrayList<>();
     }
 
-    public void clearChat(){
-        messageBubbles.clear();
-        this.paintComponent(this.getGraphics());
-    }
-
-    public void addYourMessage(String message){
-        this.addMessage(message, true);
-    }
-    public void addEnemyMessage(String message){
-        this.addMessage(message, false);
-    }
-
     private void addMessage(String message, boolean isRight){
         if(message.length()>0){
             if(messNum< Constants.ChatConstants.MAX_MESS_NUM){
@@ -130,6 +108,18 @@ public class ChatPanel extends JPanel {
             fromBottomLine -= bubbleHeight;
             fromBottomLine -= 10;
         }
+    }
+
+    public void clearChat(){
+        messageBubbles.clear();
+        this.paintComponent(this.getGraphics());
+    }
+
+    public void addYourMessage(String message){
+        this.addMessage(message, true);
+    }
+    public void addEnemyMessage(String message){
+        this.addMessage(message, false);
     }
 
     public void setYourBubbleColor(Color yourBubbleColor) {
