@@ -7,9 +7,6 @@ import model.Models;
 import model.Constants;
 import view.Views;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 public class Controller {
     Models models;
     Views views;

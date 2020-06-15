@@ -298,7 +298,6 @@ public class SocketController {
                                 break;
                             case Constants.ConnectionConstants.BOARD_MOVE:
                                 this.models.checkersModel.setOpponentMove(text.toString());
-                                System.out.println("ruch "  +text.toString());
                                 this.models.checkersModel.isMyTurn.set(true);
                                 break;
                             case Constants.ConnectionConstants.PAWN_COLOR:
@@ -309,7 +308,6 @@ public class SocketController {
                                 }
                                 break;
                             case Constants.ConnectionConstants.GAME_OVER:
-                                System.out.println("GAME+OBERA");
                                 this.models.checkersModel.setEnemyFirst(this.models.checkersModel.isEnemyFirst());
                                 this.models.checkersModel.setCurrentPlayer(Player.WHITE);
                                 this.views.resetBoardButton.doClick();
