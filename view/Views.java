@@ -6,6 +6,8 @@ package view;
 import javax.swing.*;
 
 public class Views {
+    public JButton resetBoardButton;
+
     public UserInfoChangePanel userInfoChangePanelInitial;
     public UserInfoChangePanel userInfoChangePanelSettings;
     public MenuChatPanel textMenuChatPanel;
@@ -16,6 +18,8 @@ public class Views {
     public ConnectionFrame connectionFrame;
     public SettingsFrame settingsFrame;
     public Views(){
+        resetBoardButton = new JButton("");
+
         userInfoChangePanelInitial = new UserInfoChangePanel();
         userInfoChangePanelSettings = new UserInfoChangePanel();
         textMenuChatPanel = new MenuChatPanel();

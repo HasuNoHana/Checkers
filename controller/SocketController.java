@@ -116,6 +116,8 @@ public class SocketController {
                 try{
                     models.connectionStatus.setServerSocket(new ServerSocket(models.connectionStatus.getPort()));
                     models.connectionStatus.setSocket(models.connectionStatus.getServerSocket().accept());
+                    models.checkersModel.isMyTurn.set(true);
+                    models.checkersModel.setEnemyFirst(false);
                     runHandler();
                 }catch (Exception e){
                     models.connectionStatus.setEnemyThere(false);
@@ -137,6 +139,8 @@ public class SocketController {
                     String temp = models.checkersModel.getEnemyColor();
                     models.checkersModel.setEnemyColor(models.checkersModel.getYourColor());
                     models.checkersModel.setYourColor(temp);
+                    models.checkersModel.isMyTurn.set(false);
+                    models.checkersModel.setEnemyFirst(true);
                     runHandler();
                 }catch (Exception e){
                     models.connectionStatus.setEnemyThere(false);
@@ -189,6 +193,8 @@ public class SocketController {
             models.checkersModel.setYourColor(Constants.GameConstants.PAWN_COLORS[0]);
             models.checkersModel.setEnemyColor(Constants.GameConstants.PAWN_COLORS[1]);
             views.boardFrame.getGameView().changeImageRepository(models.pawnImagesModel.getImagesRepo(models.checkersModel.getYourColor(), models.checkersModel.getEnemyColor()));
+
+            this.views.resetBoardButton.doClick();
 
             models.connectionStatus.setEnemyThere(false);
             try
@@ -250,6 +256,10 @@ public class SocketController {
                 finalMessage = finalMessage + Constants.ConnectionConstants.PAWN_COLOR+"\n";
                 finalMessage = finalMessage + message+"\n";
                 break;
+            case Constants.ConnectionConstants.GAME_OVER:
+                finalMessage = finalMessage + Constants.ConnectionConstants.GAME_OVER+"\n";
+                finalMessage = finalMessage + message+"\n";
+                break;
             default:
                 return;
         }
@@ -284,14 +294,23 @@ public class SocketController {
                                 views.mainMenuFrame.getMenuPanel().setEnemyName(models.enemy.getName());
                                 break;
                             case Constants.ConnectionConstants.BOARD_MOVE:
-
+                                this.models.checkersModel.setOpponentMove(text.toString());
+                                this.models.checkersModel.isMyTurn.set(true);
                                 break;
                             case Constants.ConnectionConstants.PAWN_COLOR:
-                                if(!lines[1].equals(models.checkersModel.getYourColor())){
-                                    models.checkersModel.setEnemyColor(lines[1]);
+                                if(!text.toString().equals(models.checkersModel.getYourColor())){
+                                    models.checkersModel.setEnemyColor(text.toString());
                                     views.boardFrame.getGameView().changeImageRepository(models.pawnImagesModel.getImagesRepo(models.checkersModel.getYourColor(), models.checkersModel.getEnemyColor()));
                                     views.boardFrame.getGameView().updateView(models.checkersModel);
                                 }
+                                break;
+                            case Constants.ConnectionConstants.GAME_OVER:
+                                System.out.println("GAME+OBERA");
+                                this.models.checkersModel.setEnemyFirst(!this.models.checkersModel.isEnemyFirst());
+                                this.models.checkersModel.isMyTurn.set(false);
+                                this.views.resetBoardButton.doClick();
+                                this.models.checkersModel.resetBoard();
+                                this.views.boardFrame.getGameView().updateView(this.models.checkersModel);
                                 break;
                             default:
                                 return;

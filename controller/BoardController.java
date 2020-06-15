@@ -14,6 +14,7 @@ public class BoardController {
         // Back to menu button
         boardFrame.addBackListener(viewsController.getChangeStateListener());
         boardFrame.getMenuButton().setActionCommand("Menu");
+
     }
 
 

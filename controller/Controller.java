@@ -8,6 +8,9 @@ import model.Models;
 import model.Constants;
 import view.Views;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class Controller {
     Models models;
     Views views;
@@ -33,8 +36,9 @@ public class Controller {
         this.settingsController = new SettingsController(views, models, models.framesArray, viewsController);
         this.boardController = new BoardController(views.boardFrame, viewsController);
         this.connectionController = new ConnectionController(views.connectionFrame, models.connectionStatus, viewsController);
-        this.checkersController = new CheckersController(models.checkersModel, views.boardFrame.getGameView());
+        this.checkersController = new CheckersController(models.checkersModel, views.boardFrame.getGameView(), socketController);
 
+        this.initGameReset();
 
         //socketController.activateChangingButtons();
 
@@ -69,6 +73,15 @@ public class Controller {
                 views.userInfoChangePanelSettings.getNameField().setText("");
             }else{
                 views.userInfoChangePanelSettings.setInfo("Name length must be between 1 and " + Constants.UserConstants.MAX_USERNAME_LENGTH +".");
+            }
+        });
+    }
+
+    private void initGameReset(){
+        this.views.resetBoardButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkersController.resetBoard();
             }
         });
     }

@@ -1,45 +1,43 @@
 package Game;
 
+import controller.SocketController;
 import model.Constants;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CheckersController implements MouseListener {
-    private CheckersModel model;
-    private CheckersView view;
+    private final CheckersModel model;
+    private final CheckersView view;
+    private final SocketController socketController;
     private boolean fieldIsClicked;
     private PicturePanel oldFieldPanel;
     private Field lastEnteredField;
+    private Thread waitingThread;
+    private Thread mainThread;
 
-    private AtomicBoolean MyTurn;
-    private String opponentMove;
-    private String MyMove = "";
     private int MyVictories = 0;
     private boolean duringCombo;
 
     private Field FieldInCombo;
-    private boolean endGame = false;
     private boolean isGameFinished;
     private int playerWhitePoints = 0;
     private int playerBrownPoints = 0;
 
     public void setCurrentPlayer(Player currentPlayer) {
-        this.currentPlayer = currentPlayer;
+        this.model.setCurrentPlayer(currentPlayer);
     }
 
-    private Player currentPlayer = Player.WHITE;
-    private boolean isCapture = false;
-    private Field opponent;
-
-    public CheckersController(CheckersModel g, CheckersView mf) {
-        model = g;
-        view = mf;
-        play();
+    public CheckersController(CheckersModel model, CheckersView view, SocketController socketController) {
+        this.model = model;
+        this.view = view;
+        this.socketController = socketController;
+        this.play();
     }
 
     public Field getField(int i, int j) {
@@ -49,6 +47,9 @@ public class CheckersController implements MouseListener {
     public void play() {
         view.updateView(model);
         this.addListiners();
+        if(!this.model.isMyTurn.get()){
+            waitForEnemy();
+        }
     }
 
     private void addListiners() {
@@ -62,7 +63,7 @@ public class CheckersController implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
-        if(isEndGame())
+        if(!this.model.isMyTurn.get())
             return;
         if (!this.fieldIsClicked) {
             PicturePanel oldFieldPanel = (PicturePanel) mouseEvent.getComponent();
@@ -108,10 +109,11 @@ public class CheckersController implements MouseListener {
     }
 
     private void highlyCurrentField(MouseEvent mouseEvent) {
-        this.lastEnteredField = getCurrentField(mouseEvent);
-        for (Field field:getAvailableMoves(lastEnteredField)
-             ) {
-            view.getPicturePanel(field.getRow(),field.getCol()).setBackground(new Color(0xb7fffa));
+        if(this.model.isMyTurn.get()){
+            this.lastEnteredField = getCurrentField(mouseEvent);
+            for (Field field:getAvailableMoves(lastEnteredField)) {
+                view.getPicturePanel(field.getRow(),field.getCol()).setBackground(new Color(0xb7fffa));
+            }
         }
     }
 
@@ -122,10 +124,11 @@ public class CheckersController implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent mouseEvent) {
-        for (Field field:getAvailableMoves(lastEnteredField)
-        ) {
-            PicturePanel currentPicturePanel = view.getPicturePanel(field.getRow(), field.getCol());
-            currentPicturePanel.setBackground(currentPicturePanel.background);
+        if(this.model.isMyTurn.get()){
+            for (Field field:getAvailableMoves(lastEnteredField)) {
+                PicturePanel currentPicturePanel = view.getPicturePanel(field.getRow(), field.getCol());
+                currentPicturePanel.setBackground(currentPicturePanel.background);
+            }
         }
     }
 
@@ -144,11 +147,11 @@ public class CheckersController implements MouseListener {
 
 
     public boolean isCapture() {
-        return isCapture;
+        return model.isCapture();
     }
 
     public void setCapture(boolean capture) {
-        isCapture = capture;
+        model.setCapture(capture);
     }
 
     public boolean isGameFinished() {
@@ -156,7 +159,7 @@ public class CheckersController implements MouseListener {
     }
 
     public Player getCurrentPlayer() {
-        return currentPlayer;
+        return model.getCurrentPlayer();
     }
 
 
@@ -165,40 +168,33 @@ public class CheckersController implements MouseListener {
                 (newField.isBrown() && newField.getRow() == Constants.GameConstants.BOARD_SIZE - 1));
     }
 
-//    public boolean canPawnMove(Field Field) {
-//        //TODO
-//
-//        return false;
-//    }
-
-    public boolean isEndGame() {
-        return endGame;
-    }
-
     public void setMyMove(String myMove) {
-        MyMove = myMove;
+        this.model.setMyMove(myMove);
     }
 
     public void resetBoard(){
         if(noMoreOpositePawns()) {
-            endGame();
             if(didIWon())
                 MyVictories++;
         }
+        socketController.sendMessage(Constants.ConnectionConstants.GAME_OVER);
+        model.setThreadRunning(false);
         model.resetBoard();
+        model.setOpponentMove("");
+        this.model.setMyMove("");
+        view.updateView(model);
+        this.model.isMyTurn.set(!this.model.isEnemyFirst());
+        System.out.println("RESET "+model.getYourColor());
+        waitForEnemy();
     }
 
     private boolean didIWon() {
         int white = countPawnsofPlayer(Player.WHITE);
         int brown = countPawnsofPlayer(Player.BROWN);
-        if(currentPlayer==Player.WHITE)
+        if(model.getCurrentPlayer()==Player.WHITE)
             return white > brown;
         else
             return brown > white;
-    }
-
-    private void endGame() {
-        this.endGame = true;
     }
 
     public void movePawn(Field oldField, Field newField) {
@@ -220,8 +216,8 @@ public class CheckersController implements MouseListener {
     }
 
     private boolean isCurrentPlayerPawn(Field oldField) {
-        return (currentPlayer == Player.WHITE && (oldField.getPawn() == Pawn.WHITE_NORMAL || oldField.getPawn() == Pawn.WHITE_QUEEN)) ||
-                (currentPlayer == Player.BROWN && (oldField.getPawn() == Pawn.BROWN_NORMAL || oldField.getPawn() == Pawn.BROWN_QUEEN));
+        return (model.getCurrentPlayer() == Player.WHITE && (oldField.getPawn() == Pawn.WHITE_NORMAL || oldField.getPawn() == Pawn.WHITE_QUEEN)) ||
+                (model.getCurrentPlayer() == Player.BROWN && (oldField.getPawn() == Pawn.BROWN_NORMAL || oldField.getPawn() == Pawn.BROWN_QUEEN));
     }
 
     private boolean isFieldEmpty(Field newField) {
@@ -248,7 +244,7 @@ public class CheckersController implements MouseListener {
         int opponentCol = newField.getCol() - differenceCol;
         if ( (opponentRow-differenceRow > Constants.GameConstants.BOARD_SIZE-1) && (opponentCol-differenceCol > Constants.GameConstants.BOARD_SIZE-1) &&(!isPathClear(oldField, model.getBoard()[opponentRow - differenceRow][opponentCol - differenceCol])))
             return false;
-        return !isNotOponent(opponentRow, opponentCol);
+        return !isNotOpponent(opponentRow, opponentCol);
     }
 
     private boolean isPathClear(Field oldField, Field newField) {
@@ -268,7 +264,7 @@ public class CheckersController implements MouseListener {
     }
 
     private boolean isMoveForward(Field oldField, Field newField) {
-        if (currentPlayer == Player.WHITE) {
+        if (model.getCurrentPlayer() == Player.WHITE) {
             return (newField.getRow() < oldField.getRow());
         } else {
             return (newField.getRow() > oldField.getRow());
@@ -285,29 +281,29 @@ public class CheckersController implements MouseListener {
         int opponentRow = oldField.getRow() + differenceRow;
         int opponentCol = oldField.getCol() + differenceCol;
 
-        if (isNotOponent(opponentRow, opponentCol))
+        if (isNotOpponent(opponentRow, opponentCol))
             return false;
         if (opponentRow + differenceRow != newField.getRow() || opponentCol + differenceCol != newField.getCol())
             return false;
-        this.isCapture = true;
-        this.opponent = model.getBoard()[opponentRow][opponentCol];
+        this.model.setCapture(true);
+        this.model.setOpponent(model.getBoard()[opponentRow][opponentCol]);
         return true;
     }
 
-    public void destroyOponentsPawn() {
-        this.opponent.setPawn(Pawn.EMPTY);
-        this.opponent.setOccupied(false);
-        if (this.currentPlayer == Player.WHITE)
+    public void destroyOpponentsPawn() {
+        this.model.getOpponent().setPawn(Pawn.EMPTY);
+        this.model.getOpponent().setOccupied(false);
+        if (this.model.getCurrentPlayer() == Player.WHITE)
             this.playerWhitePoints += 1;
         else
             this.playerBrownPoints += 1;
     }
 
-    private boolean isNotOponent(int oponentRow, int oponentCol) {
-        if (currentPlayer == Player.WHITE) {
-            return model.getBoard()[oponentRow][oponentCol].getPawn() != Pawn.BROWN_QUEEN && model.getBoard()[oponentRow][oponentCol].getPawn() != Pawn.BROWN_NORMAL;
+    private boolean isNotOpponent(int opponentRow, int opponentCol) {
+        if (this.model.getCurrentPlayer() == Player.WHITE) {
+            return model.getBoard()[opponentRow][opponentCol].getPawn() != Pawn.BROWN_QUEEN && model.getBoard()[opponentRow][opponentCol].getPawn() != Pawn.BROWN_NORMAL;
         } else {
-            return model.getBoard()[oponentRow][oponentCol].getPawn() != Pawn.WHITE_QUEEN && model.getBoard()[oponentRow][oponentCol].getPawn() != Pawn.WHITE_NORMAL;
+            return model.getBoard()[opponentRow][opponentCol].getPawn() != Pawn.WHITE_QUEEN && model.getBoard()[opponentRow][opponentCol].getPawn() != Pawn.WHITE_NORMAL;
         }
     }
 
@@ -348,8 +344,8 @@ public class CheckersController implements MouseListener {
         int differenceCol = oldField.getCol() < newField.getCol() ? 1 : -1;
         int opponentRow = newField.getRow() - differenceRow;
         int opponentCol = newField.getCol() - differenceCol;
-        this.isCapture = true;
-        this.opponent = model.getBoard()[opponentRow][opponentCol];
+        this.model.setCapture(true);
+        this.model.setOpponent(model.getBoard()[opponentRow][opponentCol]);
     }
 
     private Set<Field> getAvailableNormalMoves(Field oldField) {
@@ -414,32 +410,48 @@ public class CheckersController implements MouseListener {
     }
 
     private void makeCapture(Field oldField, Field newField) {
-        destroyOponentsPawn();
+        destroyOpponentsPawn();
         movePawn(oldField, newField);
         setCapture(false);
     }
 
     private void updateMyMove(Field oldField, Field newField) {
-        if(this.MyMove.equals(""))
-            MyMove = oldField.getRow()+","+oldField.getCol()+";"+newField.getRow()+","+newField.getCol();
+        if(this.model.getMyMove().equals(""))
+            this.model.setMyMove(oldField.getRow()+","+oldField.getCol()+";"+newField.getRow()+","+newField.getCol());
         else{
-            MyMove += ";"+newField.getRow()+","+newField.getCol();
+            this.model.setMyMove(this.model.getMyMove()+ ";"+newField.getRow()+","+newField.getCol());
         }
     }
 
 
     public void makeOpponentMove(){
-        String[] parts = this.opponentMove.split(";");
+        this.setCurrentPlayer(Player.BROWN);
+        String[] parts = this.model.getOpponentMove().split(";");
         for (int i = 1; i < parts.length; i++){
             String[] place = parts[i-1].split(",");
-            int oldrow = Integer.parseInt(place[0]);
-            int oldcol = Integer.parseInt(place[1]);
+            int oldrow = Constants.GameConstants.BOARD_SIZE-1-Integer.parseInt(place[0]);
+            int oldcol = Constants.GameConstants.BOARD_SIZE-1-Integer.parseInt(place[1]);
 
             place = parts[i].split(",");
-            int newrow = Integer.parseInt(place[0]);
-            int newcol = Integer.parseInt(place[1]);
-            makeMove(getField(oldrow,oldcol),getField(newrow,newcol));
+            int newrow = Constants.GameConstants.BOARD_SIZE-1-Integer.parseInt(place[0]);
+            int newcol = Constants.GameConstants.BOARD_SIZE-1-Integer.parseInt(place[1]);
+            Field oldField = getField(oldrow, oldcol);
+            Field newField = getField(newrow, newcol);
+            if (getAvailableCapturesMoves(oldField).contains(newField)) {
+                findOpponent(oldField,newField);
+                makeCapture(oldField, newField);
+            } else if (getAvailableNormalMoves(oldField).contains(newField)) {
+                movePawn(oldField, newField);
+            }
+            tryMakeQueen(newField);
+            if(noMoreOpositePawns()){
+                resetBoard();
+            }
+            this.view.updateView(this.model);
         }
+        this.model.setMyMove("");
+        this.model.setOpponentMove("");
+        this.setCurrentPlayer(Player.WHITE);
     }
 
     private boolean isDuringCombo(Field newField) {
@@ -463,19 +475,39 @@ public class CheckersController implements MouseListener {
             return false;
         }
         tryMakeQueen(newField);
-        if(noMoreOpositePawns())
-            endGame();
+        if(noMoreOpositePawns()){
+            resetBoard();
+        }
         return true;
     }
 
     public void changePlayer() {
-        currentPlayer = currentPlayer == Player.WHITE ? Player.BROWN : Player.WHITE;//uwaga na zmiany
-//        socetControler.sendMessage(Message boardMessage, this.MyMove);
-        MyMove="";
-        //OCZEKUJ NA PRZECIWNIKA
-        //String oponentMove = ...
-//        this.oponentMove = oponentMove;
-//        makeOponentMove();
+        if(!this.model.getMyMove().equals("")){
+            socketController.sendMessage(Constants.ConnectionConstants.BOARD_MOVE, this.model.getMyMove());
+            this.model.setMyMove("");
+        }
+//        System.out.println(model.getYourColor());
+
+        this.model.isMyTurn.set(false);
+        this.waitForEnemy();
+    }
+
+    public void waitForEnemy(){
+        if(waitingThread != null ){
+            waitingThread.stop();
+        }
+        waitingThread = new Thread(() -> {
+//            System.out.println("czekam " +this.model.getOpponentMove());
+            while (!this.model.isMyTurn.get()&&this.model.isThreadRunning()){
+            }
+            if(this.model.isThreadRunning()){
+//                System.out.println("przeciwnik..."+this.model.getOpponentMove());
+                makeOpponentMove();
+            }
+//            System.out.println("przeciwnik2..."+this.model.getOpponentMove());
+            this.model.setThreadRunning(true);
+        });
+        waitingThread.start();
     }
 
 }
